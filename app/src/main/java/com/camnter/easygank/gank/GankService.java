@@ -45,7 +45,7 @@ public interface GankService {
      * @param page 第几页
      * @return Observable<Welfare>
      */
-    @GET("/data/" + GankApi.DATA_TYPE_WELFARE + "/{size}/{page}")
+    @GET("data/" + GankApi.DATA_TYPE_WELFARE + "/{size}/{page}")
     Observable<Welfare> getWelfare(
             @Path("size") int size,
             @Path("page") int page
@@ -58,7 +58,7 @@ public interface GankService {
      * @param day
      * @return
      */
-    @GET("/day/{year}/{month}/{day}")
+    @GET("day/{year}/{month}/{day}")
     Observable<DailyData> getDaily(
             @Path("year") int year,
             @Path("month") int month,

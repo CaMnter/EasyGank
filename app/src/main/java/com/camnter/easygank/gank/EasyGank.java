@@ -23,11 +23,18 @@
  */
 package com.camnter.easygank.gank;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Response;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
@@ -39,6 +46,8 @@ import retrofit.RxJavaCallAdapterFactory;
  * Time：2016-01-03 18:24
  */
 public class EasyGank {
+
+    public static final String TAG = "EasyGank";
 
     private static EasyGank ourInstance;
 
@@ -54,8 +63,15 @@ public class EasyGank {
 
     private EasyGank() {
         OkHttpClient okHttpClient = new OkHttpClient();
-//        okHttpClient.setReadTimeout(13000, TimeUnit.MILLISECONDS);
-
+        okHttpClient.setReadTimeout(13, TimeUnit.SECONDS);
+        okHttpClient.interceptors().add(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Response response = chain.proceed(chain.request());
+                com.orhanobut.logger.Logger.d(chain.request().urlString());
+                return response;
+            }
+        });
         this.gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .create();
@@ -66,7 +82,6 @@ public class EasyGank {
                 .addConverterFactory(GsonConverterFactory.create(this.gson))
                 .client(okHttpClient)
                 .build();
-
         this.gankService = this.retrofit.create(GankService.class);
     }
 

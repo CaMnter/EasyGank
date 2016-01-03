@@ -19,6 +19,11 @@ android {
     }
 }
 
+repositories {
+    // ...
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
@@ -38,11 +43,15 @@ dependencies {
 
     // retrofit
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
-    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+    compile 'com.squareup.okhttp:okhttp:2.7.0'
+    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
 
     // ReactiveX
     compile 'io.reactivex:rxjava:1.0.16'
     compile 'io.reactivex:rxandroid:1.0.1'
+
+    // other
+    compile 'com.github.orhanobut:logger:1.12'
 
 }

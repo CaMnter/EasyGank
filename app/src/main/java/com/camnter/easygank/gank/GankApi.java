@@ -44,24 +44,9 @@ public class GankApi {
     public static final String DATA_TYPE_JS = "前端";
     public static final String DATA_TYPE_ALL = "all";
 
-    public static final String BASE_URL = "http://gank.avosapps.com/api";
+    public static final String BASE_URL = "http://gank.avosapps.com/api/";
 
     public static final int DEFAULT_SIZE = 10;
-
-    /**
-     * 数据 + 数据类型/请求个数/第几页
-     */
-    public static final String DATA = "http://gank.avosapps.com/api/data";
-
-    /**
-     * 每日数据 + year/month/day
-     */
-    public static final String DAILY = "http://gank.avosapps.com/api/day";
-
-    /**
-     * 随机数据 + /分类/个数
-     */
-    public static final String RANDOM = "http://gank.avosapps.com/api/random/data";
 
 
 }
