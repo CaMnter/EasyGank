@@ -21,65 +21,43 @@
  * Public License instead of this License.  But first, please read
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
+package com.camnter.easygank.gank;
 
-package com.camnter.easygank.views;
 
-import android.os.Bundle;
+import com.camnter.easygank.bean.DailyData;
+import com.camnter.easygank.bean.Welfare;
 
-import com.camnter.easygank.R;
-import com.camnter.easygank.core.BaseAppCompatActivity;
-import com.camnter.easygank.presenter.MainPresenter;
-import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
+import retrofit.http.GET;
+import retrofit.http.Path;
+import rx.Observable;
 
-public class MainActivity extends BaseAppCompatActivity {
-
-    private EasyRecyclerView mainRV;
-
-    private MainPresenter presenter;
+/**
+ * Description：GankService
+ * Created by：CaMnter
+ * Time：2016-01-03 16:18
+ */
+public interface GankService {
 
     /**
-     * Fill in layout id
+     * 找妹子
      *
-     * @return layout id
+     * @param size 数据个数
+     * @param page 第几页
+     * @return Observable<Welfare>
      */
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
-    }
+    @GET("/data/" + GankApi.DATA_TYPE_WELFARE + "/{size}/{page}")
+    Observable<Welfare> getWelfare(
+            @Path("size") int size,
+            @Path("page") int page
+    );
 
-    /**
-     * Initialize the view in the layout
-     *
-     * @param savedInstanceState savedInstanceState
-     */
-    @Override
-    protected void initViews(Bundle savedInstanceState) {
-        this.mainRV = this.findView(R.id.main_rv);
-    }
+    @GET("/day/{year}/{month}/{day}")
+    Observable<DailyData> getDaily(
+            @Path("year") int year,
+            @Path("month") int month,
+            @Path("day") int day
+    );
 
-    /**
-     * Initialize the View of the listener
-     */
-    @Override
-    protected void initListeners() {
-
-    }
-
-    /**
-     * Initialize the Activity data
-     */
-    @Override
-    protected void initData() {
-        this.presenter = new MainPresenter();
-
-        this.refresh();
-    }
-
-    /**
-     * 刷新 or 下拉刷新
-     */
-    private void refresh() {
-        this.presenter.getDaily(2015, 12, 31);
-    }
 
 }
+

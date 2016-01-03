@@ -21,65 +21,32 @@
  * Public License instead of this License.  But first, please read
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
+package com.camnter.easygank.presenter;
 
-package com.camnter.easygank.views;
+import java.util.ArrayList;
+import java.util.List;
 
-import android.os.Bundle;
+import rx.Subscription;
 
-import com.camnter.easygank.R;
-import com.camnter.easygank.core.BaseAppCompatActivity;
-import com.camnter.easygank.presenter.MainPresenter;
-import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
+/**
+ * Description：BasePresenter
+ * Created by：CaMnter
+ * Time：2016-01-03 18:10
+ */
+public abstract class BasePresenter {
 
-public class MainActivity extends BaseAppCompatActivity {
-
-    private EasyRecyclerView mainRV;
-
-    private MainPresenter presenter;
-
-    /**
-     * Fill in layout id
-     *
-     * @return layout id
-     */
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
-    }
+    private List<Subscription> subscriptions = new ArrayList<>();
 
     /**
-     * Initialize the view in the layout
-     *
-     * @param savedInstanceState savedInstanceState
+     * Activity 销毁时，请调用次方法销毁对应的 Presenter
      */
-    @Override
-    protected void initViews(Bundle savedInstanceState) {
-        this.mainRV = this.findView(R.id.main_rv);
-    }
+    protected abstract void onDestroy();
 
-    /**
-     * Initialize the View of the listener
-     */
-    @Override
-    protected void initListeners() {
 
-    }
-
-    /**
-     * Initialize the Activity data
-     */
-    @Override
-    protected void initData() {
-        this.presenter = new MainPresenter();
-
-        this.refresh();
-    }
-
-    /**
-     * 刷新 or 下拉刷新
-     */
-    private void refresh() {
-        this.presenter.getDaily(2015, 12, 31);
+    private void recycle() {
+        for (Subscription subscription : subscriptions) {
+            subscription.unsubscribe();
+        }
     }
 
 }

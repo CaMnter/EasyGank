@@ -21,65 +21,29 @@
  * Public License instead of this License.  But first, please read
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
+package com.camnter.easygank.adapter;
 
-package com.camnter.easygank.views;
+import com.camnter.easyrecyclerview.adapter.EasyRecyclerViewAdapter;
+import com.camnter.easyrecyclerview.holder.EasyRecyclerViewHolder;
 
-import android.os.Bundle;
-
-import com.camnter.easygank.R;
-import com.camnter.easygank.core.BaseAppCompatActivity;
-import com.camnter.easygank.presenter.MainPresenter;
-import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
-
-public class MainActivity extends BaseAppCompatActivity {
-
-    private EasyRecyclerView mainRV;
-
-    private MainPresenter presenter;
-
-    /**
-     * Fill in layout id
-     *
-     * @return layout id
-     */
+/**
+ * Description：MainAdapter
+ * Created by：CaMnter
+ * Time：2016-01-03 15:24
+ */
+public class MainAdapter extends EasyRecyclerViewAdapter {
     @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
+    public int[] getItemLayouts() {
+        return new int[0];
     }
 
-    /**
-     * Initialize the view in the layout
-     *
-     * @param savedInstanceState savedInstanceState
-     */
     @Override
-    protected void initViews(Bundle savedInstanceState) {
-        this.mainRV = this.findView(R.id.main_rv);
+    public void onBindRecycleViewHolder(EasyRecyclerViewHolder easyRecyclerViewHolder, int i) {
+
     }
 
-    /**
-     * Initialize the View of the listener
-     */
     @Override
-    protected void initListeners() {
-
+    public int getRecycleViewItemType(int i) {
+        return 0;
     }
-
-    /**
-     * Initialize the Activity data
-     */
-    @Override
-    protected void initData() {
-        this.presenter = new MainPresenter();
-
-        this.refresh();
-    }
-
-    /**
-     * 刷新 or 下拉刷新
-     */
-    private void refresh() {
-        this.presenter.getDaily(2015, 12, 31);
-    }
-
 }

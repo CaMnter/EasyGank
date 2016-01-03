@@ -21,65 +21,51 @@
  * Public License instead of this License.  But first, please read
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
+package com.camnter.easygank.presenter;
 
-package com.camnter.easygank.views;
+import com.camnter.easygank.model.callback.DailyModelCallback;
+import com.camnter.easygank.model.impl.DailyModel;
 
-import android.os.Bundle;
+/**
+ * Description：MainPresenter
+ * Created by：CaMnter
+ * Time：2016-01-03 18:09
+ */
+public class MainPresenter extends BasePresenter {
 
-import com.camnter.easygank.R;
-import com.camnter.easygank.core.BaseAppCompatActivity;
-import com.camnter.easygank.presenter.MainPresenter;
-import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
+    private DailyModel dailyModel;
 
-public class MainActivity extends BaseAppCompatActivity {
+    public MainPresenter() {
+        this.dailyModel = new DailyModel(new DailyModelCallback() {
+            @Override
+            protected void getDailySuccess() {
 
-    private EasyRecyclerView mainRV;
+            }
 
-    private MainPresenter presenter;
+            @Override
+            public void failure(String msg) {
+
+            }
+        });
+    }
 
     /**
-     * Fill in layout id
+     * Activity 销毁时，请调用次方法销毁对应的 Presenter
+     */
+    @Override
+    protected void onDestroy() {
+
+    }
+
+    /**
+     * 查询每日数据
      *
-     * @return layout id
+     * @param year  year
+     * @param month month
+     * @param day   day
      */
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
-    }
-
-    /**
-     * Initialize the view in the layout
-     *
-     * @param savedInstanceState savedInstanceState
-     */
-    @Override
-    protected void initViews(Bundle savedInstanceState) {
-        this.mainRV = this.findView(R.id.main_rv);
-    }
-
-    /**
-     * Initialize the View of the listener
-     */
-    @Override
-    protected void initListeners() {
-
-    }
-
-    /**
-     * Initialize the Activity data
-     */
-    @Override
-    protected void initData() {
-        this.presenter = new MainPresenter();
-
-        this.refresh();
-    }
-
-    /**
-     * 刷新 or 下拉刷新
-     */
-    private void refresh() {
-        this.presenter.getDaily(2015, 12, 31);
+    public void getDaily(int year, int month, int day) {
+        this.dailyModel.getDaily(year, month, day);
     }
 
 }

@@ -21,65 +21,20 @@
  * Public License instead of this License.  But first, please read
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
+package com.camnter.easygank.model.callback;
 
-package com.camnter.easygank.views;
-
-import android.os.Bundle;
-
-import com.camnter.easygank.R;
-import com.camnter.easygank.core.BaseAppCompatActivity;
-import com.camnter.easygank.presenter.MainPresenter;
-import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
-
-public class MainActivity extends BaseAppCompatActivity {
-
-    private EasyRecyclerView mainRV;
-
-    private MainPresenter presenter;
+/**
+ * Description：BaseCallback
+ * Created by：CaMnter
+ * Time：2016-01-03 18:06
+ */
+public interface BaseCallback {
 
     /**
-     * Fill in layout id
+     * 返回错误消息
      *
-     * @return layout id
+     * @param msg msg
      */
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
-    }
-
-    /**
-     * Initialize the view in the layout
-     *
-     * @param savedInstanceState savedInstanceState
-     */
-    @Override
-    protected void initViews(Bundle savedInstanceState) {
-        this.mainRV = this.findView(R.id.main_rv);
-    }
-
-    /**
-     * Initialize the View of the listener
-     */
-    @Override
-    protected void initListeners() {
-
-    }
-
-    /**
-     * Initialize the Activity data
-     */
-    @Override
-    protected void initData() {
-        this.presenter = new MainPresenter();
-
-        this.refresh();
-    }
-
-    /**
-     * 刷新 or 下拉刷新
-     */
-    private void refresh() {
-        this.presenter.getDaily(2015, 12, 31);
-    }
+    void failure(String msg);
 
 }
