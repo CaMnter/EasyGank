@@ -31,6 +31,7 @@ import java.util.concurrent.TimeUnit;
 
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
+import retrofit.RxJavaCallAdapterFactory;
 
 /**
  * Description：Gank
@@ -53,16 +54,19 @@ public class EasyGank {
 
     private EasyGank() {
         OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.setReadTimeout(13000, TimeUnit.MILLISECONDS);
+//        okHttpClient.setReadTimeout(13000, TimeUnit.MILLISECONDS);
 
         this.gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .create();
+
         this.retrofit = new Retrofit.Builder()
                 .baseUrl(GankApi.BASE_URL)
-                .client(okHttpClient)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(this.gson))
+                .client(okHttpClient)
                 .build();
+
         this.gankService = this.retrofit.create(GankService.class);
     }
 

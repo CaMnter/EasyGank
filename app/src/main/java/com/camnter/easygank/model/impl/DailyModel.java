@@ -56,4 +56,5 @@ public class DailyModel implements IDailyModel {
     public Observable<DailyData> getDaily(int year, int month, int day) {
         return EasyGank.getInstance().getGankService().getDaily(year, month, day);
     }
+
 }

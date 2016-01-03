@@ -51,6 +51,13 @@ public interface GankService {
             @Path("page") int page
     );
 
+    /**
+     *
+     * @param year
+     * @param month
+     * @param day
+     * @return
+     */
     @GET("/day/{year}/{month}/{day}")
     Observable<DailyData> getDaily(
             @Path("year") int year,

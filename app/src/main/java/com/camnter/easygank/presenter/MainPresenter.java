@@ -23,8 +23,17 @@
  */
 package com.camnter.easygank.presenter;
 
+import android.util.Log;
+
+import com.camnter.easygank.bean.DailyData;
 import com.camnter.easygank.model.callback.DailyModelCallback;
 import com.camnter.easygank.model.impl.DailyModel;
+
+import rx.Scheduler;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Description：MainPresenter
@@ -65,7 +74,31 @@ public class MainPresenter extends BasePresenter {
      * @param day   day
      */
     public void getDaily(int year, int month, int day) {
-        this.dailyModel.getDaily(year, month, day);
+        this.dailyModel.getDaily(year, month, day)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<DailyData, DailyData.DailyResults>() {
+                    @Override
+                    public DailyData.DailyResults call(DailyData dailyData) {
+                        return dailyData.results;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DailyData.DailyResults>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(DailyData.DailyResults dailyResults) {
+                        Log.i("next",dailyResults.toString());
+                    }
+                });
     }
 
 }
