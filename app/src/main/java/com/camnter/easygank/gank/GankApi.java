@@ -47,7 +47,8 @@ public class GankApi {
 
     public static final String BASE_URL = "http://gank.avosapps.com/api/";
 
-    public static final int DEFAULT_SIZE = 10;
+    public static final int DEFAULT_DATA_SIZE = 10;
+    public static final int DEFAULT_DAILY_SIZE = 15;
 
 
 }

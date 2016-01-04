@@ -31,6 +31,7 @@ import com.camnter.easygank.R;
 import com.camnter.easygank.bean.DailyData;
 import com.camnter.easygank.bean.GankData;
 import com.camnter.easygank.utils.DateUtils;
+import com.camnter.easygank.utils.GlideUtils;
 import com.camnter.easyrecyclerview.adapter.EasyRecyclerViewAdapter;
 import com.camnter.easyrecyclerview.holder.EasyRecyclerViewHolder;
 
@@ -97,13 +98,17 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         if (dailyData.results.videoData != null && dailyData.results.videoData.size() > 0) {
             GankData video = dailyData.results.videoData.get(0);
             dailyTitleTV.setText(video.desc);
-            dailyDateTV.setText(DateUtils.string2String(video.publishedAt, "yyyy-MM-dd","yyyy.MM.dd"));
+            dailyDateTV.setText(DateUtils.string2String(video.publishedAt, "yyyy-MM-dd", "yyyy.MM.dd"));
         } else if (dailyData.results.welfareData != null && dailyData.results.welfareData.size() > 0) {
             GankData welfare = dailyData.results.welfareData.get(0);
             dailyTitleTV.setText(welfare.desc);
-            dailyDateTV.setText(DateUtils.string2String(welfare.publishedAt,"yyyy-MM-dd","yyyy.MM.dd"));
+            dailyDateTV.setText(DateUtils.string2String(welfare.publishedAt, "yyyy-MM-dd", "yyyy.MM.dd"));
         } else {
             dailyTitleTV.setText("");
+        }
+
+        if (dailyData.results.welfareData != null && dailyData.results.welfareData.size() > 0) {
+            GlideUtils.display(dailyIV, dailyData.results.welfareData.get(0).url);
         }
 
     }

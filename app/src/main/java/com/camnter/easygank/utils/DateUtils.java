@@ -64,6 +64,14 @@ public class DateUtils {
         return new Date();
     }
 
+    /**
+     * String 转 String
+     *
+     * @param str          str
+     * @param format       format
+     * @param secondFormat secondFormat
+     * @return String
+     */
     public static String string2String(String str, String format, String secondFormat) {
         try {
             return date2String(new SimpleDateFormat(format).parse(str).getTime(), secondFormat);

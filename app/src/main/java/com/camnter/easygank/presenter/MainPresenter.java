@@ -82,7 +82,7 @@ public class MainPresenter extends BasePresenter<MainView> {
 
         public List<EasyDate> getPastTime() {
             List<EasyDate> easyDates = new ArrayList<>();
-            for (int i = 0; i < GankApi.DEFAULT_SIZE; i++) {
+            for (int i = 0; i < GankApi.DEFAULT_DAILY_SIZE; i++) {
                 long time = this.calendar.getTimeInMillis() - i * DateUtils.ONE_DAY;
                 Calendar c = Calendar.getInstance();
                 c.setTimeInMillis(time);
@@ -129,8 +129,8 @@ public class MainPresenter extends BasePresenter<MainView> {
                 .toSortedList(new Func2<DailyData, DailyData, Integer>() {
                     @Override
                     public Integer call(DailyData dailyData, DailyData dailyData2) {
-                        return DateUtils.string2Date(dailyData.results.androidData.get(0).publishedAt, "yyyy-MM-dd")
-                                .compareTo(DateUtils.string2Date(dailyData2.results.androidData.get(0).publishedAt, "yyyy-MM-dd"));
+                        return DateUtils.string2Date(dailyData2.results.androidData.get(0).publishedAt, "yyyy-MM-dd")
+                                .compareTo(DateUtils.string2Date(dailyData.results.androidData.get(0).publishedAt, "yyyy-MM-dd"));
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())

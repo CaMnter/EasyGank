@@ -3,12 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:padding="9dp">
 
     <ImageView
         android:id="@+id/daily_iv"
         android:layout_width="120dp"
-        android:layout_height="80dp" />
+        android:layout_height="90dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/img_default_gray" />
 
     <TextView
         android:id="@+id/daily_title_tv"
