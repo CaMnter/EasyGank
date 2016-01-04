@@ -27,13 +27,21 @@ package com.camnter.easygank.views;
 import android.os.Bundle;
 
 import com.camnter.easygank.R;
+import com.camnter.easygank.adapter.MainAdapter;
+import com.camnter.easygank.bean.DailyData;
 import com.camnter.easygank.core.BaseAppCompatActivity;
 import com.camnter.easygank.presenter.MainPresenter;
+import com.camnter.easygank.presenter.iview.MainView;
 import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
+import com.camnter.easyrecyclerview.widget.decorator.EasyDividerItemDecoration;
 
-public class MainActivity extends BaseAppCompatActivity {
+import java.util.List;
+
+public class MainActivity extends BaseAppCompatActivity implements MainView {
 
     private EasyRecyclerView mainRV;
+
+    private MainAdapter mainAdapter;
 
     private MainPresenter presenter;
 
@@ -55,6 +63,7 @@ public class MainActivity extends BaseAppCompatActivity {
     @Override
     protected void initViews(Bundle savedInstanceState) {
         this.mainRV = this.findView(R.id.main_rv);
+        this.mainRV.addItemDecoration(new EasyDividerItemDecoration(this, EasyDividerItemDecoration.VERTICAL_LIST));
     }
 
     /**
@@ -71,6 +80,9 @@ public class MainActivity extends BaseAppCompatActivity {
     @Override
     protected void initData() {
         this.presenter = new MainPresenter();
+        this.presenter.attachView(this);
+        this.mainAdapter = new MainAdapter(MainAdapter.AdapterType.daily);
+        this.mainRV.setAdapter(this.mainAdapter);
 
         this.refresh();
     }
@@ -79,7 +91,33 @@ public class MainActivity extends BaseAppCompatActivity {
      * 刷新 or 下拉刷新
      */
     private void refresh() {
-        this.presenter.getDaily(2015, 12, 31);
+        this.presenter.getDaily();
     }
 
+    /**
+     * 查询每日干货成功
+     *
+     * @param dailyData dailyData
+     */
+    @Override
+    public void onGetDailySuccess(List<DailyData> dailyData) {
+        this.mainAdapter.setList(dailyData);
+        this.mainAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 发生错误
+     *
+     * @param e e
+     */
+    @Override
+    public void onFailure(Throwable e) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        this.presenter.detachView();
+        super.onDestroy();
+    }
 }

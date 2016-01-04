@@ -21,20 +21,23 @@
  * Public License instead of this License.  But first, please read
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
-package com.camnter.easygank.model.callback;
+
+package com.camnter.easygank.core;
 
 /**
- * Description：BaseCallback
+ * Description：Presenter
+ * <p/>
+ * Base class that implements the Presenter interface and provides a base implementation for
+ * attachView() and detachView(). It also handles keeping a reference to the mvpView that
+ * can be accessed from the children classes by calling getMvpView().
+ * <p/>
  * Created by：CaMnter
- * Time：2016-01-03 18:06
+ * Time：2016-01-04 11:35
  */
-public interface BaseCallback {
+public interface Presenter<V extends MvpView> {
 
-    /**
-     * 返回错误消息
-     *
-     * @param msg msg
-     */
-    void failure(String msg);
+    void attachView(V mvpView);
+
+    void detachView();
 
 }

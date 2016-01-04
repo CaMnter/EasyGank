@@ -21,12 +21,12 @@
  * Public License instead of this License.  But first, please read
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
+
 package com.camnter.easygank.model.impl;
 
 import com.camnter.easygank.bean.DailyData;
 import com.camnter.easygank.gank.EasyGank;
 import com.camnter.easygank.model.IDailyModel;
-import com.camnter.easygank.model.callback.DailyModelCallback;
 
 import rx.Observable;
 
@@ -37,12 +37,14 @@ import rx.Observable;
  */
 public class DailyModel implements IDailyModel {
 
-    private DailyModelCallback callback;
+    private static final DailyModel ourInstance = new DailyModel();
 
-    public DailyModel(DailyModelCallback callback) {
-        this.callback = callback;
+    public static DailyModel getInstance() {
+        return ourInstance;
     }
 
+    private DailyModel() {
+    }
 
     /**
      * 查询每日数据

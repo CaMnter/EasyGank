@@ -21,18 +21,27 @@
  * Public License instead of this License.  But first, please read
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
+
 package com.camnter.easygank.presenter;
 
-import android.util.Log;
-
 import com.camnter.easygank.bean.DailyData;
-import com.camnter.easygank.model.callback.DailyModelCallback;
-import com.camnter.easygank.model.impl.DailyModel;
+import com.camnter.easygank.core.BasePresenter;
+import com.camnter.easygank.gank.EasyGank;
+import com.camnter.easygank.gank.GankApi;
+import com.camnter.easygank.presenter.iview.MainView;
+import com.camnter.easygank.utils.DateUtils;
+import com.orhanobut.logger.Logger;
 
-import rx.Scheduler;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 /**
@@ -40,65 +49,109 @@ import rx.schedulers.Schedulers;
  * Created by：CaMnter
  * Time：2016-01-03 18:09
  */
-public class MainPresenter extends BasePresenter {
+public class MainPresenter extends BasePresenter<MainView> {
 
-    private DailyModel dailyModel;
-
-    public MainPresenter() {
-        this.dailyModel = new DailyModel(new DailyModelCallback() {
-            @Override
-            protected void getDailySuccess() {
-
-            }
-
-            @Override
-            public void failure(String msg) {
-
-            }
-        });
-    }
+    private EasyDate currentDate;
+    private int page;
 
     /**
-     * Activity 销毁时，请调用次方法销毁对应的 Presenter
+     * 查每日干货需要的特殊的类
      */
-    @Override
-    protected void onDestroy() {
+    public class EasyDate implements Serializable {
+        private Calendar calendar;
 
+        public EasyDate(Calendar calendar) {
+            this.calendar = calendar;
+        }
+
+        public int getYear() {
+            return calendar.get(Calendar.YEAR);
+        }
+
+        public int getMonth() {
+            return calendar.get(Calendar.MONTH) + 1;
+        }
+
+        public int getDay() {
+            return calendar.get(Calendar.DAY_OF_MONTH);
+        }
+
+        public Calendar getCalendar() {
+            return this.calendar;
+        }
+
+        public List<EasyDate> getPastTime() {
+            List<EasyDate> easyDates = new ArrayList<>();
+            for (int i = 0; i < GankApi.DEFAULT_SIZE; i++) {
+                long time = this.calendar.getTimeInMillis() - i * DateUtils.ONE_DAY;
+                Calendar c = Calendar.getInstance();
+                c.setTimeInMillis(time);
+                EasyDate date = new EasyDate(c);
+                easyDates.add(date);
+            }
+            return easyDates;
+        }
+
+    }
+
+
+    public MainPresenter() {
+        long time = System.currentTimeMillis();
+        Calendar mCalendar = Calendar.getInstance();
+        mCalendar.setTimeInMillis(time);
+        this.currentDate = new EasyDate(mCalendar);
+        this.page = 1;
     }
 
     /**
      * 查询每日数据
-     *
-     * @param year  year
-     * @param month month
-     * @param day   day
      */
-    public void getDaily(int year, int month, int day) {
-        this.dailyModel.getDaily(year, month, day)
+    public void getDaily() {
+        Observable.from(this.currentDate.getPastTime())
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<DailyData, DailyData.DailyResults>() {
+                .flatMap(new Func1<EasyDate, Observable<DailyData>>() {
                     @Override
-                    public DailyData.DailyResults call(DailyData dailyData) {
-                        return dailyData.results;
+                    public Observable<DailyData> call(EasyDate easyDate) {
+                        /*
+                         * 感觉Android的数据应该不会为null
+                         * 所以以Android的数据为判断是否当天有数据
+                         */
+                        return EasyGank.getInstance().getGankService()
+                                .getDaily(easyDate.getYear(), easyDate.getMonth(), easyDate.getDay())
+                                .filter(new Func1<DailyData, Boolean>() {
+                                    @Override
+                                    public Boolean call(DailyData dailyData) {
+                                        return dailyData.results.androidData != null;
+                                    }
+                                });
+                    }
+                })
+                .toSortedList(new Func2<DailyData, DailyData, Integer>() {
+                    @Override
+                    public Integer call(DailyData dailyData, DailyData dailyData2) {
+                        return DateUtils.string2Date(dailyData.results.androidData.get(0).publishedAt, "yyyy-MM-dd")
+                                .compareTo(DateUtils.string2Date(dailyData2.results.androidData.get(0).publishedAt, "yyyy-MM-dd"));
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DailyData.DailyResults>() {
+                .subscribe(new Subscriber<List<DailyData>>() {
                     @Override
                     public void onCompleted() {
-
+                        MainPresenter.this.mCompositeSubscription.remove(this);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        e.printStackTrace();
+                        Logger.d(e.getMessage());
+                        MainPresenter.this.getMvpView().onFailure(e);
                     }
 
                     @Override
-                    public void onNext(DailyData.DailyResults dailyResults) {
-                        Log.i("next",dailyResults.toString());
+                    public void onNext(List<DailyData> dailyData) {
+                        MainPresenter.this.getMvpView().onGetDailySuccess(dailyData);
                     }
                 });
+
     }
 
 }

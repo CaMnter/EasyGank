@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <ImageView
+        android:id="@+id/daily_iv"
+        android:layout_width="120dp"
+        android:layout_height="80dp" />
+
+    <TextView
+        android:id="@+id/daily_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/daily_iv"
+        android:layout_marginLeft="9dp"
+        android:layout_marginStart="9dp"
+        android:layout_toEndOf="@id/daily_iv"
+        android:layout_toRightOf="@id/daily_iv"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/daily_title_tv"
+        android:textSize="@dimen/daily_title_tv" />
+
+    <TextView
+        android:id="@+id/daily_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/date"
+        android:textSize="@dimen/daily_date_tv" />
+
+</RelativeLayout>

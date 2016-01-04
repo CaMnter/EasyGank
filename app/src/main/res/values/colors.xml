@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#ff303F9F</color>
     <color name="colorAccent">#ffFF4081</color>
+
+    <color name="date">#ffFF4081</color>
+
+
+    <!-- daily -->
+    <color name="daily_title_tv">#ff000000</color>
+
 </resources>

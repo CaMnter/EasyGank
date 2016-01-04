@@ -21,32 +21,26 @@
  * Public License instead of this License.  But first, please read
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
-package com.camnter.easygank.presenter;
 
-import java.util.ArrayList;
+package com.camnter.easygank.presenter.iview;
+
+import com.camnter.easygank.bean.DailyData;
+import com.camnter.easygank.core.MvpView;
+
 import java.util.List;
 
-import rx.Subscription;
-
 /**
- * Description：BasePresenter
+ * Description：MainView
  * Created by：CaMnter
- * Time：2016-01-03 18:10
+ * Time：2016-01-04 16:38
  */
-public abstract class BasePresenter {
-
-    private List<Subscription> subscriptions = new ArrayList<>();
-
+public interface MainView extends MvpView {
     /**
-     * Activity 销毁时，请调用次方法销毁对应的 Presenter
+     * 查询每日干货成功
+     *
+     * @param dailyData dailyData
      */
-    protected abstract void onDestroy();
+    void onGetDailySuccess(List<DailyData> dailyData);
 
-
-    private void recycle() {
-        for (Subscription subscription : subscriptions) {
-            subscription.unsubscribe();
-        }
-    }
 
 }

@@ -21,18 +21,24 @@
  * Public License instead of this License.  But first, please read
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
-package com.camnter.easygank.model.callback;
+
+package com.camnter.easygank.core;
 
 /**
- * Description：DailyModelCallback
+ * Description：MvpView
+ * <p/>
+ * Base interface that any class that wants to act as a View in the MVP (Model View Presenter)
+ * pattern must implement. Generally this interface will be extended by a more specific interface
+ * that then usually will be implemented by an Activity or Fragment.
+ * <p/>
  * Created by：CaMnter
- * Time：2016-01-03 18:02
+ * Time：2016-01-04 11:31
  */
-public abstract class DailyModelCallback implements BaseCallback {
-
+public interface MvpView {
     /**
-     * 查询每日数据成功
+     * 发生错误
+     *
+     * @param e e
      */
-    protected abstract void getDailySuccess();
-
+    void onFailure(Throwable e);
 }

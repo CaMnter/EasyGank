@@ -21,9 +21,8 @@
  * Public License instead of this License.  But first, please read
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
-package com.camnter.easygank.gank;
 
-import android.util.Log;
+package com.camnter.easygank.gank;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,8 +32,6 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
@@ -50,9 +47,6 @@ public class EasyGank {
     public static final String TAG = "EasyGank";
 
     private static EasyGank ourInstance;
-
-    private Gson gson;
-    private Retrofit retrofit;
 
     private GankService gankService;
 
@@ -72,17 +66,17 @@ public class EasyGank {
                 return response;
             }
         });
-        this.gson = new GsonBuilder()
+        Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .create();
 
-        this.retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(GankApi.BASE_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(this.gson))
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient)
                 .build();
-        this.gankService = this.retrofit.create(GankService.class);
+        this.gankService = retrofit.create(GankService.class);
     }
 
     public GankService getGankService() {

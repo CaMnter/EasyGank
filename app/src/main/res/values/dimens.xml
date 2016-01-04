@@ -2,4 +2,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="daily_title_tv">16sp</dimen>
+    <dimen name="daily_date_tv">14sp</dimen>
 </resources>
