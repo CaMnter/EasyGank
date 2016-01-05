@@ -137,7 +137,8 @@ public class MainPresenter extends BasePresenter<MainView> {
                 .subscribe(new Subscriber<List<DailyData>>() {
                     @Override
                     public void onCompleted() {
-                        MainPresenter.this.mCompositeSubscription.remove(this);
+                        if (MainPresenter.this.mCompositeSubscription != null)
+                            MainPresenter.this.mCompositeSubscription.remove(this);
                     }
 
                     @Override
@@ -148,7 +149,8 @@ public class MainPresenter extends BasePresenter<MainView> {
 
                     @Override
                     public void onNext(List<DailyData> dailyData) {
-                        MainPresenter.this.getMvpView().onGetDailySuccess(dailyData);
+                        if (MainPresenter.this.getMvpView() != null)
+                            MainPresenter.this.getMvpView().onGetDailySuccess(dailyData);
                     }
                 });
 

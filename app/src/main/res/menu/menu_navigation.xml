@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_sub_setting"
+        android:title="EasyGank" />
+    <item
+        android:id="@+id/navigation_subheader"
+        android:title="完事精彩，干货分类  :)">
+        <menu>
+            <item
+                android:id="@+id/navigation_sub_plan"
+                android:checked="true"
+                android:title="每日精彩" />
+            <item android:title="福利" />
+            <item android:title="Android" />
+            <item android:title="iOS" />
+            <item android:title="前端" />
+            <item android:title="休息视频" />
+            <item android:title="拓展资源" />
+
+        </menu>
+    </item>
+</menu>

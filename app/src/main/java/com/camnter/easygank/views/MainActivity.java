@@ -40,9 +40,7 @@ import java.util.List;
 public class MainActivity extends BaseAppCompatActivity implements MainView {
 
     private EasyRecyclerView mainRV;
-
     private MainAdapter mainAdapter;
-
     private MainPresenter presenter;
 
     /**

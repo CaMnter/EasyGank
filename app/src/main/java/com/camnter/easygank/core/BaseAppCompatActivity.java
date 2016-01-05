@@ -28,7 +28,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -40,7 +39,7 @@ import com.camnter.easygank.utils.ToastUtils;
  * Created by：CaMnter
  * Time：2016-01-02 15:02
  */
-public abstract class BaseAppCompatActivity extends AppCompatActivity {
+public abstract class BaseAppCompatActivity extends BaseSwipeRefreshLayout {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

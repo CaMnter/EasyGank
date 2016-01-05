@@ -4,5 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="daily_title_tv">15sp</dimen>
-    <dimen name="daily_date_tv">13sp</dimen>
+    <dimen name="daily_date_tv">12sp</dimen>
 </resources>
