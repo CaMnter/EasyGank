@@ -36,8 +36,6 @@ import com.camnter.easygank.utils.GlideUtils;
 import com.camnter.easyrecyclerview.adapter.EasyRecyclerViewAdapter;
 import com.camnter.easyrecyclerview.holder.EasyRecyclerViewHolder;
 
-import java.net.URI;
-
 /**
  * Description：MainAdapter
  * Created by：CaMnter
@@ -51,9 +49,6 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
     private static final String JS = "前端";
     private static final String IOS = "iOS";
     private static final String ANDROID = "Android";
-
-    URI uri;
-
 
     public enum AdapterType {
         daily,

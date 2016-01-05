@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="9dp">
 
     <ImageView
@@ -26,8 +25,8 @@
         android:lineSpacingExtra="2dp"
         android:maxLines="2"
         android:paddingBottom="6dp"
-        android:textColor="@color/daily_title_tv"
-        android:textSize="@dimen/daily_title_tv" />
+        android:textColor="@color/item_title_tv"
+        android:textSize="@dimen/item_title_tv" />
 
     <TextView
         android:id="@+id/daily_date_tv"
@@ -36,8 +35,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:textColor="@color/date"
-        android:textSize="@dimen/daily_date_tv" />
+        android:textColor="@color/item_date"
+        android:textSize="@dimen/item_date_tv" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -55,10 +54,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/bg_daily_android_tag"
+            android:background="@drawable/bg_android_tag"
             android:text="@string/daily_android_tag_tv"
-            android:textColor="@color/daily_tag_tv"
-            android:textSize="@dimen/daily_tag_tv" />
+            android:textColor="@color/item_tag_tv"
+            android:textSize="@dimen/item_tag_tv" />
 
         <TextView
             android:id="@+id/daily_ios_tag_tv"
@@ -66,10 +65,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/bg_daily_ios_tag"
+            android:background="@drawable/bg_ios_tag"
             android:text="@string/daily_ios_tag_tv"
-            android:textColor="@color/daily_tag_tv"
-            android:textSize="@dimen/daily_tag_tv" />
+            android:textColor="@color/item_tag_tv"
+            android:textSize="@dimen/item_tag_tv" />
 
         <TextView
             android:id="@+id/daily_js_tag_tv"
@@ -77,10 +76,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/bg_daily_js_tag"
+            android:background="@drawable/bg_js_tag"
             android:text="@string/daily_js_tag_tv"
-            android:textColor="@color/daily_tag_tv"
-            android:textSize="@dimen/daily_tag_tv" />
+            android:textColor="@color/item_tag_tv"
+            android:textSize="@dimen/item_tag_tv" />
 
 
     </LinearLayout>

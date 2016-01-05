@@ -26,8 +26,11 @@ package com.camnter.easygank.views;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.camnter.easygank.R;
@@ -61,10 +64,14 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
         return R.layout.activity_main;
     }
 
+    /**
+     * 刷新的时候
+     */
     @Override
     public void onSwipeRefresh() {
         this.refreshData();
     }
+
 
     /**
      * Initialize the view in the layout
@@ -128,7 +135,6 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
                             ToastUtils.show(MainActivity.this, MainActivity.this.getString(R.string.main_empty_data), Toast.LENGTH_LONG);
                             return;
                         }
-
 
                         // 如果没在刷新
                         if (!MainActivity.this.isRefreshStatus()) {
@@ -200,12 +206,47 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
     public void onFailure(Throwable e) {
         this.refresh(false);
         this.setRefreshStatus(true);
+        Snackbar.make(this.mainRV, R.string.main_load_error, Snackbar.LENGTH_SHORT);
     }
 
     @Override
     protected void onDestroy() {
         this.presenter.detachView();
         super.onDestroy();
+    }
+
+    /**
+     * Fill in NavigationView.OnNavigationItemSelectedListener
+     *
+     * @return NavigationView.OnNavigationItemSelectedListener
+     */
+    @Override
+    protected NavigationView.OnNavigationItemSelectedListener getNavigationItemSelectedListener() {
+        return new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                item.setChecked(true);
+                MainActivity.this.mDrawerLayout.closeDrawer(MainActivity.this.mNavigationView);
+                switch (item.getItemId()) {
+                    case R.id.navigation_daily:
+                        return true;
+                    case R.id.navigation_welfare:
+                        return true;
+                    case R.id.navigation_android:
+                        return true;
+                    case R.id.navigation_ios:
+                        return true;
+                    case R.id.navigation_js:
+                        return true;
+                    case R.id.navigation_video:
+                        return true;
+                    case R.id.navigation_resources:
+                        return true;
+                }
+                return false;
+
+            }
+        };
     }
 
 }

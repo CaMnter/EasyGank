@@ -3,7 +3,16 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="daily_title_tv">15sp</dimen>
-    <dimen name="daily_date_tv">12sp</dimen>
-    <dimen name="daily_tag_tv">12sp</dimen>
+
+    <!-- item -->
+    <dimen name="item_title_tv">15sp</dimen>
+    <dimen name="item_date_tv">12sp</dimen>
+    <dimen name="item_tag_tv">12sp</dimen>
+
+    <!-- item daily -->
+
+    <!-- item technology -->
+    <dimen name="technology_type_tv">12sp</dimen>
+    <dimen name="technology_via_tv">10sp</dimen>
+
 </resources>

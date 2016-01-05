@@ -39,7 +39,7 @@ import com.camnter.easygank.utils.ToastUtils;
  * Created by：CaMnter
  * Time：2016-01-02 15:02
  */
-public abstract class BaseAppCompatActivity extends BaseSwipeRefreshLayout {
+public abstract class BaseAppCompatActivity extends BaseNavigationViewActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +49,6 @@ public abstract class BaseAppCompatActivity extends BaseSwipeRefreshLayout {
         this.initListeners();
     }
 
-
-    /**
-     * Fill in layout id
-     *
-     * @return layout id
-     */
-    protected abstract int getLayoutId();
 
     /**
      * Initialize the view in the layout

@@ -78,16 +78,34 @@ public abstract class BaseSwipeRefreshLayout extends BaseToolbarActivity {
 
     }
 
+    /**
+     * 刷新的时候
+     */
     public abstract void onSwipeRefresh();
 
+    /**
+     * 设置刷新状态
+     *
+     * @param status status
+     */
     public void setRefreshStatus(boolean status) {
         this.refreshStatus = status;
     }
 
+    /**
+     * 获取当前刷新状态
+     *
+     * @return boolean
+     */
     public boolean isRefreshStatus() {
         return refreshStatus;
     }
 
+    /**
+     * 刷新 true false
+     *
+     * @param refresh refresh
+     */
     public void refresh(final boolean refresh) {
         if (this.mMultiSwipeRefreshLayout == null) return;
         /*
