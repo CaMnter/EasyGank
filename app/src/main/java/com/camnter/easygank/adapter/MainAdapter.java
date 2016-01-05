@@ -24,6 +24,7 @@
 
 package com.camnter.easygank.adapter;
 
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,8 +44,12 @@ import com.camnter.easyrecyclerview.holder.EasyRecyclerViewHolder;
 public class MainAdapter extends EasyRecyclerViewAdapter {
 
     public static final int LAYOUT_TYPE_DAILY = 0;
-
     private AdapterType type;
+
+    private static final String JS = "前端";
+    private static final String IOS = "iOS";
+    private static final String ANDROID = "Android";
+
 
     public enum AdapterType {
         daily,
@@ -92,7 +97,14 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         TextView dailyDateTV = easyRecyclerViewHolder.findViewById(R.id.daily_date_tv);
         TextView dailyTitleTV = easyRecyclerViewHolder.findViewById(R.id.daily_title_tv);
 
+        TextView androidTagTV = easyRecyclerViewHolder.findViewById(R.id.daily_android_tag_tv);
+        TextView iOSTagTV = easyRecyclerViewHolder.findViewById(R.id.daily_ios_tag_tv);
+        TextView jsTagTV = easyRecyclerViewHolder.findViewById(R.id.daily_js_tag_tv);
+
+
         /*
+         * 标题 和 日期
+         *
          * 如果没有视频的title和date就找福利的title和date，实在没有就，完！
          */
         if (dailyData.results.videoData != null && dailyData.results.videoData.size() > 0) {
@@ -104,13 +116,43 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
             dailyTitleTV.setText(welfare.desc);
             dailyDateTV.setText(DateUtils.string2String(welfare.publishedAt, "yyyy-MM-dd", "yyyy.MM.dd"));
         } else {
-            dailyTitleTV.setText("");
+            dailyTitleTV.setText("这期没福利了，安心学习吧！");
         }
 
+        /*
+         * 图片
+         */
         if (dailyData.results.welfareData != null && dailyData.results.welfareData.size() > 0) {
             GlideUtils.display(dailyIV, dailyData.results.welfareData.get(0).url);
         }
 
+        /*
+         * 标签 ListView 和 RecyclerView 都要写else 因为复用问题
+         * 忧伤
+         */
+        if (dailyData.category == null) {
+            androidTagTV.setVisibility(View.GONE);
+            iOSTagTV.setVisibility(View.GONE);
+            jsTagTV.setVisibility(View.GONE);
+        } else {
+            if (dailyData.category.contains(ANDROID)) {
+                androidTagTV.setVisibility(View.VISIBLE);
+            } else {
+                androidTagTV.setVisibility(View.GONE);
+            }
+            if(dailyData.category.contains(IOS)){
+                iOSTagTV.setVisibility(View.VISIBLE);
+            }else {
+                iOSTagTV.setVisibility(View.GONE);
+            }
+            if (dailyData.category.contains(JS)){
+                jsTagTV.setVisibility(View.VISIBLE);
+            }else {
+                jsTagTV.setVisibility(View.GONE);
+            }
+        }
+
     }
+
 
 }

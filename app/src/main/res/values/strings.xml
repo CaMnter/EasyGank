@@ -3,4 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="main_empty_data">感谢你热爱学习，更重要的是妹子，可惜没干货了T~T</string>
+    <string name="daily_android_tag_tv">Android</string>
+    <string name="daily_ios_tag_tv">iOS</string>
+    <string name="daily_js_tag_tv">前端</string>
 </resources>

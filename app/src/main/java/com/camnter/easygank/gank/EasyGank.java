@@ -58,14 +58,14 @@ public class EasyGank {
     private EasyGank() {
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.setReadTimeout(13, TimeUnit.SECONDS);
-        okHttpClient.interceptors().add(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Response response = chain.proceed(chain.request());
-                com.orhanobut.logger.Logger.d(chain.request().urlString());
-                return response;
-            }
-        });
+//        okHttpClient.interceptors().add(new Interceptor() {
+//            @Override
+//            public Response intercept(Chain chain) throws IOException {
+//                Response response = chain.proceed(chain.request());
+//                com.orhanobut.logger.Logger.d(chain.request().urlString());
+//                return response;
+//            }
+//        });
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .create();

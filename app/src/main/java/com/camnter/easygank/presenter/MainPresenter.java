@@ -83,7 +83,11 @@ public class MainPresenter extends BasePresenter<MainView> {
         public List<EasyDate> getPastTime() {
             List<EasyDate> easyDates = new ArrayList<>();
             for (int i = 0; i < GankApi.DEFAULT_DAILY_SIZE; i++) {
-                long time = this.calendar.getTimeInMillis() - i * DateUtils.ONE_DAY;
+                /*
+                 * - (page * DateUtils.ONE_DAY) 翻到哪页再找 一页有DEFAULT_DAILY_SIZE这么长
+                 * - i * DateUtils.ONE_DAY 往前一天一天 找呀找
+                 */
+                long time = this.calendar.getTimeInMillis() - ((page - 1) * GankApi.DEFAULT_DAILY_SIZE * DateUtils.ONE_DAY) - i * DateUtils.ONE_DAY;
                 Calendar c = Calendar.getInstance();
                 c.setTimeInMillis(time);
                 EasyDate date = new EasyDate(c);
@@ -104,9 +108,29 @@ public class MainPresenter extends BasePresenter<MainView> {
     }
 
     /**
-     * 查询每日数据
+     * 设置查询第几页
+     *
+     * @param page page
      */
-    public void getDaily() {
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    /**
+     * 获取当前页数量
+     *
+     * @return page
+     */
+    public int getPage() {
+        return page;
+    }
+
+    /**
+     * 查询每日数据
+     *
+     * @param refresh 是否是刷新
+     */
+    public void getDaily(final boolean refresh) {
         Observable.from(this.currentDate.getPastTime())
                 .subscribeOn(Schedulers.io())
                 .flatMap(new Func1<EasyDate, Observable<DailyData>>() {
@@ -143,14 +167,18 @@ public class MainPresenter extends BasePresenter<MainView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        Logger.d(e.getMessage());
-                        MainPresenter.this.getMvpView().onFailure(e);
+                        try {
+                            Logger.d(e.getMessage());
+                            MainPresenter.this.getMvpView().onFailure(e);
+                        } catch (Throwable e1) {
+                            e1.getMessage();
+                        }
                     }
 
                     @Override
                     public void onNext(List<DailyData> dailyData) {
                         if (MainPresenter.this.getMvpView() != null)
-                            MainPresenter.this.getMvpView().onGetDailySuccess(dailyData);
+                            MainPresenter.this.getMvpView().onGetDailySuccess(dailyData, refresh);
                     }
                 });
 

@@ -39,4 +39,51 @@
         android:textColor="@color/date"
         android:textSize="@dimen/daily_date_tv" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/daily_iv"
+        android:layout_marginLeft="9dp"
+        android:layout_marginStart="9dp"
+        android:layout_toEndOf="@id/daily_iv"
+        android:layout_toRightOf="@id/daily_iv"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/daily_android_tag_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/bg_daily_android_tag"
+            android:text="@string/daily_android_tag_tv"
+            android:textColor="@color/daily_tag_tv"
+            android:textSize="@dimen/daily_tag_tv" />
+
+        <TextView
+            android:id="@+id/daily_ios_tag_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/bg_daily_ios_tag"
+            android:text="@string/daily_ios_tag_tv"
+            android:textColor="@color/daily_tag_tv"
+            android:textSize="@dimen/daily_tag_tv" />
+
+        <TextView
+            android:id="@+id/daily_js_tag_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/bg_daily_js_tag"
+            android:text="@string/daily_js_tag_tv"
+            android:textColor="@color/daily_tag_tv"
+            android:textSize="@dimen/daily_tag_tv" />
+
+
+    </LinearLayout>
+
+
 </RelativeLayout>

@@ -39,8 +39,8 @@ public interface MainView extends MvpView {
      * 查询每日干货成功
      *
      * @param dailyData dailyData
+     * @param refresh   是否刷新
      */
-    void onGetDailySuccess(List<DailyData> dailyData);
-
+    void onGetDailySuccess(List<DailyData> dailyData, boolean refresh);
 
 }

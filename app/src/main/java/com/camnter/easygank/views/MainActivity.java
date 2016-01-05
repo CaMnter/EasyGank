@@ -25,6 +25,10 @@
 package com.camnter.easygank.views;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.camnter.easygank.R;
 import com.camnter.easygank.adapter.MainAdapter;
@@ -32,6 +36,7 @@ import com.camnter.easygank.bean.DailyData;
 import com.camnter.easygank.core.BaseAppCompatActivity;
 import com.camnter.easygank.presenter.MainPresenter;
 import com.camnter.easygank.presenter.iview.MainView;
+import com.camnter.easygank.utils.ToastUtils;
 import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
 import com.camnter.easyrecyclerview.widget.decorator.EasyDividerItemDecoration;
 
@@ -43,6 +48,9 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
     private MainAdapter mainAdapter;
     private MainPresenter presenter;
 
+    private int emptyCount = 0;
+    private static final int EMPTY_LIMIT = 3;
+
     /**
      * Fill in layout id
      *
@@ -51,6 +59,12 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    public void onSwipeRefresh() {
+        super.onSwipeRefresh();
+        this.refreshData();
     }
 
     /**
@@ -69,7 +83,65 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
      */
     @Override
     protected void initListeners() {
+        this.mainRV.addOnScrollListener(this.getRecyclerViewOnScrollListener());
+    }
 
+    public RecyclerView.OnScrollListener getRecyclerViewOnScrollListener() {
+        return new RecyclerView.OnScrollListener() {
+            private boolean toLast = false;
+
+            /**
+             * @param recyclerView The RecyclerView which scrolled.
+             * @param dx           The amount of horizontal scroll.
+             * @param dy           The amount of vertical scroll.
+             */
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                /*
+                 * dy 表示y轴滑动方向
+                 * dx 表示x轴滑动方向
+                 */
+                if (dy > 0) {
+                    // 正在向下滑动
+                    this.toLast = true;
+                } else {
+                    // 停止滑动或者向上滑动
+                    this.toLast = false;
+                }
+            }
+
+            /**
+             * @param recyclerView The RecyclerView whose scroll state has changed.
+             * @param newState     The updated scroll state. One of {#SCROLL_STATE_IDLE},
+             *                     {#SCROLL_STATE_DRAGGING} or {#SCROLL_STATE_SETTLING}.
+             */
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                // 不滚动
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    // 最后完成显示的item的position 正好是 最后一条数据的index
+                    if (manager.findLastCompletelyVisibleItemPosition() == (manager.getItemCount() - 1) && toLast) {
+
+                        // 没数据了
+                        if (MainActivity.this.emptyCount >= EMPTY_LIMIT) {
+                            ToastUtils.show(MainActivity.this, MainActivity.this.getString(R.string.main_empty_data), Toast.LENGTH_LONG);
+                            return;
+                        }
+
+                        swipeRefreshLayout.setRefreshing(true);
+                        // 加载更多
+                        MainActivity.this.presenter.setPage(MainActivity.this.presenter.getPage() + 1);
+//                        if (MainActivity.this.getRefreshStatus()) {
+                        MainActivity.this.setRefreshStatus(false);
+                        MainActivity.this.presenter.getDaily(false);
+//                        }
+
+                    }
+                }
+            }
+        };
     }
 
     /**
@@ -82,25 +154,40 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
         this.mainAdapter = new MainAdapter(MainAdapter.AdapterType.daily);
         this.mainRV.setAdapter(this.mainAdapter);
 
-        this.refresh();
+        this.refreshData();
     }
 
     /**
      * 刷新 or 下拉刷新
      */
-    private void refresh() {
-        this.presenter.getDaily();
+    private void refreshData() {
+        this.presenter.getDaily(true);
+        this.presenter.setPage(1);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                MainActivity.this.refresh(true);
+            }
+        }, 266);
     }
 
     /**
      * 查询每日干货成功
      *
      * @param dailyData dailyData
+     * @param refresh   是否刷新
      */
     @Override
-    public void onGetDailySuccess(List<DailyData> dailyData) {
-        this.mainAdapter.setList(dailyData);
+    public void onGetDailySuccess(List<DailyData> dailyData, boolean refresh) {
+        if (refresh) {
+            this.mainAdapter.clear();
+            this.mainAdapter.setList(dailyData);
+        } else {
+            this.mainAdapter.addAll(dailyData);
+        }
         this.mainAdapter.notifyDataSetChanged();
+        this.refresh(false);
+        if (dailyData.size() == 0) this.emptyCount++;
     }
 
     /**
@@ -110,7 +197,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
      */
     @Override
     public void onFailure(Throwable e) {
-
+        this.setRefreshStatus(true);
     }
 
     @Override
@@ -118,4 +205,5 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
         this.presenter.detachView();
         super.onDestroy();
     }
+
 }

@@ -8,5 +8,10 @@
 
     <!-- daily -->
     <color name="daily_title_tv">#ff000000</color>
+    <color name="daily_tag_tv">#ffFFFFFF</color>
+
+    <color name="daily_android_tag_bg">#ff388E3C</color>
+    <color name="daily_ios_tag_bg">#ff0377BC</color>
+    <color name="daily_js_tag_bg">#ffEF6C02</color>
 
 </resources>

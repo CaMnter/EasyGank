@@ -5,4 +5,5 @@
 
     <dimen name="daily_title_tv">15sp</dimen>
     <dimen name="daily_date_tv">12sp</dimen>
+    <dimen name="daily_tag_tv">12sp</dimen>
 </resources>
