@@ -2,21 +2,34 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_sub_setting"
-        android:title="EasyGank" />
+        android:title="@string/app_name" />
     <item
-        android:id="@+id/navigation_subheader"
-        android:title="完事精彩，干货分类  :)">
+        android:id="@+id/navigation_title"
+        android:title="@string/navigation_title">
         <menu>
             <item
-                android:id="@+id/navigation_sub_plan"
+                android:id="@+id/navigation_daily"
                 android:checked="true"
-                android:title="每日精彩" />
-            <item android:title="福利" />
-            <item android:title="Android" />
-            <item android:title="iOS" />
-            <item android:title="前端" />
-            <item android:title="休息视频" />
-            <item android:title="拓展资源" />
+                android:icon="@mipmap/ic_daily"
+                android:title="@string/common_navigation_daily" />
+            <item
+                android:icon="@mipmap/ic_welfare"
+                android:title="@string/common_welfare" />
+            <item
+                android:icon="@mipmap/ic_android"
+                android:title="@string/common_android" />
+            <item
+                android:icon="@mipmap/ic_ios"
+                android:title="@string/common_ios" />
+            <item
+                android:icon="@mipmap/ic_js"
+                android:title="@string/common_js" />
+            <item
+                android:icon="@mipmap/ic_video"
+                android:title="@string/common_video" />
+            <item
+                android:icon="@mipmap/ic_resources"
+                android:title="@string/common_resources" />
 
         </menu>
     </item>

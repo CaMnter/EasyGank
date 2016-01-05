@@ -130,7 +130,6 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
                         }
 
 
-
                         // 如果没在刷新
                         if (!MainActivity.this.isRefreshStatus()) {
                             // 加载更多
@@ -199,6 +198,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
      */
     @Override
     public void onFailure(Throwable e) {
+        this.refresh(false);
         this.setRefreshStatus(true);
     }
 

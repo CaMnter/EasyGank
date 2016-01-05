@@ -8,4 +8,12 @@
     <string name="daily_android_tag_tv">Android</string>
     <string name="daily_ios_tag_tv">iOS</string>
     <string name="daily_js_tag_tv">前端</string>
+    <string name="navigation_title">干货在手，万事精彩。</string>
+    <string name="common_navigation_daily">每日精彩</string>
+    <string name="common_welfare">福利</string>
+    <string name="common_android">Android</string>
+    <string name="common_ios">iOS</string>
+    <string name="common_js">前端</string>
+    <string name="common_video">休息视频</string>
+    <string name="common_resources">拓展资源</string>
 </resources>
