@@ -51,7 +51,7 @@ public class GlideUtils {
      * @param url  url
      */
     public static void display(ImageView view, String url) {
-        display(view, url, R.mipmap.img_default_gray);
+        displayUrl(view, url, R.mipmap.img_default_gray);
     }
 
 
@@ -62,7 +62,7 @@ public class GlideUtils {
      * @param url          url
      * @param defaultImage defaultImage
      */
-    private static void display(final ImageView view, String url, @DrawableRes int defaultImage) {
+    private static void displayUrl(final ImageView view, String url, @DrawableRes int defaultImage) {
         // 不能崩
         if (view == null) {
             Logger.e("GlideUtils -> display -> imageView is null");
@@ -95,4 +95,38 @@ public class GlideUtils {
             e.printStackTrace();
         }
     }
+
+    public static void displayNative(final ImageView view, @DrawableRes int resId) {
+        // 不能崩
+        if (view == null) {
+            Logger.e("GlideUtils -> display -> imageView is null");
+            return;
+        }
+        Context context = view.getContext();
+        // View你还活着吗？
+        if (context instanceof Activity) {
+            if (((Activity) context).isFinishing()) {
+                return;
+            }
+        }
+
+        try {
+            Glide.with(context)
+                    .load(resId)
+                    .crossFade()
+                    .centerCrop()
+                    .into(view)
+                    .getSize(new SizeReadyCallback() {
+                        @Override
+                        public void onSizeReady(int width, int height) {
+                            if (!view.isShown()) {
+                                view.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -15,8 +15,8 @@
 
         <include layout="@layout/include_toolbar" />
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_layout"
+        <com.camnter.easygank.widget.MultiSwipeRefreshLayout
+            android:id="@+id/multi_swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -27,7 +27,7 @@
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </com.camnter.easygank.widget.MultiSwipeRefreshLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 

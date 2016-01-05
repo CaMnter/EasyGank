@@ -49,7 +49,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
     private MainPresenter presenter;
 
     private int emptyCount = 0;
-    private static final int EMPTY_LIMIT = 3;
+    private static final int EMPTY_LIMIT = 5;
 
     /**
      * Fill in layout id
@@ -63,7 +63,6 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
 
     @Override
     public void onSwipeRefresh() {
-        super.onSwipeRefresh();
         this.refreshData();
     }
 
@@ -130,13 +129,16 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
                             return;
                         }
 
-                        swipeRefreshLayout.setRefreshing(true);
-                        // 加载更多
-                        MainActivity.this.presenter.setPage(MainActivity.this.presenter.getPage() + 1);
-//                        if (MainActivity.this.getRefreshStatus()) {
-                        MainActivity.this.setRefreshStatus(false);
-                        MainActivity.this.presenter.getDaily(false);
-//                        }
+
+
+                        // 如果没在刷新
+                        if (!MainActivity.this.isRefreshStatus()) {
+                            // 加载更多
+                            MainActivity.this.presenter.setPage(MainActivity.this.presenter.getPage() + 1);
+                            MainActivity.this.setRefreshStatus(false);
+                            MainActivity.this.presenter.getDaily(false);
+                            MainActivity.this.refresh(true);
+                        }
 
                     }
                 }
@@ -161,14 +163,14 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
      * 刷新 or 下拉刷新
      */
     private void refreshData() {
-        this.presenter.getDaily(true);
         this.presenter.setPage(1);
-        new Handler().postDelayed(new Runnable() {
+        new Handler().post(new Runnable() {
             @Override
             public void run() {
                 MainActivity.this.refresh(true);
             }
-        }, 266);
+        });
+        this.presenter.getDaily(true);
     }
 
     /**

@@ -44,7 +44,6 @@ public abstract class BaseAppCompatActivity extends BaseSwipeRefreshLayout {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (this.getLayoutId() != 0) this.setContentView(this.getLayoutId());
         this.initViews(savedInstanceState);
         this.initData();
         this.initListeners();

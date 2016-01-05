@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.camnter.easygank.R;
+import com.camnter.easygank.widget.MultiSwipeRefreshLayout;
 
 /**
  * Description：BaseSwipeRefreshLayout
@@ -35,7 +36,7 @@ import com.camnter.easygank.R;
  */
 public abstract class BaseSwipeRefreshLayout extends BaseToolbarActivity {
 
-    protected SwipeRefreshLayout swipeRefreshLayout;
+    protected MultiSwipeRefreshLayout mMultiSwipeRefreshLayout;
 
     private boolean refreshStatus = false;
 
@@ -50,7 +51,7 @@ public abstract class BaseSwipeRefreshLayout extends BaseToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.swipeRefreshLayout = this.findView(R.id.swipe_refresh_layout);
+        this.mMultiSwipeRefreshLayout = this.findView(R.id.multi_swipe_refresh_layout);
     }
 
     @Override
@@ -64,11 +65,11 @@ public abstract class BaseSwipeRefreshLayout extends BaseToolbarActivity {
      */
     private void initMultiSwipeRefreshLayout() {
         // 下拉刷新的颜色
-        if (this.swipeRefreshLayout != null)
-            this.swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        if (this.mMultiSwipeRefreshLayout != null)
+            this.mMultiSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
         // 在刷新时，关闭刷新开关
-        this.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        this.mMultiSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 onSwipeRefresh();
@@ -77,76 +78,50 @@ public abstract class BaseSwipeRefreshLayout extends BaseToolbarActivity {
 
     }
 
-    public void onSwipeRefresh() {
-        this.refreshStatus = true;
-    }
+    public abstract void onSwipeRefresh();
 
     public void setRefreshStatus(boolean status) {
         this.refreshStatus = status;
     }
 
-    public boolean getRefreshStatus() {
-        return this.refreshStatus;
+    public boolean isRefreshStatus() {
+        return refreshStatus;
     }
 
-    public void refresh(boolean refresh) {
-        if (this.swipeRefreshLayout == null)
-            return;
-        if (!refresh) {
-            this.refreshStatus = false;
-            // 防止刷新消失太快，让子弹飞一会儿.
-            this.swipeRefreshLayout.postDelayed(new Runnable() {
+    public void refresh(final boolean refresh) {
+        if (this.mMultiSwipeRefreshLayout == null) return;
+        /*
+         * refresh 只要进来是false 就不考虑 refreshStatus
+         * 所以用了短路&&，则直接关掉
+         */
+        this.mMultiSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                BaseSwipeRefreshLayout.this.mMultiSwipeRefreshLayout.setRefreshing(refresh);
+            }
+        });
+        if (!refresh && this.refreshStatus) {
+            // 到这了 refresh==false refreshStatus==true|false
+            this.mMultiSwipeRefreshLayout.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (BaseSwipeRefreshLayout.this.swipeRefreshLayout != null) {
-                        BaseSwipeRefreshLayout.this.swipeRefreshLayout.setRefreshing(false);
-                    }
+                    BaseSwipeRefreshLayout.this.mMultiSwipeRefreshLayout.setRefreshing(false);
+                    BaseSwipeRefreshLayout.this.refreshStatus = false;
                 }
-            }, 1200);
+            }, 1666);
         } else {
-            this.swipeRefreshLayout.postDelayed(new Runnable() {
+            //到这了，有可能，refresh==true，refreshStatus==true
+            //也有可能，refresh==true，refreshStatus==false
+            this.mMultiSwipeRefreshLayout.post(new Runnable() {
                 @Override
                 public void run() {
-                    BaseSwipeRefreshLayout.this.swipeRefreshLayout.setRefreshing(true);
+                    BaseSwipeRefreshLayout.this.mMultiSwipeRefreshLayout.setRefreshing(true);
+
                 }
-            }, 1000);
+            });
+            this.refreshStatus = true;
         }
+
     }
-
-
-//    public void refresh(final boolean refresh) {
-//        if (this.mMultiSwipeRefreshLayout == null) return;
-//        /*
-//         * refresh 只要进来是false 就不考虑 refreshing
-//         * 所以用了短路&&，则直接关掉
-//         */
-//        this.mMultiSwipeRefreshLayout.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                BaseSwipeRefreshLayout.this.mMultiSwipeRefreshLayout.setProgressViewOffset(false, 0,
-//                        (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
-//                BaseSwipeRefreshLayout.this.mMultiSwipeRefreshLayout.setRefreshing(refresh);
-//            }
-//        });
-//        if (!refresh && this.refreshing) {
-//            // 延时关闭，防止刷新太快
-//            this.mMultiSwipeRefreshLayout.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    BaseSwipeRefreshLayout.this.mMultiSwipeRefreshLayout.setRefreshing(refresh);
-//                    BaseSwipeRefreshLayout.this.refreshing = false;
-//                }
-//            }, 1200);
-//        } else if (this.refreshing) {
-//            //到这了，refresh==true，refreshing==true
-////            this.mMultiSwipeRefreshLayout.setRefreshing(refresh);
-//            this.refreshing = true;
-//        } else {
-//            //到这了，refresh==true，refreshing==false
-////            this.mMultiSwipeRefreshLayout.setRefreshing(refresh);
-//            this.refreshing = true;
-//        }
-
-//}
 
 }

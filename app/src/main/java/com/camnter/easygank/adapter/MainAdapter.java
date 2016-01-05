@@ -36,6 +36,8 @@ import com.camnter.easygank.utils.GlideUtils;
 import com.camnter.easyrecyclerview.adapter.EasyRecyclerViewAdapter;
 import com.camnter.easyrecyclerview.holder.EasyRecyclerViewHolder;
 
+import java.net.URI;
+
 /**
  * Description：MainAdapter
  * Created by：CaMnter
@@ -49,6 +51,8 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
     private static final String JS = "前端";
     private static final String IOS = "iOS";
     private static final String ANDROID = "Android";
+
+    URI uri;
 
 
     public enum AdapterType {
@@ -117,6 +121,7 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
             dailyDateTV.setText(DateUtils.string2String(welfare.publishedAt, "yyyy-MM-dd", "yyyy.MM.dd"));
         } else {
             dailyTitleTV.setText("这期没福利了，安心学习吧！");
+            dailyDateTV.setText("");
         }
 
         /*
@@ -124,6 +129,8 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
          */
         if (dailyData.results.welfareData != null && dailyData.results.welfareData.size() > 0) {
             GlideUtils.display(dailyIV, dailyData.results.welfareData.get(0).url);
+        } else {
+            GlideUtils.displayNative(dailyIV, R.mipmap.img_default_gray);
         }
 
         /*
@@ -140,14 +147,14 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
             } else {
                 androidTagTV.setVisibility(View.GONE);
             }
-            if(dailyData.category.contains(IOS)){
+            if (dailyData.category.contains(IOS)) {
                 iOSTagTV.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 iOSTagTV.setVisibility(View.GONE);
             }
-            if (dailyData.category.contains(JS)){
+            if (dailyData.category.contains(JS)) {
                 jsTagTV.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 jsTagTV.setVisibility(View.GONE);
             }
         }
