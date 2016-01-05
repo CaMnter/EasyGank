@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@mipmap/ic_mm"
+    android:layout_height="200dp"
+    android:background="@mipmap/img_navigation_header"
     android:orientation="vertical"/>
