@@ -24,6 +24,7 @@
 
 package com.camnter.easygank.adapter;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,6 +33,8 @@ import android.widget.TextView;
 import com.camnter.easygank.R;
 import com.camnter.easygank.bean.BaseGankData;
 import com.camnter.easygank.bean.GankDaily;
+import com.camnter.easygank.constant.Constant;
+import com.camnter.easygank.gank.GankApi;
 import com.camnter.easygank.gank.GankType;
 import com.camnter.easygank.utils.DateUtils;
 import com.camnter.easygank.utils.GlideUtils;
@@ -45,15 +48,16 @@ import com.camnter.easyrecyclerview.holder.EasyRecyclerViewHolder;
  */
 public class MainAdapter extends EasyRecyclerViewAdapter {
 
+
     public static final int LAYOUT_TYPE_DAILY = 0;
     public static final int LAYOUT_TYPE_TECHNOLOGY = 1;
+
     private GankType type;
 
-    private static final String JS = "前端";
-    private static final String IOS = "iOS";
-    private static final String ANDROID = "Android";
+    private Context context;
 
-    public MainAdapter(GankType type) {
+    public MainAdapter(Context context, GankType type) {
+        this.context = context;
         this.type = type;
     }
 
@@ -137,12 +141,12 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
          */
         if (dailyData.results.videoData != null && dailyData.results.videoData.size() > 0) {
             BaseGankData video = dailyData.results.videoData.get(0);
-            dailyTitleTV.setText(video.desc);
-            dailyDateTV.setText(DateUtils.string2String(video.publishedAt, "yyyy-MM-dd", "yyyy.MM.dd"));
+            dailyTitleTV.setText(video.desc.trim());
+            dailyDateTV.setText(DateUtils.string2String(video.publishedAt, GankApi.GANK_DATA_FORMAT, Constant.DAILY_DATE_FORMAT));
         } else if (dailyData.results.welfareData != null && dailyData.results.welfareData.size() > 0) {
             BaseGankData welfare = dailyData.results.welfareData.get(0);
-            dailyTitleTV.setText(welfare.desc);
-            dailyDateTV.setText(DateUtils.string2String(welfare.publishedAt, "yyyy-MM-dd", "yyyy.MM.dd"));
+            dailyTitleTV.setText(welfare.desc.trim());
+            dailyDateTV.setText(DateUtils.string2String(welfare.publishedAt, GankApi.GANK_DATA_FORMAT, Constant.DAILY_DATE_FORMAT));
         } else {
             dailyTitleTV.setText("这期没福利了，安心学习吧！");
             dailyDateTV.setText("");
@@ -166,17 +170,17 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
             iOSTagTV.setVisibility(View.GONE);
             jsTagTV.setVisibility(View.GONE);
         } else {
-            if (dailyData.category.contains(ANDROID)) {
+            if (dailyData.category.contains(GankApi.DATA_TYPE_ANDROID)) {
                 androidTagTV.setVisibility(View.VISIBLE);
             } else {
                 androidTagTV.setVisibility(View.GONE);
             }
-            if (dailyData.category.contains(IOS)) {
+            if (dailyData.category.contains(GankApi.DATA_TYPE_IOS)) {
                 iOSTagTV.setVisibility(View.VISIBLE);
             } else {
                 iOSTagTV.setVisibility(View.GONE);
             }
-            if (dailyData.category.contains(JS)) {
+            if (dailyData.category.contains(GankApi.DATA_TYPE_JS)) {
                 jsTagTV.setVisibility(View.VISIBLE);
             } else {
                 jsTagTV.setVisibility(View.GONE);
@@ -186,7 +190,7 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
     }
 
     /**
-     * 加载技术类型数据
+     * 加载技术类型数据 ( Android、iOS、前端、拓展资源 )
      *
      * @param easyRecyclerViewHolder easyRecyclerViewHolder
      * @param position               position
@@ -196,6 +200,9 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         if (baseGankData == null) return;
         TextView technologyDateTV = easyRecyclerViewHolder.findViewById(R.id.technology_date_tv);
         TextView technologyTitleTV = easyRecyclerViewHolder.findViewById(R.id.technology_title_tv);
+        TextView technologyViaTV = easyRecyclerViewHolder.findViewById(R.id.technology_via_tv);
+        TextView technologyBlogTV = easyRecyclerViewHolder.findViewById(R.id.technology_blog_tag_tv);
+        TextView technologyGithubTV = easyRecyclerViewHolder.findViewById(R.id.technology_github_tag_tv);
 
         /*
          * 标题
@@ -203,16 +210,39 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         if (TextUtils.isEmpty(baseGankData.desc)) {
             technologyTitleTV.setText("");
         } else {
-            technologyTitleTV.setText(baseGankData.desc);
+            technologyTitleTV.setText(baseGankData.desc.trim());
         }
 
         /*
-         * 时间 2016-01-05T05:47:06.977Z
+         * 时间
          */
         if (TextUtils.isEmpty(baseGankData.publishedAt)) {
             technologyDateTV.setText("");
         } else {
-            technologyDateTV.setText(DateUtils.string2String(baseGankData.publishedAt, "yyyy-MM-dd'T'HH:mm:ss", "yyyy.MM.dd HH:mm"));
+            technologyDateTV.setText(DateUtils.getTimestampString(DateUtils.string2Date(baseGankData.publishedAt, GankApi.GANK_DATA_FORMAT)));
+        }
+
+        /*
+         * 小编
+         */
+        if (TextUtils.isEmpty(baseGankData.who)) {
+            technologyViaTV.setText("");
+        } else {
+            technologyViaTV.setText(this.context.getString(R.string.common_via, baseGankData.who));
+        }
+
+        /*
+         * 标签
+         */
+        if (TextUtils.isEmpty(baseGankData.url)) {
+            technologyBlogTV.setVisibility(View.GONE);
+            technologyGithubTV.setVisibility(View.GONE);
+        } else if (baseGankData.url.startsWith(Constant.GITHUB_PREFIX)) {
+            technologyBlogTV.setVisibility(View.GONE);
+            technologyGithubTV.setVisibility(View.VISIBLE);
+        } else {
+            technologyBlogTV.setVisibility(View.VISIBLE);
+            technologyGithubTV.setVisibility(View.GONE);
         }
 
     }

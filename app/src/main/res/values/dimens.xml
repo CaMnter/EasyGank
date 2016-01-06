@@ -39,6 +39,6 @@
 
     <!-- item technology -->
     <dimen name="technology_type_tv">12sp</dimen>
-    <dimen name="technology_via_tv">10sp</dimen>
+    <dimen name="technology_via_tv">12sp</dimen>
 
 </resources>

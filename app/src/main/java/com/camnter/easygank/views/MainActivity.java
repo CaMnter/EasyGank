@@ -184,7 +184,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
         this.presenter.attachView(this);
         this.gankType = GankType.daily;
         // 默认是每日干货
-        this.mainAdapter = new MainAdapter(this.gankType);
+        this.mainAdapter = new MainAdapter(this,this.gankType);
         this.mainRV.setAdapter(this.mainAdapter);
 
         this.refreshData(this.gankType);

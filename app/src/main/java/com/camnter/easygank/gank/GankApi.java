@@ -37,6 +37,9 @@ package com.camnter.easygank.gank;
  */
 public class GankApi {
 
+
+    public static final String BASE_URL = "http://gank.avosapps.com/api/";
+
     public static final String DATA_TYPE_WELFARE = "福利";
     public static final String DATA_TYPE_ANDROID = "Android";
     public static final String DATA_TYPE_IOS = "iOS";
@@ -45,10 +48,9 @@ public class GankApi {
     public static final String DATA_TYPE_JS = "前端";
     public static final String DATA_TYPE_ALL = "all";
 
-    public static final String BASE_URL = "http://gank.avosapps.com/api/";
-
     public static final int DEFAULT_DATA_SIZE = 10;
     public static final int DEFAULT_DAILY_SIZE = 15;
 
+    public static final String GANK_DATA_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
 }

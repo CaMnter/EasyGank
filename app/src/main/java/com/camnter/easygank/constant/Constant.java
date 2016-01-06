@@ -21,20 +21,14 @@
  * Public License instead of this License.  But first, please read
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
-
-package com.camnter.easygank.gank;
+package com.camnter.easygank.constant;
 
 /**
- * Description：GankType
+ * Description：Constant
  * Created by：CaMnter
- * Time：2016-01-06 16:35
+ * Time：2016-01-07 00:06
  */
-public enum GankType {
-    daily,
-    android,
-    ios,
-    js,
-    resources,
-    welfare,
-    video
+public class Constant {
+    public static final String GITHUB_PREFIX = "https://github.com";
+    public static final String DAILY_DATE_FORMAT = "yyyy.MM.dd";
 }
