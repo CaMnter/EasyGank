@@ -26,11 +26,8 @@ package com.camnter.easygank.gank;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Response;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import retrofit.GsonConverterFactory;
@@ -38,7 +35,7 @@ import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 
 /**
- * Description：Gank
+ * Description：EasyGank
  * Created by：CaMnter
  * Time：2016-01-03 18:24
  */
@@ -58,6 +55,11 @@ public class EasyGank {
     private EasyGank() {
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.setReadTimeout(13, TimeUnit.SECONDS);
+
+        /*
+         * 查看网络请求发送状况
+         */
+
 //        okHttpClient.interceptors().add(new Interceptor() {
 //            @Override
 //            public Response intercept(Chain chain) throws IOException {

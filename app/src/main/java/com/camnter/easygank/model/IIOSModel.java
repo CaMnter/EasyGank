@@ -24,25 +24,24 @@
 
 package com.camnter.easygank.model;
 
-import com.camnter.easygank.bean.GankDaily;
+import com.camnter.easygank.bean.GankIOS;
 
 import rx.Observable;
 
 /**
- * Description：IDailyModel
- * 定义DaliModel要实现的功能
+ * Description：IIOSModel
+ * 定义IOSModel要实现的功能
  * Created by：CaMnter
- * Time：2016-01-03 17:58
+ * Time：2016-01-06 14:56
  */
-public interface IDailyModel {
-    /**
-     * 查询每日数据
-     *
-     * @param year  year
-     * @param month month
-     * @param day   day
-     * @return Observable<GankDaily>
-     */
-    Observable<GankDaily> getDaily(int year, int month, int day);
+public interface IIOSModel {
 
+    /**
+     * 分页查询IOS数据
+     *
+     * @param size 数据个数
+     * @param page 第几页
+     * @return Observable<GankIOS>
+     */
+    Observable<GankIOS> getIOS(int size, int page);
 }

@@ -24,25 +24,23 @@
 
 package com.camnter.easygank.model;
 
-import com.camnter.easygank.bean.GankDaily;
+import com.camnter.easygank.bean.GankResources;
 
 import rx.Observable;
 
 /**
- * Description：IDailyModel
- * 定义DaliModel要实现的功能
+ * Description：IResourcesModel
+ * 定义ResourcesModel要实现的功能
  * Created by：CaMnter
- * Time：2016-01-03 17:58
+ * Time：2016-01-06 15:06
  */
-public interface IDailyModel {
+public interface IResourcesModel {
     /**
-     * 查询每日数据
+     * 分页查询扩展资源数据
      *
-     * @param year  year
-     * @param month month
-     * @param day   day
-     * @return Observable<GankDaily>
+     * @param size 数据个数
+     * @param page 第几页
+     * @return Observable<GankIOS>
      */
-    Observable<GankDaily> getDaily(int year, int month, int day);
-
+    Observable<GankResources> getResources(int size, int page);
 }

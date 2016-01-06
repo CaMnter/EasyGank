@@ -22,21 +22,25 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package com.camnter.easygank.bean;
+package com.camnter.easygank.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.camnter.easygank.bean.GankJS;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import rx.Observable;
 
 /**
- * Description：IOS
+ * Description：IJsModel
+ * 定义JsModel要实现的功能
  * Created by：CaMnter
- * Time：2016-01-03 17:42
+ * Time：2016-01-06 14:58
  */
-public class IOS extends Error implements Serializable {
-
-    @SerializedName("results")
-    public ArrayList<GankData> results;
-
+public interface IJsModel {
+    /**
+     * 分页查询前端数据
+     *
+     * @param size 数据个数
+     * @param page 第几页
+     * @return Observable<GankJS>
+     */
+    Observable<GankJS> getJs(int size, int page);
 }

@@ -27,7 +27,6 @@ package com.camnter.easygank.views;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
@@ -35,7 +34,7 @@ import android.widget.Toast;
 
 import com.camnter.easygank.R;
 import com.camnter.easygank.adapter.MainAdapter;
-import com.camnter.easygank.bean.DailyData;
+import com.camnter.easygank.bean.GankDaily;
 import com.camnter.easygank.core.BaseAppCompatActivity;
 import com.camnter.easygank.presenter.MainPresenter;
 import com.camnter.easygank.presenter.iview.MainView;
@@ -185,7 +184,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
      * @param refresh   是否刷新
      */
     @Override
-    public void onGetDailySuccess(List<DailyData> dailyData, boolean refresh) {
+    public void onGetDailySuccess(List<GankDaily> dailyData, boolean refresh) {
         if (refresh) {
             this.mainAdapter.clear();
             this.mainAdapter.setList(dailyData);
@@ -206,7 +205,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
     public void onFailure(Throwable e) {
         this.refresh(false);
         this.setRefreshStatus(true);
-        ToastUtils.show(this,R.string.main_load_error,ToastUtils.LENGTH_LONG);
+        ToastUtils.show(this, R.string.main_load_error, ToastUtils.LENGTH_LONG);
     }
 
     @Override

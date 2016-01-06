@@ -21,28 +21,40 @@
  * Public License instead of this License.  But first, please read
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
+package com.camnter.easygank.model.impl;
 
-package com.camnter.easygank.model;
-
-import com.camnter.easygank.bean.GankDaily;
+import com.camnter.easygank.bean.GankAndroid;
+import com.camnter.easygank.gank.EasyGank;
+import com.camnter.easygank.model.IAndroidModel;
 
 import rx.Observable;
 
 /**
- * Description：IDailyModel
- * 定义DaliModel要实现的功能
+ * Description：AndroidModel
  * Created by：CaMnter
- * Time：2016-01-03 17:58
+ * Time：2016-01-06 14:53
  */
-public interface IDailyModel {
+public class AndroidModel implements IAndroidModel {
+
+    private static final AndroidModel ourInstance = new AndroidModel();
+
+    public static AndroidModel getInstance() {
+        return ourInstance;
+    }
+
+    private AndroidModel() {
+    }
+
     /**
-     * 查询每日数据
+     * 分页查询Android数据
      *
-     * @param year  year
-     * @param month month
-     * @param day   day
-     * @return Observable<GankDaily>
+     * @param size 数据个数
+     * @param page 第几页
+     * @return Observable<Android>
      */
-    Observable<GankDaily> getDaily(int year, int month, int day);
+    @Override
+    public Observable<GankAndroid> getAndroid(int size, int page) {
+        return EasyGank.getInstance().getGankService().getAndroid(size, page);
+    }
 
 }

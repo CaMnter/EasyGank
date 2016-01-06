@@ -22,48 +22,41 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package com.camnter.easygank.bean;
+package com.camnter.easygank.model.impl;
 
-import com.google.gson.annotations.SerializedName;
+import com.camnter.easygank.bean.GankJS;
+import com.camnter.easygank.gank.EasyGank;
+import com.camnter.easygank.model.IJsModel;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import rx.Observable;
 
 /**
- * Description：DailyData  （ 每日数据 ）
+ * Description：JsModel
  * Created by：CaMnter
- * Time：2016-01-03 17:44
+ * Time：2016-01-06 15:03
  */
-public class DailyData extends Error implements Serializable {
+public class JsModel implements IJsModel {
 
-    @SerializedName("results")
-    public DailyResults results;
+    private static final JsModel ourInstance = new JsModel();
 
-    @SerializedName("category")
-    public ArrayList<String> category;
-
-    public class DailyResults {
-
-        @SerializedName("iOS")
-        public ArrayList<GankData> iosData;
-
-        @SerializedName("Android")
-        public ArrayList<GankData> androidData;
-
-        @SerializedName("瞎推荐")
-        public ArrayList<GankData> recommendData;
-
-        @SerializedName("休息视频")
-        public ArrayList<GankData> videoData;
-
-        @SerializedName("福利")
-        public ArrayList<GankData> welfareData;
-
-        @SerializedName("App")
-        public ArrayList<GankData> appfareData;
-
-        @SerializedName("拓展资源")
-        public ArrayList<GankData> resourcesData;
-
+    public static JsModel getInstance() {
+        return ourInstance;
     }
+
+    private JsModel() {
+    }
+
+
+    /**
+     * 分页查询前端数据
+     *
+     * @param size 数据个数
+     * @param page 第几页
+     * @return Observable<GankJS>
+     */
+    @Override
+    public Observable<GankJS> getJs(int size, int page) {
+        return EasyGank.getInstance().getGankService().getJs(size, page);
+    }
+
 }

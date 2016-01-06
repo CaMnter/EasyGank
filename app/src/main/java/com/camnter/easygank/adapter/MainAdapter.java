@@ -29,7 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.camnter.easygank.R;
-import com.camnter.easygank.bean.DailyData;
+import com.camnter.easygank.bean.GankDaily;
 import com.camnter.easygank.bean.GankData;
 import com.camnter.easygank.utils.DateUtils;
 import com.camnter.easygank.utils.GlideUtils;
@@ -90,7 +90,7 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
     }
 
     private void loadingDaily(EasyRecyclerViewHolder easyRecyclerViewHolder, int i) {
-        DailyData dailyData = this.getItem(i);
+        GankDaily dailyData = this.getItem(i);
         if (dailyData == null) return;
         ImageView dailyIV = easyRecyclerViewHolder.findViewById(R.id.daily_iv);
         TextView dailyDateTV = easyRecyclerViewHolder.findViewById(R.id.daily_date_tv);

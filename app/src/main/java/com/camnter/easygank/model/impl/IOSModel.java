@@ -22,21 +22,40 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package com.camnter.easygank.bean;
+package com.camnter.easygank.model.impl;
 
-import com.google.gson.annotations.SerializedName;
+import com.camnter.easygank.bean.GankIOS;
+import com.camnter.easygank.gank.EasyGank;
+import com.camnter.easygank.model.IIOSModel;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import rx.Observable;
 
 /**
- * Description：Welfare （福利）
+ * Description：IOSModel
  * Created by：CaMnter
- * Time：2016-01-03 16:21
+ * Time：2016-01-06 15:04
  */
-public class Welfare extends Error implements Serializable {
+public class IOSModel implements IIOSModel {
 
-    @SerializedName("results")
-    public ArrayList<GankData> results;
+    private static final IOSModel ourInstance = new IOSModel();
+
+    public static IOSModel getInstance() {
+        return ourInstance;
+    }
+
+    private IOSModel() {
+    }
+
+    /**
+     * 分页查询IOS数据
+     *
+     * @param size 数据个数
+     * @param page 第几页
+     * @return Observable<GankIOS>
+     */
+    @Override
+    public Observable<GankIOS> getIOS(int size, int page) {
+        return EasyGank.getInstance().getGankService().getIOS(size, page);
+    }
 
 }

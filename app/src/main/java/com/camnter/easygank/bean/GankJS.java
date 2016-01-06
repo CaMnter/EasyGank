@@ -22,27 +22,21 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package com.camnter.easygank.model;
+package com.camnter.easygank.bean;
 
-import com.camnter.easygank.bean.GankDaily;
+import com.google.gson.annotations.SerializedName;
 
-import rx.Observable;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
- * Description：IDailyModel
- * 定义DaliModel要实现的功能
+ * Description：GankJS （前端）
  * Created by：CaMnter
- * Time：2016-01-03 17:58
+ * Time：2016-01-06 14:39
  */
-public interface IDailyModel {
-    /**
-     * 查询每日数据
-     *
-     * @param year  year
-     * @param month month
-     * @param day   day
-     * @return Observable<GankDaily>
-     */
-    Observable<GankDaily> getDaily(int year, int month, int day);
+public class GankJS extends Error implements Serializable {
+
+    @SerializedName("results")
+    public ArrayList<GankData> results;
 
 }

@@ -24,25 +24,23 @@
 
 package com.camnter.easygank.model;
 
-import com.camnter.easygank.bean.GankDaily;
+import com.camnter.easygank.bean.GankAndroid;
 
 import rx.Observable;
 
 /**
- * Description：IDailyModel
- * 定义DaliModel要实现的功能
+ * Description：IAndroidModel
+ * 定义AndroidModel要实现的功能
  * Created by：CaMnter
- * Time：2016-01-03 17:58
+ * Time：2016-01-06 14:33
  */
-public interface IDailyModel {
+public interface IAndroidModel {
     /**
-     * 查询每日数据
+     * 分页查询Android数据
      *
-     * @param year  year
-     * @param month month
-     * @param day   day
-     * @return Observable<GankDaily>
+     * @param size 数据个数
+     * @param page 第几页
+     * @return Observable<GankAndroid>
      */
-    Observable<GankDaily> getDaily(int year, int month, int day);
-
+    Observable<GankAndroid> getAndroid(int size, int page);
 }

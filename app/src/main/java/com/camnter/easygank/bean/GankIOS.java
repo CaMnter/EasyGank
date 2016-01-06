@@ -30,11 +30,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Description：Android
+ * Description：GankIOS （iOS）
  * Created by：CaMnter
- * Time：2016-01-03 17:41
+ * Time：2016-01-03 17:42
  */
-public class Android extends Error implements Serializable {
+public class GankIOS extends Error implements Serializable {
 
     @SerializedName("results")
     public ArrayList<GankData> results;

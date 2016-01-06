@@ -24,7 +24,7 @@
 
 package com.camnter.easygank.presenter.iview;
 
-import com.camnter.easygank.bean.DailyData;
+import com.camnter.easygank.bean.GankDaily;
 import com.camnter.easygank.core.MvpView;
 
 import java.util.List;
@@ -41,6 +41,6 @@ public interface MainView extends MvpView {
      * @param dailyData dailyData
      * @param refresh   是否刷新
      */
-    void onGetDailySuccess(List<DailyData> dailyData, boolean refresh);
+    void onGetDailySuccess(List<GankDaily> dailyData, boolean refresh);
 
 }

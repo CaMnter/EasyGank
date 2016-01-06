@@ -25,8 +25,12 @@
 package com.camnter.easygank.gank;
 
 
-import com.camnter.easygank.bean.DailyData;
-import com.camnter.easygank.bean.Welfare;
+import com.camnter.easygank.bean.GankAndroid;
+import com.camnter.easygank.bean.GankDaily;
+import com.camnter.easygank.bean.GankIOS;
+import com.camnter.easygank.bean.GankJS;
+import com.camnter.easygank.bean.GankResources;
+import com.camnter.easygank.bean.GankWelfare;
 
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -40,30 +44,80 @@ import rx.Observable;
 public interface GankService {
 
     /**
+     * @param year  year
+     * @param month month
+     * @param day   day
+     * @return Observable<GankDaily>
+     */
+    @GET("day/{year}/{month}/{day}")
+    Observable<GankDaily> getDaily(
+            @Path("year") int year,
+            @Path("month") int month,
+            @Path("day") int day
+    );
+
+    /**
      * 找妹子
      *
      * @param size 数据个数
      * @param page 第几页
-     * @return Observable<Welfare>
+     * @return Observable<GankWelfare>
      */
     @GET("data/" + GankApi.DATA_TYPE_WELFARE + "/{size}/{page}")
-    Observable<Welfare> getWelfare(
+    Observable<GankWelfare> getWelfare(
             @Path("size") int size,
             @Path("page") int page
     );
 
     /**
+     * Android
      *
-     * @param year
-     * @param month
-     * @param day
-     * @return
+     * @param size 数据个数
+     * @param page 第几页
+     * @return Observable<GankAndroid>
      */
-    @GET("day/{year}/{month}/{day}")
-    Observable<DailyData> getDaily(
-            @Path("year") int year,
-            @Path("month") int month,
-            @Path("day") int day
+    @GET("data/" + GankApi.DATA_TYPE_ANDROID + "/{size}/{page}")
+    Observable<GankAndroid> getAndroid(
+            @Path("size") int size,
+            @Path("page") int page
+    );
+
+    /**
+     * iOS
+     *
+     * @param size 数据个数
+     * @param page 第几页
+     * @return Observable<GankIOS>
+     */
+    @GET("data/" + GankApi.DATA_TYPE_IOS + "/{size}/{page}")
+    Observable<GankIOS> getIOS(
+            @Path("size") int size,
+            @Path("page") int page
+    );
+
+    /**
+     * 前端
+     *
+     * @param size 数据个数
+     * @param page 第几页
+     * @return Observable<GankJS>
+     */
+    @GET("data/" + GankApi.DATA_TYPE_JS + "/{size}/{page}")
+    Observable<GankJS> getJs(
+            @Path("size") int size,
+            @Path("page") int page
+    );
+
+    /**
+     * 扩展资源
+     *
+     * @param size 数据个数
+     * @param page 第几页
+     * @return Observable<GankResources>
+     */
+    Observable<GankResources> getResources(
+            @Path("size") int size,
+            @Path("page") int page
     );
 
 

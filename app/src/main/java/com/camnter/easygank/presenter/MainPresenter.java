@@ -24,7 +24,7 @@
 
 package com.camnter.easygank.presenter;
 
-import com.camnter.easygank.bean.DailyData;
+import com.camnter.easygank.bean.GankDaily;
 import com.camnter.easygank.core.BasePresenter;
 import com.camnter.easygank.gank.EasyGank;
 import com.camnter.easygank.gank.GankApi;
@@ -133,32 +133,32 @@ public class MainPresenter extends BasePresenter<MainView> {
     public void getDaily(final boolean refresh) {
         Observable.from(this.currentDate.getPastTime())
                 .subscribeOn(Schedulers.io())
-                .flatMap(new Func1<EasyDate, Observable<DailyData>>() {
+                .flatMap(new Func1<EasyDate, Observable<GankDaily>>() {
                     @Override
-                    public Observable<DailyData> call(EasyDate easyDate) {
+                    public Observable<GankDaily> call(EasyDate easyDate) {
                         /*
                          * 感觉Android的数据应该不会为null
                          * 所以以Android的数据为判断是否当天有数据
                          */
                         return EasyGank.getInstance().getGankService()
                                 .getDaily(easyDate.getYear(), easyDate.getMonth(), easyDate.getDay())
-                                .filter(new Func1<DailyData, Boolean>() {
+                                .filter(new Func1<GankDaily, Boolean>() {
                                     @Override
-                                    public Boolean call(DailyData dailyData) {
+                                    public Boolean call(GankDaily dailyData) {
                                         return dailyData.results.androidData != null;
                                     }
                                 });
                     }
                 })
-                .toSortedList(new Func2<DailyData, DailyData, Integer>() {
+                .toSortedList(new Func2<GankDaily, GankDaily, Integer>() {
                     @Override
-                    public Integer call(DailyData dailyData, DailyData dailyData2) {
+                    public Integer call(GankDaily dailyData, GankDaily dailyData2) {
                         return DateUtils.string2Date(dailyData2.results.androidData.get(0).publishedAt, "yyyy-MM-dd")
                                 .compareTo(DateUtils.string2Date(dailyData.results.androidData.get(0).publishedAt, "yyyy-MM-dd"));
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<DailyData>>() {
+                .subscribe(new Subscriber<List<GankDaily>>() {
                     @Override
                     public void onCompleted() {
                         if (MainPresenter.this.mCompositeSubscription != null)
@@ -177,7 +177,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                     }
 
                     @Override
-                    public void onNext(List<DailyData> dailyData) {
+                    public void onNext(List<GankDaily> dailyData) {
                         if (MainPresenter.this.getMvpView() != null)
                             MainPresenter.this.getMvpView().onGetDailySuccess(dailyData, refresh);
                     }

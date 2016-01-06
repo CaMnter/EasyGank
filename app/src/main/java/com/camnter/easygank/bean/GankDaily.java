@@ -22,27 +22,51 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package com.camnter.easygank.model;
+package com.camnter.easygank.bean;
 
-import com.camnter.easygank.bean.GankDaily;
+import com.google.gson.annotations.SerializedName;
 
-import rx.Observable;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
- * Description：IDailyModel
- * 定义DaliModel要实现的功能
+ * Description：GankDaily  （ 每日数据 ）
  * Created by：CaMnter
- * Time：2016-01-03 17:58
+ * Time：2016-01-03 17:44
  */
-public interface IDailyModel {
-    /**
-     * 查询每日数据
-     *
-     * @param year  year
-     * @param month month
-     * @param day   day
-     * @return Observable<GankDaily>
-     */
-    Observable<GankDaily> getDaily(int year, int month, int day);
+public class GankDaily extends Error implements Serializable {
 
+    @SerializedName("results")
+    public DailyResults results;
+
+    @SerializedName("category")
+    public ArrayList<String> category;
+
+    public class DailyResults {
+
+        @SerializedName("福利")
+        public ArrayList<GankData> welfareData;
+
+        @SerializedName("Android")
+        public ArrayList<GankData> androidData;
+
+        @SerializedName("iOS")
+        public ArrayList<GankData> iosData;
+
+        @SerializedName("前端")
+        public ArrayList<GankData> jsData;
+
+        @SerializedName("休息视频")
+        public ArrayList<GankData> videoData;
+
+        @SerializedName("拓展资源")
+        public ArrayList<GankData> resourcesData;
+
+        @SerializedName("App")
+        public ArrayList<GankData> appfareData;
+
+        @SerializedName("瞎推荐")
+        public ArrayList<GankData> recommendData;
+
+    }
 }

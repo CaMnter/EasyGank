@@ -24,7 +24,7 @@
 
 package com.camnter.easygank.model.impl;
 
-import com.camnter.easygank.bean.DailyData;
+import com.camnter.easygank.bean.GankDaily;
 import com.camnter.easygank.gank.EasyGank;
 import com.camnter.easygank.model.IDailyModel;
 
@@ -52,10 +52,10 @@ public class DailyModel implements IDailyModel {
      * @param year  year
      * @param month month
      * @param day   day
-     * @return DailyData
+     * @return Observable<GankDaily>
      */
     @Override
-    public Observable<DailyData> getDaily(int year, int month, int day) {
+    public Observable<GankDaily> getDaily(int year, int month, int day) {
         return EasyGank.getInstance().getGankService().getDaily(year, month, day);
     }
 

@@ -22,27 +22,29 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package com.camnter.easygank.model;
+package com.camnter.easygank.model.impl;
 
-import com.camnter.easygank.bean.GankDaily;
+import com.camnter.easygank.bean.GankResources;
+import com.camnter.easygank.gank.EasyGank;
+import com.camnter.easygank.model.IResourcesModel;
 
 import rx.Observable;
 
 /**
- * Description：IDailyModel
- * 定义DaliModel要实现的功能
+ * Description：ResourcesModel
  * Created by：CaMnter
- * Time：2016-01-03 17:58
+ * Time：2016-01-06 15:07
  */
-public interface IDailyModel {
+public class ResourcesModel implements IResourcesModel {
     /**
-     * 查询每日数据
+     * 分页查询扩展资源数据
      *
-     * @param year  year
-     * @param month month
-     * @param day   day
-     * @return Observable<GankDaily>
+     * @param size 数据个数
+     * @param page 第几页
+     * @return Observable<GankIOS>
      */
-    Observable<GankDaily> getDaily(int year, int month, int day);
-
+    @Override
+    public Observable<GankResources> getResources(int size, int page) {
+        return EasyGank.getInstance().getGankService().getResources(size, page);
+    }
 }
