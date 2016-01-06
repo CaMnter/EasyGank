@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_sub_setting"
+
         android:title="@string/app_name" />
     <item
         android:id="@+id/navigation_title"

@@ -206,7 +206,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
     public void onFailure(Throwable e) {
         this.refresh(false);
         this.setRefreshStatus(true);
-        Snackbar.make(this.mainRV, R.string.main_load_error, Snackbar.LENGTH_SHORT);
+        ToastUtils.show(this,R.string.main_load_error,ToastUtils.LENGTH_LONG);
     }
 
     @Override
@@ -225,28 +225,60 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
         return new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                item.setChecked(true);
-                MainActivity.this.mDrawerLayout.closeDrawer(MainActivity.this.mNavigationView);
-                switch (item.getItemId()) {
-                    case R.id.navigation_daily:
-                        return true;
-                    case R.id.navigation_welfare:
-                        return true;
-                    case R.id.navigation_android:
-                        return true;
-                    case R.id.navigation_ios:
-                        return true;
-                    case R.id.navigation_js:
-                        return true;
-                    case R.id.navigation_video:
-                        return true;
-                    case R.id.navigation_resources:
-                        return true;
-                }
-                return false;
-
+                return MainActivity.this.menuItemChecked(item.getItemId());
             }
         };
     }
+
+    /**
+     * Fill in NavigationView menu ids
+     *
+     * @return int[]
+     */
+    @Override
+    protected int[] getMenuItemIds() {
+        return new int[]{
+                R.id.navigation_daily,
+                R.id.navigation_welfare,
+                R.id.navigation_android,
+                R.id.navigation_ios,
+                R.id.navigation_js,
+                R.id.navigation_video,
+                R.id.navigation_resources
+        };
+    }
+
+    /**
+     * Fill in your menu operation on click
+     *
+     * @param now Now you choose the item
+     */
+    @Override
+    protected void onMenuItemOnClick(MenuItem now) {
+        switch (now.getItemId()) {
+            case R.id.navigation_daily:
+                ToastUtils.show(this, "日常", ToastUtils.LENGTH_SHORT);
+                break;
+            case R.id.navigation_welfare:
+                ToastUtils.show(this, "福利", ToastUtils.LENGTH_SHORT);
+                break;
+            case R.id.navigation_android:
+                ToastUtils.show(this, "android", ToastUtils.LENGTH_SHORT);
+                break;
+            case R.id.navigation_ios:
+                ToastUtils.show(this, "ios", ToastUtils.LENGTH_SHORT);
+                break;
+            case R.id.navigation_js:
+                ToastUtils.show(this, "前端", ToastUtils.LENGTH_SHORT);
+                break;
+            case R.id.navigation_video:
+                ToastUtils.show(this, "休闲视频", ToastUtils.LENGTH_SHORT);
+                break;
+            case R.id.navigation_resources:
+                ToastUtils.show(this, "扩展资源", ToastUtils.LENGTH_SHORT);
+                break;
+        }
+    }
+
 
 }

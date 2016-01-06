@@ -71,10 +71,6 @@ public abstract class BaseToolbarActivity extends AppCompatActivity {
         }
     }
 
-    public boolean canBack() {
-        return false;
-    }
-
     /**
      * This hook is called whenever an item in your options menu is selected.
      * The default implementation simply returns false to have the normal
@@ -99,6 +95,11 @@ public abstract class BaseToolbarActivity extends AppCompatActivity {
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+
+    public boolean canBack() {
+        return false;
     }
 
     /**

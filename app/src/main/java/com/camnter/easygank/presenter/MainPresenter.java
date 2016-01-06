@@ -169,7 +169,8 @@ public class MainPresenter extends BasePresenter<MainView> {
                     public void onError(Throwable e) {
                         try {
                             Logger.d(e.getMessage());
-                            MainPresenter.this.getMvpView().onFailure(e);
+                            if (MainPresenter.this.getMvpView() != null)
+                                MainPresenter.this.getMvpView().onFailure(e);
                         } catch (Throwable e1) {
                             e1.getMessage();
                         }

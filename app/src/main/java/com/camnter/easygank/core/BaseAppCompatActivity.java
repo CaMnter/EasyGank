@@ -39,7 +39,7 @@ import com.camnter.easygank.utils.ToastUtils;
  * Created by：CaMnter
  * Time：2016-01-02 15:02
  */
-public abstract class BaseAppCompatActivity extends BaseNavigationViewActivity {
+public abstract class BaseAppCompatActivity extends BaseDrawerLayoutActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
