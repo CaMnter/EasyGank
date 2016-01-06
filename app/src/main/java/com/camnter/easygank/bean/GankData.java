@@ -27,48 +27,17 @@ package com.camnter.easygank.bean;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
- * Description：GankData ( Gank数据的类型，无论是Android，还是福利，都是这样的数据 )
+ * Description：GankData ( Android、iOS、前端、拓展资源、福利、休息视频 )
  * Created by：CaMnter
- * Time：2016-01-03 17:28
+ * Time：2016-01-06 17:45
  */
-public class GankData implements Serializable {
+public class GankData extends Error implements Serializable {
 
-    // 发布人
-    @SerializedName("who")
-    public String who;
-
-    // 发布时间
-    @SerializedName("publishedAt")
-    public String publishedAt;
-
-    // 标题
-    @SerializedName("desc")
-    public String desc;
-
-    // 类型， 一般都是"福利"
-    @SerializedName("type")
-    public String type;
-
-    // 图片url
-    @SerializedName("url")
-    public String url;
-
-    // 是否可用
-    @SerializedName("used")
-    public Boolean used;
-
-    // 对象id
-    @SerializedName("objectId")
-    public String objectId;
-
-    // 创建时间
-    @SerializedName("createdAt")
-    public String createdAt;
-
-    // 更新时间
-    @SerializedName("updatedAt")
-    public String updatedAt;
+    @SerializedName("results")
+    public ArrayList<BaseGankData> results;
 
 }
+

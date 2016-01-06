@@ -22,40 +22,53 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package com.camnter.easygank.model.impl;
+package com.camnter.easygank.bean;
 
-import com.camnter.easygank.bean.GankIOS;
-import com.camnter.easygank.gank.EasyGank;
-import com.camnter.easygank.model.IIOSModel;
+import com.google.gson.annotations.SerializedName;
 
-import rx.Observable;
+import java.io.Serializable;
 
 /**
- * Description：IOSModel
+ * Description：BaseGankData ( Gank数据的类型，无论是Android，还是福利，都是这样的数据 )
  * Created by：CaMnter
- * Time：2016-01-06 15:04
+ * Time：2016-01-03 17:28
  */
-public class IOSModel implements IIOSModel {
+public class BaseGankData implements Serializable {
 
-    private static final IOSModel ourInstance = new IOSModel();
+    // 发布人
+    @SerializedName("who")
+    public String who;
 
-    public static IOSModel getInstance() {
-        return ourInstance;
-    }
+    // 发布时间
+    @SerializedName("publishedAt")
+    public String publishedAt;
 
-    private IOSModel() {
-    }
+    // 标题
+    @SerializedName("desc")
+    public String desc;
 
-    /**
-     * 分页查询IOS数据
-     *
-     * @param size 数据个数
-     * @param page 第几页
-     * @return Observable<GankIOS>
-     */
-    @Override
-    public Observable<GankIOS> getIOS(int size, int page) {
-        return EasyGank.getInstance().getGankService().getIOS(size, page);
-    }
+    // 类型， 一般都是"福利"
+    @SerializedName("type")
+    public String type;
+
+    // 图片url
+    @SerializedName("url")
+    public String url;
+
+    // 是否可用
+    @SerializedName("used")
+    public Boolean used;
+
+    // 对象id
+    @SerializedName("objectId")
+    public String objectId;
+
+    // 创建时间
+    @SerializedName("createdAt")
+    public String createdAt;
+
+    // 更新时间
+    @SerializedName("updatedAt")
+    public String updatedAt;
 
 }

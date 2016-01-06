@@ -81,6 +81,7 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/bg_android_tag"
             android:text="@string/daily_android_tag_tv"
+            android:gravity="center"
             android:textColor="@color/item_tag_tv"
             android:textSize="@dimen/item_tag_tv" />
 
@@ -92,6 +93,7 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/bg_ios_tag"
             android:text="@string/daily_ios_tag_tv"
+            android:gravity="center"
             android:textColor="@color/item_tag_tv"
             android:textSize="@dimen/item_tag_tv" />
 
@@ -103,6 +105,7 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/bg_js_tag"
             android:text="@string/daily_js_tag_tv"
+            android:gravity="center"
             android:textColor="@color/item_tag_tv"
             android:textSize="@dimen/item_tag_tv" />
 

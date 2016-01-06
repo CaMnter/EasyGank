@@ -34,8 +34,11 @@ import android.widget.Toast;
 
 import com.camnter.easygank.R;
 import com.camnter.easygank.adapter.MainAdapter;
+import com.camnter.easygank.bean.BaseGankData;
 import com.camnter.easygank.bean.GankDaily;
 import com.camnter.easygank.core.BaseAppCompatActivity;
+import com.camnter.easygank.gank.GankType;
+import com.camnter.easygank.gank.GankTypeDict;
 import com.camnter.easygank.presenter.MainPresenter;
 import com.camnter.easygank.presenter.iview.MainView;
 import com.camnter.easygank.utils.ToastUtils;
@@ -53,6 +56,8 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
     private int emptyCount = 0;
     private static final int EMPTY_LIMIT = 5;
 
+    private GankType gankType;
+
     /**
      * Fill in layout id
      *
@@ -68,7 +73,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
      */
     @Override
     public void onSwipeRefresh() {
-        this.refreshData();
+        this.refreshData(this.gankType);
     }
 
 
@@ -131,7 +136,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
 
                         // 没数据了
                         if (MainActivity.this.emptyCount >= EMPTY_LIMIT) {
-                            ToastUtils.show(MainActivity.this, MainActivity.this.getString(R.string.main_empty_data), Toast.LENGTH_LONG);
+                            MainActivity.this.showToast(MainActivity.this.getString(R.string.main_empty_data), Toast.LENGTH_LONG);
                             return;
                         }
 
@@ -140,7 +145,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
                             // 加载更多
                             MainActivity.this.presenter.setPage(MainActivity.this.presenter.getPage() + 1);
                             MainActivity.this.setRefreshStatus(false);
-                            MainActivity.this.presenter.getDaily(false);
+                            MainActivity.this.loadMore(MainActivity.this.gankType);
                             MainActivity.this.refresh(true);
                         }
 
@@ -151,22 +156,44 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
     }
 
     /**
+     * 加载更多
+     *
+     * @param gankType gankType
+     */
+    private void loadMore(GankType gankType) {
+        switch (gankType) {
+            case daily:
+                this.presenter.getDaily(false, GankTypeDict.DONT_SWITCH);
+                break;
+            case android:
+            case ios:
+            case js:
+            case resources:
+                this.presenter.getTechnology(this.gankType, false, GankTypeDict.DONT_SWITCH);
+                break;
+
+        }
+    }
+
+    /**
      * Initialize the Activity data
      */
     @Override
     protected void initData() {
         this.presenter = new MainPresenter();
         this.presenter.attachView(this);
-        this.mainAdapter = new MainAdapter(MainAdapter.AdapterType.daily);
+        this.gankType = GankType.daily;
+        // 默认是每日干货
+        this.mainAdapter = new MainAdapter(this.gankType);
         this.mainRV.setAdapter(this.mainAdapter);
 
-        this.refreshData();
+        this.refreshData(this.gankType);
     }
 
     /**
      * 刷新 or 下拉刷新
      */
-    private void refreshData() {
+    private void refreshData(GankType gankType) {
         this.presenter.setPage(1);
         new Handler().post(new Runnable() {
             @Override
@@ -174,7 +201,18 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
                 MainActivity.this.refresh(true);
             }
         });
-        this.presenter.getDaily(true);
+        switch (gankType) {
+            case daily:
+                this.presenter.getDaily(true, GankTypeDict.DONT_SWITCH);
+                break;
+            case android:
+            case ios:
+            case js:
+            case resources:
+                this.presenter.getTechnology(this.gankType, true, GankTypeDict.DONT_SWITCH);
+                break;
+
+        }
     }
 
     /**
@@ -186,6 +224,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
     @Override
     public void onGetDailySuccess(List<GankDaily> dailyData, boolean refresh) {
         if (refresh) {
+            this.emptyCount = 0;
             this.mainAdapter.clear();
             this.mainAdapter.setList(dailyData);
         } else {
@@ -197,6 +236,39 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
     }
 
     /**
+     * 查询 ( Android、iOS、前端、拓展资源、福利、休息视频 ) 成功
+     *
+     * @param data    data
+     * @param refresh 是否刷新
+     */
+    @Override
+    public void onGetDataSuccess(List<BaseGankData> data, boolean refresh) {
+        if (refresh) {
+            this.emptyCount = 0;
+            this.mainAdapter.clear();
+            this.mainAdapter.setList(data);
+        } else {
+            this.mainAdapter.addAll(data);
+        }
+        this.mainAdapter.notifyDataSetChanged();
+        this.refresh(false);
+        if (data.size() == 0) this.emptyCount++;
+    }
+
+    /**
+     * 切换数据源成功
+     *
+     * @param type type
+     */
+    @Override
+    public void onSwitchSuccess(GankType type) {
+        this.emptyCount = 0;
+        this.mainAdapter.setType(type);
+        this.mainAdapter.clear();
+        this.gankType = type;
+    }
+
+    /**
      * 发生错误
      *
      * @param e e
@@ -205,7 +277,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
     public void onFailure(Throwable e) {
         this.refresh(false);
         this.setRefreshStatus(true);
-        ToastUtils.show(this, R.string.main_load_error, ToastUtils.LENGTH_LONG);
+        this.showToast(R.string.main_load_error, ToastUtils.LENGTH_LONG);
     }
 
     @Override
@@ -236,48 +308,32 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
      */
     @Override
     protected int[] getMenuItemIds() {
-        return new int[]{
-                R.id.navigation_daily,
-                R.id.navigation_welfare,
-                R.id.navigation_android,
-                R.id.navigation_ios,
-                R.id.navigation_js,
-                R.id.navigation_video,
-                R.id.navigation_resources
-        };
+        return GankTypeDict.menuIds;
     }
 
     /**
      * Fill in your menu operation on click
+     * <p/>
+     * 走到这，就不会有两次点击都一样的情况
+     * Come to this, there would be no two clicks are all the same
      *
      * @param now Now you choose the item
      */
     @Override
     protected void onMenuItemOnClick(MenuItem now) {
-        switch (now.getItemId()) {
-            case R.id.navigation_daily:
-                ToastUtils.show(this, "日常", ToastUtils.LENGTH_SHORT);
-                break;
-            case R.id.navigation_welfare:
-                ToastUtils.show(this, "福利", ToastUtils.LENGTH_SHORT);
-                break;
-            case R.id.navigation_android:
-                ToastUtils.show(this, "android", ToastUtils.LENGTH_SHORT);
-                break;
-            case R.id.navigation_ios:
-                ToastUtils.show(this, "ios", ToastUtils.LENGTH_SHORT);
-                break;
-            case R.id.navigation_js:
-                ToastUtils.show(this, "前端", ToastUtils.LENGTH_SHORT);
-                break;
-            case R.id.navigation_video:
-                ToastUtils.show(this, "休闲视频", ToastUtils.LENGTH_SHORT);
-                break;
-            case R.id.navigation_resources:
-                ToastUtils.show(this, "扩展资源", ToastUtils.LENGTH_SHORT);
-                break;
-        }
+        if (GankTypeDict.menuId2TypeDict.indexOfKey(now.getItemId()) >= 0)
+            this.changeGankType(GankTypeDict.menuId2TypeDict.get(now.getItemId()));
     }
 
+    /**
+     * 走到这，就不会有两次点击都一样的情况
+     * Come to this, there would be no two clicks are all the same
+     *
+     * @param gankType gankType
+     */
+    private void changeGankType(GankType gankType) {
+        this.refresh(true);
+        this.presenter.switchType(gankType);
+    }
 
 }

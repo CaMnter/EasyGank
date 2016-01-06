@@ -24,10 +24,15 @@
 
 package com.camnter.easygank.presenter;
 
+import com.camnter.easygank.bean.BaseGankData;
 import com.camnter.easygank.bean.GankDaily;
+import com.camnter.easygank.bean.GankData;
 import com.camnter.easygank.core.BasePresenter;
-import com.camnter.easygank.gank.EasyGank;
 import com.camnter.easygank.gank.GankApi;
+import com.camnter.easygank.gank.GankType;
+import com.camnter.easygank.gank.GankTypeDict;
+import com.camnter.easygank.model.impl.DailyModel;
+import com.camnter.easygank.model.impl.DataModel;
 import com.camnter.easygank.presenter.iview.MainView;
 import com.camnter.easygank.utils.DateUtils;
 import com.orhanobut.logger.Logger;
@@ -129,9 +134,16 @@ public class MainPresenter extends BasePresenter<MainView> {
      * 查询每日数据
      *
      * @param refresh 是否是刷新
+     * @param oldPage olaPage==GankTypeDict.DONT_SWITCH表示不是切换数据
      */
-    public void getDaily(final boolean refresh) {
-        Observable.from(this.currentDate.getPastTime())
+    public void getDaily(final boolean refresh, final int oldPage) {
+        /*
+         * 切换数据源的话,尝试页数1
+         */
+        if (oldPage != GankTypeDict.DONT_SWITCH) {
+            this.page = 1;
+        }
+        this.mCompositeSubscription.add(Observable.from(this.currentDate.getPastTime())
                 .subscribeOn(Schedulers.io())
                 .flatMap(new Func1<EasyDate, Observable<GankDaily>>() {
                     @Override
@@ -140,7 +152,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                          * 感觉Android的数据应该不会为null
                          * 所以以Android的数据为判断是否当天有数据
                          */
-                        return EasyGank.getInstance().getGankService()
+                        return DailyModel.getInstance()
                                 .getDaily(easyDate.getYear(), easyDate.getMonth(), easyDate.getDay())
                                 .filter(new Func1<GankDaily, Boolean>() {
                                     @Override
@@ -169,20 +181,142 @@ public class MainPresenter extends BasePresenter<MainView> {
                     public void onError(Throwable e) {
                         try {
                             Logger.d(e.getMessage());
-                            if (MainPresenter.this.getMvpView() != null)
-                                MainPresenter.this.getMvpView().onFailure(e);
                         } catch (Throwable e1) {
                             e1.getMessage();
+                        } finally {
+                            /*
+                             * 如果是切换数据源
+                             * 刚才尝试的page＝1失败了的请求
+                             * 加载失败
+                             * 会影响到原来页面的page
+                             * 在这里执行复原page操作
+                             */
+                            if (oldPage != GankTypeDict.DONT_SWITCH)
+                                MainPresenter.this.page = oldPage;
+
+                            if (MainPresenter.this.getMvpView() != null)
+                                MainPresenter.this.getMvpView().onFailure(e);
                         }
                     }
 
                     @Override
                     public void onNext(List<GankDaily> dailyData) {
+                        /*
+                         * 如果是切换数据源
+                         * page=1加载成功了
+                         * 即刚才的loadPage
+                         */
+                        if (oldPage != GankTypeDict.DONT_SWITCH) {
+                            if (MainPresenter.this.getMvpView() != null)
+                                MainPresenter.this.getMvpView().onSwitchSuccess(GankType.daily);
+                        }
+
                         if (MainPresenter.this.getMvpView() != null)
                             MainPresenter.this.getMvpView().onGetDailySuccess(dailyData, refresh);
                     }
+                }));
+    }
+
+    /**
+     * * 查询Android、iOS、Js、扩展资源
+     *
+     * @param type    GankType
+     * @param refresh 是否是刷新
+     * @param oldPage olaPage==GankTypeDict.DONT_SWITCH表示不是切换数据
+     */
+    public void getTechnology(final GankType type, final boolean refresh, final int oldPage) {
+        /*
+         * 切换数据源的话,尝试页数1
+         */
+        if (oldPage != GankTypeDict.DONT_SWITCH) {
+            this.page = 1;
+        }
+
+        String gankType = GankTypeDict.type2UrlTypeDict.get(type);
+        if (gankType == null) return;
+
+        DataModel.getInstance().getData(gankType, GankApi.DEFAULT_DATA_SIZE, this.page)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<GankData, ArrayList<BaseGankData>>() {
+                    @Override
+                    public ArrayList<BaseGankData> call(GankData gankData) {
+                        return gankData.results;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorReturn(new Func1<Throwable, ArrayList<BaseGankData>>() {
+                    @Override
+                    public ArrayList<BaseGankData> call(Throwable throwable) {
+                        return null;
+                    }
+                })
+                .subscribe(new Subscriber<ArrayList<BaseGankData>>() {
+                    @Override
+                    public void onCompleted() {
+                        if (MainPresenter.this.mCompositeSubscription != null)
+                            MainPresenter.this.mCompositeSubscription.remove(this);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        try {
+                            Logger.d(e.getMessage());
+                        } catch (Throwable e1) {
+                            e1.getMessage();
+                        } finally {
+                            /*
+                             * 如果是切换数据源
+                             * 刚才尝试的page＝1失败了的请求
+                             * 加载失败
+                             * 会影响到原来页面的page
+                             * 在这里执行复原page操作
+                             */
+                            if (oldPage != GankTypeDict.DONT_SWITCH)
+                                MainPresenter.this.page = oldPage;
+
+                            if (MainPresenter.this.getMvpView() != null)
+                                MainPresenter.this.getMvpView().onFailure(e);
+                        }
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<BaseGankData> baseGankData) {
+                        /*
+                         * 如果是切换数据源
+                         * page=1加载成功了
+                         * 即刚才的loadPage
+                         */
+                        if (oldPage != GankTypeDict.DONT_SWITCH) {
+                            if (MainPresenter.this.getMvpView() != null)
+                                MainPresenter.this.getMvpView().onSwitchSuccess(type);
+                        }
+
+
+                        if (MainPresenter.this.getMvpView() != null)
+                            MainPresenter.this.getMvpView().onGetDataSuccess(baseGankData, refresh);
+                    }
                 });
+    }
+
+    public void switchType(GankType type) {
+        /*
+         * 记录没切换前的数据的页数
+         * 以防切换数据后，网络又跪导致的page对不上问题
+         */
+        int oldPage = this.page;
+        switch (type) {
+            case daily:
+                this.getDaily(true, oldPage);
+                break;
+            case android:
+            case ios:
+            case js:
+            case resources:
+                this.getTechnology(type, true, oldPage);
+                break;
+        }
 
     }
+
 
 }

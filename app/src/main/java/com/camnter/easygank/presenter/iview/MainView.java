@@ -24,8 +24,10 @@
 
 package com.camnter.easygank.presenter.iview;
 
+import com.camnter.easygank.bean.BaseGankData;
 import com.camnter.easygank.bean.GankDaily;
 import com.camnter.easygank.core.MvpView;
+import com.camnter.easygank.gank.GankType;
 
 import java.util.List;
 
@@ -35,12 +37,29 @@ import java.util.List;
  * Time：2016-01-04 16:38
  */
 public interface MainView extends MvpView {
+
     /**
-     * 查询每日干货成功
+     * 查询 每日干货 成功
      *
      * @param dailyData dailyData
      * @param refresh   是否刷新
      */
     void onGetDailySuccess(List<GankDaily> dailyData, boolean refresh);
+
+    /**
+     * 查询 ( Android、iOS、前端、拓展资源、福利、休息视频 ) 成功
+     *
+     * @param data    data
+     * @param refresh 是否刷新
+     */
+    void onGetDataSuccess(List<BaseGankData> data, boolean refresh);
+
+
+    /**
+     * 切换数据源成功
+     *
+     * @param type type
+     */
+    void onSwitchSuccess(GankType type);
 
 }

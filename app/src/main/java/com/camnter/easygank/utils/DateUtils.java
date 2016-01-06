@@ -90,8 +90,7 @@ public class DateUtils {
      */
     public static String date2String(long time, String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
-        String s = sdf.format(time);
-        return s;
+        return sdf.format(time);
     }
 
     /**

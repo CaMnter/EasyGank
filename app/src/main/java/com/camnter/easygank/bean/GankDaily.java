@@ -30,7 +30,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Description：GankDaily  （ 每日数据 ）
+ * Description：GankDaily  ( 每日数据 )
  * Created by：CaMnter
  * Time：2016-01-03 17:44
  */
@@ -45,28 +45,28 @@ public class GankDaily extends Error implements Serializable {
     public class DailyResults {
 
         @SerializedName("福利")
-        public ArrayList<GankData> welfareData;
+        public ArrayList<BaseGankData> welfareData;
 
         @SerializedName("Android")
-        public ArrayList<GankData> androidData;
+        public ArrayList<BaseGankData> androidData;
 
         @SerializedName("iOS")
-        public ArrayList<GankData> iosData;
+        public ArrayList<BaseGankData> iosData;
 
         @SerializedName("前端")
-        public ArrayList<GankData> jsData;
+        public ArrayList<BaseGankData> jsData;
 
         @SerializedName("休息视频")
-        public ArrayList<GankData> videoData;
+        public ArrayList<BaseGankData> videoData;
 
         @SerializedName("拓展资源")
-        public ArrayList<GankData> resourcesData;
+        public ArrayList<BaseGankData> resourcesData;
 
         @SerializedName("App")
-        public ArrayList<GankData> appfareData;
+        public ArrayList<BaseGankData> appfareData;
 
         @SerializedName("瞎推荐")
-        public ArrayList<GankData> recommendData;
+        public ArrayList<BaseGankData> recommendData;
 
     }
 }

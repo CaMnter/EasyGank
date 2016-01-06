@@ -100,6 +100,9 @@ public abstract class BaseDrawerLayoutActivity extends BaseSwipeRefreshLayout {
 
     /**
      * Fill in your menu operation on click
+     * <p/>
+     * 走到这，就不会有两次点击都一样的情况
+     * Come to this, there would be no two clicks are all the same
      *
      * @param now Now you choose the item
      */

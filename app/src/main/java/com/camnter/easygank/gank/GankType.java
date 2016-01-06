@@ -22,25 +22,21 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package com.camnter.easygank.model;
-
-import com.camnter.easygank.bean.GankJS;
-
-import rx.Observable;
+package com.camnter.easygank.gank;
 
 /**
- * Description：IJsModel
- * 定义JsModel要实现的功能
+ * Description：GankType
  * Created by：CaMnter
- * Time：2016-01-06 14:58
+ * Time：2016-01-06 16:35
  */
-public interface IJsModel {
-    /**
-     * 分页查询前端数据
-     *
-     * @param size 数据个数
-     * @param page 第几页
-     * @return Observable<GankJS>
-     */
-    Observable<GankJS> getJs(int size, int page);
+public enum GankType {
+
+    daily,
+    android,
+    ios,
+    js,
+    resources,
+    welfare,
+    video
+
 }

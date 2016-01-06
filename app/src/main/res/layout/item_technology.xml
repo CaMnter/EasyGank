@@ -67,6 +67,7 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/bg_github_tag"
             android:text="@string/technology_github_tag_tv"
+            android:gravity="center"
             android:textColor="@color/item_tag_tv"
             android:textSize="@dimen/item_tag_tv" />
 
@@ -77,6 +78,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/bg_blog_tag"
+            android:gravity="center"
             android:text="@string/technology_blog_tag_tv"
             android:textColor="@color/item_tag_tv"
             android:textSize="@dimen/item_tag_tv" />

@@ -112,14 +112,8 @@ public abstract class BaseSwipeRefreshLayout extends BaseToolbarActivity {
          * refresh 只要进来是false 就不考虑 refreshStatus
          * 所以用了短路&&，则直接关掉
          */
-        this.mMultiSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                BaseSwipeRefreshLayout.this.mMultiSwipeRefreshLayout.setRefreshing(refresh);
-            }
-        });
         if (!refresh && this.refreshStatus) {
-            // 到这了 refresh==false refreshStatus==true|false
+            // 到这了 refresh==false && refreshStatus==true
             this.mMultiSwipeRefreshLayout.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -127,9 +121,11 @@ public abstract class BaseSwipeRefreshLayout extends BaseToolbarActivity {
                     BaseSwipeRefreshLayout.this.refreshStatus = false;
                 }
             }, 1666);
-        } else {
-            //到这了，有可能，refresh==true，refreshStatus==true
-            //也有可能，refresh==true，refreshStatus==false
+        } else if (!this.refreshStatus) {
+            /*
+             * 到这了，refresh==true，refreshStatus==false
+             * 排除了refreshStatus==true的情况
+             */
             this.mMultiSwipeRefreshLayout.post(new Runnable() {
                 @Override
                 public void run() {
