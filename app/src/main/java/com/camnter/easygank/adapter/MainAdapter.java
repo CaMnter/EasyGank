@@ -38,6 +38,9 @@ import com.camnter.easygank.gank.GankApi;
 import com.camnter.easygank.gank.GankType;
 import com.camnter.easygank.utils.DateUtils;
 import com.camnter.easygank.utils.GlideUtils;
+import com.camnter.easygank.widget.RatioImageView;
+import com.camnter.easygank.widget.RatioTextView;
+import com.camnter.easygank.widget.VideoRatioTextView;
 import com.camnter.easyrecyclerview.adapter.EasyRecyclerViewAdapter;
 import com.camnter.easyrecyclerview.holder.EasyRecyclerViewHolder;
 
@@ -51,6 +54,8 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
 
     public static final int LAYOUT_TYPE_DAILY = 0;
     public static final int LAYOUT_TYPE_TECHNOLOGY = 1;
+    public static final int LAYOUT_TYPE_WELFARE = 2;
+    public static final int LAYOUT_TYPE_VIDEO = 3;
 
     private GankType type;
 
@@ -63,7 +68,12 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
 
     @Override
     public int[] getItemLayouts() {
-        return new int[]{R.layout.item_daily, R.layout.item_technology};
+        return new int[]{
+                R.layout.item_daily,
+                R.layout.item_technology,
+                R.layout.item_welfate,
+                R.layout.item_video
+        };
     }
 
     @Override
@@ -75,6 +85,12 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
                 break;
             case LAYOUT_TYPE_TECHNOLOGY:
                 this.loadingTechnology(easyRecyclerViewHolder, position);
+                break;
+            case LAYOUT_TYPE_WELFARE:
+                this.loadingWelfare(easyRecyclerViewHolder, position);
+                break;
+            case LAYOUT_TYPE_VIDEO:
+                this.loadingVideo(easyRecyclerViewHolder, position);
                 break;
         }
     }
@@ -105,14 +121,18 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
          */
         switch (this.type) {
             case daily:
-                return 0;
+                return LAYOUT_TYPE_DAILY;
             case android:
             case ios:
             case js:
             case resources:
-                return 1;
+                return LAYOUT_TYPE_TECHNOLOGY;
+            case welfare:
+                return LAYOUT_TYPE_WELFARE;
+            case video:
+                return LAYOUT_TYPE_VIDEO;
             default:
-                return 0;
+                return LAYOUT_TYPE_DAILY;
         }
     }
 
@@ -243,6 +263,50 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         } else {
             technologyBlogTV.setVisibility(View.VISIBLE);
             technologyGithubTV.setVisibility(View.GONE);
+        }
+
+    }
+
+    /**
+     * 加载 福利
+     *
+     * @param easyRecyclerViewHolder easyRecyclerViewHolder
+     * @param position               position
+     */
+    private void loadingWelfare(EasyRecyclerViewHolder easyRecyclerViewHolder, int position) {
+        BaseGankData baseGankData = this.getItem(position);
+        if (baseGankData == null) return;
+        RatioImageView welfareIV = easyRecyclerViewHolder.findViewById(R.id.welfare_iv);
+
+        /*
+         * 图片
+         */
+        if (TextUtils.isEmpty(baseGankData.url)) {
+            GlideUtils.displayNative(welfareIV, R.mipmap.img_default_gray);
+        } else {
+            GlideUtils.display(welfareIV, baseGankData.url);
+        }
+
+    }
+
+    /**
+     * 加载 视频
+     *
+     * @param easyRecyclerViewHolder easyRecyclerViewHolder
+     * @param position               position
+     */
+    private void loadingVideo(EasyRecyclerViewHolder easyRecyclerViewHolder, int position) {
+        BaseGankData baseGankData = this.getItem(position);
+        if (baseGankData == null) return;
+        RatioTextView ratioTextView = easyRecyclerViewHolder.findViewById(R.id.video_ratio_tv);
+
+        /*
+         * 标题
+         */
+        if (TextUtils.isEmpty(baseGankData.desc)) {
+            ratioTextView.setText("");
+        } else {
+            ratioTextView.setText(baseGankData.desc.trim());
         }
 
     }

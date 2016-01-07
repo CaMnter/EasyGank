@@ -30,6 +30,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.camnter.easygank.R;
 import com.orhanobut.logger.Logger;
@@ -79,6 +80,7 @@ public class GlideUtils {
         try {
             Glide.with(context)
                     .load(url)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .placeholder(defaultImage)
                     .crossFade()
                     .centerCrop()
@@ -113,6 +115,7 @@ public class GlideUtils {
         try {
             Glide.with(context)
                     .load(resId)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .crossFade()
                     .centerCrop()
                     .into(view)

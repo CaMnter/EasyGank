@@ -24,10 +24,14 @@
 
 package com.camnter.easygank.gank;
 
+import com.camnter.easygank.EasyApplication;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Response;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import retrofit.GsonConverterFactory;
@@ -57,15 +61,17 @@ public class EasyGank {
         /*
          * 查看网络请求发送状况
          */
+        if(EasyApplication.getInstance().log) {
+            okHttpClient.interceptors().add(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Response response = chain.proceed(chain.request());
+                    com.orhanobut.logger.Logger.d(chain.request().urlString());
+                    return response;
+                }
+            });
+        }
 
-//        okHttpClient.interceptors().add(new Interceptor() {
-//            @Override
-//            public Response intercept(Chain chain) throws IOException {
-//                Response response = chain.proceed(chain.request());
-//                com.orhanobut.logger.Logger.d(chain.request().urlString());
-//                return response;
-//            }
-//        });
         Gson gson = new GsonBuilder()
                 .setDateFormat(GankApi.GANK_DATA_FORMAT)
                 .create();

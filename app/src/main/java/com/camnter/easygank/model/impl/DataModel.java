@@ -34,4 +34,5 @@ public class DataModel implements IDataModel {
     public Observable<GankData> getData(String type, int size, int page) {
         return EasyGank.getInstance().getGankService().getData(type, size, page);
     }
+
 }

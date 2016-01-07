@@ -29,11 +29,13 @@
     <color name="colorPrimaryDark">#ff301B91</color>
     <color name="colorAccent">#ffEF6C02</color>
 
+    <color name="common_green">#ff80E54E</color>
     <color name="common_android_tag_bg">#ff388E3C</color>
     <color name="common_ios_tag_bg">#ff0377BC</color>
     <color name="common_js_tag_bg">#ffEF6C02</color>
     <color name="common_github_tag_bg">#ff000000</color>
     <color name="common_blog_tag_bg">#ff870D4F</color>
+    <color name="title_tv">#ff000000</color>
 
     <!-- item -->
     <color name="item_date">#ffA8A8A8</color>
@@ -44,5 +46,8 @@
 
     <!-- item technology -->
     <color name="daily_technology_tv">#ff000000</color>
+
+    <!-- item video -->
+    <color name="video_cover_color">#4d000000</color>
 
 </resources>

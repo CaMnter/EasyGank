@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="2.2dp">
+
+    <com.camnter.easygank.widget.RatioTextView
+        android:id="@+id/video_ratio_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:maxLines="3"
+        android:padding="3dp"
+        android:paddingTop="10dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="15sp"
+        app:textRatio="1.0"
+        app:textRatioType="widthHeight" />
+
+    <com.camnter.easygank.widget.RatioImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#4d000000"
+        android:scaleType="centerCrop"
+        app:imageRatio="1.0"
+        app:imageRatioType="widthHeight" />
+
+    <ImageView
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/ic_video_start" />
+
+</RelativeLayout>

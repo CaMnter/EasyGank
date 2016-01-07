@@ -35,6 +35,7 @@ import com.orhanobut.logger.Logger;
  */
 public class EasyApplication extends Application {
     private static EasyApplication ourInstance = new EasyApplication();
+    public boolean log = false;
 
     public static EasyApplication getInstance() {
         return ourInstance;

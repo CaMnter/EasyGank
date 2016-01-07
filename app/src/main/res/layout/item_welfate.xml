@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="2.2dp"
+    android:orientation="vertical">
+
+    <com.camnter.easygank.widget.RatioImageView
+        android:id="@+id/welfare_iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:imageRatio="0.7"
+        android:scaleType="centerCrop"
+        app:imageRatioType="widthHeight" />
+
+</LinearLayout>

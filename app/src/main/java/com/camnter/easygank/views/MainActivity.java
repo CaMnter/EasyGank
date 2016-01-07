@@ -27,8 +27,10 @@ package com.camnter.easygank.views;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -41,7 +43,6 @@ import com.camnter.easygank.gank.GankType;
 import com.camnter.easygank.gank.GankTypeDict;
 import com.camnter.easygank.presenter.MainPresenter;
 import com.camnter.easygank.presenter.iview.MainView;
-import com.camnter.easygank.utils.ToastUtils;
 import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
 import com.camnter.easyrecyclerview.widget.decorator.EasyDividerItemDecoration;
 
@@ -50,6 +51,9 @@ import java.util.List;
 public class MainActivity extends BaseAppCompatActivity implements MainView {
 
     private EasyRecyclerView mainRV;
+    private EasyDividerItemDecoration dailyDecoration;
+    private LinearLayoutManager mLinearLayoutManager;
+    private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
     private MainAdapter mainAdapter;
     private MainPresenter presenter;
 
@@ -85,7 +89,10 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
     @Override
     protected void initViews(Bundle savedInstanceState) {
         this.mainRV = this.findView(R.id.main_rv);
-        this.mainRV.addItemDecoration(new EasyDividerItemDecoration(this, EasyDividerItemDecoration.VERTICAL_LIST));
+        this.dailyDecoration = new EasyDividerItemDecoration(this, EasyDividerItemDecoration.VERTICAL_LIST);
+        this.mainRV.addItemDecoration(this.dailyDecoration);
+        this.mLinearLayoutManager = (LinearLayoutManager) this.mainRV.getLayoutManager();
+        this.mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
     }
 
     /**
@@ -96,15 +103,15 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
         this.mainRV.addOnScrollListener(this.getRecyclerViewOnScrollListener());
     }
 
+    /**
+     * LinearLayoutManager 时的滚动监听
+     *
+     * @return RecyclerView.OnScrollListener
+     */
     public RecyclerView.OnScrollListener getRecyclerViewOnScrollListener() {
         return new RecyclerView.OnScrollListener() {
             private boolean toLast = false;
 
-            /**
-             * @param recyclerView The RecyclerView which scrolled.
-             * @param dx           The amount of horizontal scroll.
-             * @param dy           The amount of vertical scroll.
-             */
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 /*
@@ -120,39 +127,51 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
                 }
             }
 
-            /**
-             * @param recyclerView The RecyclerView whose scroll state has changed.
-             * @param newState     The updated scroll state. One of {#SCROLL_STATE_IDLE},
-             *                     {#SCROLL_STATE_DRAGGING} or {#SCROLL_STATE_SETTLING}.
-             */
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
-                // 不滚动
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    // 最后完成显示的item的position 正好是 最后一条数据的index
-                    if (manager.findLastCompletelyVisibleItemPosition() == (manager.getItemCount() - 1) && toLast) {
-
-                        // 没数据了
-                        if (MainActivity.this.emptyCount >= EMPTY_LIMIT) {
-                            MainActivity.this.showToast(MainActivity.this.getString(R.string.main_empty_data), Toast.LENGTH_LONG);
-                            return;
+                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                if (layoutManager instanceof LinearLayoutManager) {
+                    LinearLayoutManager manager = (LinearLayoutManager) layoutManager;
+                    // 不滚动
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        // 最后完成显示的item的position 正好是 最后一条数据的index
+                        if (manager.findLastCompletelyVisibleItemPosition() == (manager.getItemCount() - 1) && toLast) {
+                            MainActivity.this.loadMoreQuest();
                         }
-
-                        // 如果没在刷新
-                        if (!MainActivity.this.isRefreshStatus()) {
-                            // 加载更多
-                            MainActivity.this.presenter.setPage(MainActivity.this.presenter.getPage() + 1);
-                            MainActivity.this.setRefreshStatus(false);
-                            MainActivity.this.loadMore(MainActivity.this.gankType);
-                            MainActivity.this.refresh(true);
+                    }
+                } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+                    StaggeredGridLayoutManager manager = (StaggeredGridLayoutManager) layoutManager;
+                    // 不滚动
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        // 最后完成显示的item的position 正好是 最后一条数据的index
+                        if (manager.findLastCompletelyVisibleItemPositions(new int[2])[1] == (manager.getItemCount() - 1) && toLast) {
+                            MainActivity.this.loadMoreQuest();
                         }
-
                     }
                 }
+
             }
         };
+    }
+
+    /**
+     * 请求加载更多
+     */
+    private void loadMoreQuest() {
+        // 没数据了
+        if (this.emptyCount >= EMPTY_LIMIT) {
+            this.showToast(MainActivity.this.getString(R.string.main_empty_data), Toast.LENGTH_LONG);
+            return;
+        }
+
+        // 如果没在刷新
+        if (!MainActivity.this.isRefreshStatus()) {
+            // 加载更多
+            this.presenter.setPage(MainActivity.this.presenter.getPage() + 1);
+            this.setRefreshStatus(false);
+            this.loadMore(MainActivity.this.gankType);
+            this.refresh(true);
+        }
     }
 
     /**
@@ -169,9 +188,10 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
             case ios:
             case js:
             case resources:
-                this.presenter.getTechnology(this.gankType, false, GankTypeDict.DONT_SWITCH);
+            case welfare:
+            case video:
+                this.presenter.getData(this.gankType, false, GankTypeDict.DONT_SWITCH);
                 break;
-
         }
     }
 
@@ -184,7 +204,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
         this.presenter.attachView(this);
         this.gankType = GankType.daily;
         // 默认是每日干货
-        this.mainAdapter = new MainAdapter(this,this.gankType);
+        this.mainAdapter = new MainAdapter(this, this.gankType);
         this.mainRV.setAdapter(this.mainAdapter);
 
         this.refreshData(this.gankType);
@@ -209,9 +229,10 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
             case ios:
             case js:
             case resources:
-                this.presenter.getTechnology(this.gankType, true, GankTypeDict.DONT_SWITCH);
+            case welfare:
+            case video:
+                this.presenter.getData(this.gankType, true, GankTypeDict.DONT_SWITCH);
                 break;
-
         }
     }
 
@@ -266,6 +287,28 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
         this.mainAdapter.setType(type);
         this.mainAdapter.clear();
         this.gankType = type;
+
+        // 重置分割线
+        if (type == GankType.daily) {
+            this.mainRV.addItemDecoration(this.dailyDecoration);
+        } else {
+            this.mainRV.removeItemDecoration(this.dailyDecoration);
+        }
+
+        // 重置LayoutManager
+        switch (gankType) {
+            case daily:
+            case android:
+            case ios:
+            case js:
+            case resources:
+                this.mainRV.setLayoutManager(this.mLinearLayoutManager);
+                break;
+            case welfare:
+            case video:
+                this.mainRV.setLayoutManager(this.mStaggeredGridLayoutManager);
+                break;
+        }
     }
 
     /**
@@ -277,7 +320,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
     public void onFailure(Throwable e) {
         this.refresh(false);
         this.setRefreshStatus(true);
-        this.showToast(R.string.main_load_error, ToastUtils.LENGTH_LONG);
+        Snackbar.make(this.mainRV, R.string.main_load_error, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

@@ -217,13 +217,13 @@ public class MainPresenter extends BasePresenter<MainView> {
     }
 
     /**
-     * * 查询Android、iOS、Js、扩展资源
+     * * 查询 ( Android、iOS、前端、拓展资源、福利、休息视频 )
      *
      * @param type    GankType
      * @param refresh 是否是刷新
      * @param oldPage olaPage==GankTypeDict.DONT_SWITCH表示不是切换数据
      */
-    public void getTechnology(final GankType type, final boolean refresh, final int oldPage) {
+    public void getData(final GankType type, final boolean refresh, final int oldPage) {
         /*
          * 切换数据源的话,尝试页数1
          */
@@ -234,7 +234,7 @@ public class MainPresenter extends BasePresenter<MainView> {
         String gankType = GankTypeDict.type2UrlTypeDict.get(type);
         if (gankType == null) return;
 
-        DataModel.getInstance().getData(gankType, GankApi.DEFAULT_DATA_SIZE, this.page)
+        this.mCompositeSubscription.add(DataModel.getInstance().getData(gankType, GankApi.DEFAULT_DATA_SIZE, this.page)
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<GankData, ArrayList<BaseGankData>>() {
                     @Override
@@ -294,7 +294,8 @@ public class MainPresenter extends BasePresenter<MainView> {
                         if (MainPresenter.this.getMvpView() != null)
                             MainPresenter.this.getMvpView().onGetDataSuccess(baseGankData, refresh);
                     }
-                });
+                }));
+
     }
 
     public void switchType(GankType type) {
@@ -311,7 +312,9 @@ public class MainPresenter extends BasePresenter<MainView> {
             case ios:
             case js:
             case resources:
-                this.getTechnology(type, true, oldPage);
+            case welfare:
+            case video:
+                this.getData(type, true, oldPage);
                 break;
         }
 
