@@ -41,8 +41,6 @@ import retrofit.RxJavaCallAdapterFactory;
  */
 public class EasyGank {
 
-    public static final String TAG = "EasyGank";
-
     private static EasyGank ourInstance;
 
     private GankService gankService;
@@ -69,7 +67,7 @@ public class EasyGank {
 //            }
 //        });
         Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .setDateFormat(GankApi.GANK_DATA_FORMAT)
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()

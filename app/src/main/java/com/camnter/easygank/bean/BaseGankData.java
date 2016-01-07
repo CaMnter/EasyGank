@@ -27,6 +27,7 @@ package com.camnter.easygank.bean;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Description：BaseGankData ( Gank数据的类型，无论是Android，还是福利，都是这样的数据 )
@@ -41,7 +42,7 @@ public class BaseGankData implements Serializable {
 
     // 发布时间
     @SerializedName("publishedAt")
-    public String publishedAt;
+    public Date publishedAt;
 
     // 标题
     @SerializedName("desc")
@@ -65,10 +66,10 @@ public class BaseGankData implements Serializable {
 
     // 创建时间
     @SerializedName("createdAt")
-    public String createdAt;
+    public Date createdAt;
 
     // 更新时间
     @SerializedName("updatedAt")
-    public String updatedAt;
+    public Date updatedAt;
 
 }

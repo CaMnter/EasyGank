@@ -142,11 +142,11 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         if (dailyData.results.videoData != null && dailyData.results.videoData.size() > 0) {
             BaseGankData video = dailyData.results.videoData.get(0);
             dailyTitleTV.setText(video.desc.trim());
-            dailyDateTV.setText(DateUtils.string2String(video.publishedAt, GankApi.GANK_DATA_FORMAT, Constant.DAILY_DATE_FORMAT));
+            dailyDateTV.setText(DateUtils.date2String(video.publishedAt.getTime(), Constant.DAILY_DATE_FORMAT));
         } else if (dailyData.results.welfareData != null && dailyData.results.welfareData.size() > 0) {
             BaseGankData welfare = dailyData.results.welfareData.get(0);
             dailyTitleTV.setText(welfare.desc.trim());
-            dailyDateTV.setText(DateUtils.string2String(welfare.publishedAt, GankApi.GANK_DATA_FORMAT, Constant.DAILY_DATE_FORMAT));
+            dailyDateTV.setText(DateUtils.date2String(welfare.publishedAt.getTime(), Constant.DAILY_DATE_FORMAT));
         } else {
             dailyTitleTV.setText("这期没福利了，安心学习吧！");
             dailyDateTV.setText("");
@@ -216,10 +216,10 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         /*
          * 时间
          */
-        if (TextUtils.isEmpty(baseGankData.publishedAt)) {
+        if (baseGankData.publishedAt == null) {
             technologyDateTV.setText("");
         } else {
-            technologyDateTV.setText(DateUtils.getTimestampString(DateUtils.string2Date(baseGankData.publishedAt, GankApi.GANK_DATA_FORMAT)));
+            technologyDateTV.setText(DateUtils.getTimestampString(baseGankData.publishedAt));
         }
 
         /*

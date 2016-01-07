@@ -165,8 +165,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                 .toSortedList(new Func2<GankDaily, GankDaily, Integer>() {
                     @Override
                     public Integer call(GankDaily dailyData, GankDaily dailyData2) {
-                        return DateUtils.string2Date(dailyData2.results.androidData.get(0).publishedAt, "yyyy-MM-dd")
-                                .compareTo(DateUtils.string2Date(dailyData.results.androidData.get(0).publishedAt, "yyyy-MM-dd"));
+                        return dailyData2.results.androidData.get(0).publishedAt.compareTo(dailyData.results.androidData.get(0).publishedAt);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
