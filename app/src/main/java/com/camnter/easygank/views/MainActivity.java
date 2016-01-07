@@ -302,10 +302,10 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
             case ios:
             case js:
             case resources:
+            case video:
                 this.mainRV.setLayoutManager(this.mLinearLayoutManager);
                 break;
             case welfare:
-            case video:
                 this.mainRV.setLayoutManager(this.mStaggeredGridLayoutManager);
                 break;
         }

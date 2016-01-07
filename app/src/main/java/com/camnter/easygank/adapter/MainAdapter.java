@@ -25,6 +25,7 @@
 package com.camnter.easygank.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,13 +35,12 @@ import com.camnter.easygank.R;
 import com.camnter.easygank.bean.BaseGankData;
 import com.camnter.easygank.bean.GankDaily;
 import com.camnter.easygank.constant.Constant;
+import com.camnter.easygank.constant.UrlMatch;
 import com.camnter.easygank.gank.GankApi;
 import com.camnter.easygank.gank.GankType;
 import com.camnter.easygank.utils.DateUtils;
 import com.camnter.easygank.utils.GlideUtils;
 import com.camnter.easygank.widget.RatioImageView;
-import com.camnter.easygank.widget.RatioTextView;
-import com.camnter.easygank.widget.VideoRatioTextView;
 import com.camnter.easyrecyclerview.adapter.EasyRecyclerViewAdapter;
 import com.camnter.easyrecyclerview.holder.EasyRecyclerViewHolder;
 
@@ -55,7 +55,6 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
     public static final int LAYOUT_TYPE_DAILY = 0;
     public static final int LAYOUT_TYPE_TECHNOLOGY = 1;
     public static final int LAYOUT_TYPE_WELFARE = 2;
-    public static final int LAYOUT_TYPE_VIDEO = 3;
 
     private GankType type;
 
@@ -70,9 +69,8 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
     public int[] getItemLayouts() {
         return new int[]{
                 R.layout.item_daily,
-                R.layout.item_technology,
+                R.layout.item_data,
                 R.layout.item_welfate,
-                R.layout.item_video
         };
     }
 
@@ -88,9 +86,6 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
                 break;
             case LAYOUT_TYPE_WELFARE:
                 this.loadingWelfare(easyRecyclerViewHolder, position);
-                break;
-            case LAYOUT_TYPE_VIDEO:
-                this.loadingVideo(easyRecyclerViewHolder, position);
                 break;
         }
     }
@@ -126,11 +121,10 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
             case ios:
             case js:
             case resources:
+            case video:
                 return LAYOUT_TYPE_TECHNOLOGY;
             case welfare:
                 return LAYOUT_TYPE_WELFARE;
-            case video:
-                return LAYOUT_TYPE_VIDEO;
             default:
                 return LAYOUT_TYPE_DAILY;
         }
@@ -172,9 +166,7 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
             dailyDateTV.setText("");
         }
 
-        /*
-         * 图片
-         */
+        // 图片
         if (dailyData.results.welfareData != null && dailyData.results.welfareData.size() > 0) {
             GlideUtils.display(dailyIV, dailyData.results.welfareData.get(0).url);
         } else {
@@ -218,53 +210,66 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
     private void loadingTechnology(EasyRecyclerViewHolder easyRecyclerViewHolder, int position) {
         BaseGankData baseGankData = this.getItem(position);
         if (baseGankData == null) return;
-        TextView technologyDateTV = easyRecyclerViewHolder.findViewById(R.id.technology_date_tv);
-        TextView technologyTitleTV = easyRecyclerViewHolder.findViewById(R.id.technology_title_tv);
-        TextView technologyViaTV = easyRecyclerViewHolder.findViewById(R.id.technology_via_tv);
-        TextView technologyBlogTV = easyRecyclerViewHolder.findViewById(R.id.technology_blog_tag_tv);
-        TextView technologyGithubTV = easyRecyclerViewHolder.findViewById(R.id.technology_github_tag_tv);
+        TextView dataDateTV = easyRecyclerViewHolder.findViewById(R.id.data_date_tv);
+        TextView dataTitleTV = easyRecyclerViewHolder.findViewById(R.id.data_title_tv);
+        TextView dataViaTV = easyRecyclerViewHolder.findViewById(R.id.data_via_tv);
+        TextView dataTagTV = easyRecyclerViewHolder.findViewById(R.id.data_tag_tv);
 
-        /*
-         * 标题
-         */
+        // 标题
         if (TextUtils.isEmpty(baseGankData.desc)) {
-            technologyTitleTV.setText("");
+            dataTitleTV.setText("");
         } else {
-            technologyTitleTV.setText(baseGankData.desc.trim());
+            dataTitleTV.setText(baseGankData.desc.trim());
         }
 
-        /*
-         * 时间
-         */
+        // 时间
         if (baseGankData.publishedAt == null) {
-            technologyDateTV.setText("");
+            dataDateTV.setText("");
         } else {
-            technologyDateTV.setText(DateUtils.getTimestampString(baseGankData.publishedAt));
+            dataDateTV.setText(DateUtils.getTimestampString(baseGankData.publishedAt));
         }
 
-        /*
-         * 小编
-         */
+        // 小编
         if (TextUtils.isEmpty(baseGankData.who)) {
-            technologyViaTV.setText("");
+            dataViaTV.setText("");
         } else {
-            technologyViaTV.setText(this.context.getString(R.string.common_via, baseGankData.who));
+            dataViaTV.setText(this.context.getString(R.string.common_via, baseGankData.who));
         }
 
-        /*
-         * 标签
-         */
+
         if (TextUtils.isEmpty(baseGankData.url)) {
-            technologyBlogTV.setVisibility(View.GONE);
-            technologyGithubTV.setVisibility(View.GONE);
-        } else if (baseGankData.url.startsWith(Constant.GITHUB_PREFIX)) {
-            technologyBlogTV.setVisibility(View.GONE);
-            technologyGithubTV.setVisibility(View.VISIBLE);
+            dataTagTV.setVisibility(View.GONE);
         } else {
-            technologyBlogTV.setVisibility(View.VISIBLE);
-            technologyGithubTV.setVisibility(View.GONE);
+            this.setTag(dataTagTV, baseGankData.url);
         }
 
+    }
+
+    /**
+     * @param dataTagTV dataTagTV
+     * @param url       url
+     */
+    private void setTag(TextView dataTagTV, String url) {
+        String key = UrlMatch.processUrl(url);
+        GradientDrawable drawable = (GradientDrawable) dataTagTV.getBackground();
+        if (UrlMatch.url2Content.containsKey(key)) {
+            drawable.setColor(UrlMatch.url2Color.get(key));
+            dataTagTV.setText(UrlMatch.url2Content.get(key));
+        } else {
+            if (this.type == GankType.video) {
+                drawable.setColor(UrlMatch.OTHER_VIDEO_COLOR);
+                dataTagTV.setText(UrlMatch.OTHER_VIDEO_CONTENT);
+            } else {
+                // github 的要特殊处理
+                if (url.contains(UrlMatch.GITHUB_PREFIX)) {
+                    drawable.setColor(UrlMatch.url2Color.get(UrlMatch.GITHUB_PREFIX));
+                    dataTagTV.setText(UrlMatch.url2Content.get(UrlMatch.GITHUB_PREFIX));
+                } else {
+                    drawable.setColor(UrlMatch.OTHER_BLOG_COLOR);
+                    dataTagTV.setText(UrlMatch.OTHER_BLOG_CONTENT);
+                }
+            }
+        }
     }
 
     /**
@@ -285,28 +290,6 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
             GlideUtils.displayNative(welfareIV, R.mipmap.img_default_gray);
         } else {
             GlideUtils.display(welfareIV, baseGankData.url);
-        }
-
-    }
-
-    /**
-     * 加载 视频
-     *
-     * @param easyRecyclerViewHolder easyRecyclerViewHolder
-     * @param position               position
-     */
-    private void loadingVideo(EasyRecyclerViewHolder easyRecyclerViewHolder, int position) {
-        BaseGankData baseGankData = this.getItem(position);
-        if (baseGankData == null) return;
-        RatioTextView ratioTextView = easyRecyclerViewHolder.findViewById(R.id.video_ratio_tv);
-
-        /*
-         * 标题
-         */
-        if (TextUtils.isEmpty(baseGankData.desc)) {
-            ratioTextView.setText("");
-        } else {
-            ratioTextView.setText(baseGankData.desc.trim());
         }
 
     }

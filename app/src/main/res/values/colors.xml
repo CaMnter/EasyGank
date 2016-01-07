@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 
   {EasyGank}  Copyright (C) {2015}  {CaMnter}
 
@@ -30,12 +29,25 @@
     <color name="colorAccent">#ffEF6C02</color>
 
     <color name="common_green">#ff80E54E</color>
+
     <color name="common_android_tag_bg">#ff388E3C</color>
     <color name="common_ios_tag_bg">#ff0377BC</color>
     <color name="common_js_tag_bg">#ffEF6C02</color>
+
     <color name="common_github_tag_bg">#ff000000</color>
     <color name="common_blog_tag_bg">#ff870D4F</color>
+    <color name="common_csdn_tag_bg">#ff870D4F</color>
+    <color name="common_bole_bg">#ff870D4F</color>
+    <color name="common_oschina_bg">#ff870D4F</color>
+    <color name="common_weixin_bg">#ff870D4F</color>
+
     <color name="title_tv">#ff000000</color>
+
+    <color name="common_tudou_tag_bg">#ffFD6600</color>
+    <color name="common_youku_tag_bg">#ff00A6E0</color>
+    <color name="common_tencent_tag_bg">#ff7ED800</color>
+    <color name="common_weibo_tag_bg">#ffF60C04</color>
+    <color name="common_miaopai_tag_bg">#ffFFD800</color>
 
     <!-- item -->
     <color name="item_date">#ffA8A8A8</color>
