@@ -35,10 +35,13 @@
     <dimen name="item_date_tv">12sp</dimen>
     <dimen name="item_tag_tv">12sp</dimen>
 
-    <!-- item daily -->
+    <!-- item data -->
+    <dimen name="data_type_tv">12sp</dimen>
+    <dimen name="data_via_tv">12sp</dimen>
+    <dimen name="data_border_padding_infra_spans">8dp</dimen>
+    <dimen name="data_border_divider_height">8dp</dimen>
 
-    <!-- item technology -->
-    <dimen name="technology_type_tv">12sp</dimen>
-    <dimen name="technology_via_tv">12sp</dimen>
+    <dimen name="card_corner_radius">2dp</dimen>
+
 
 </resources>

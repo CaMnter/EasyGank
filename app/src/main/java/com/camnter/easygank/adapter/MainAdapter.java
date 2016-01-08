@@ -283,6 +283,12 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         if (baseGankData == null) return;
         RatioImageView welfareIV = easyRecyclerViewHolder.findViewById(R.id.welfare_iv);
 
+        if(position%2==0){
+            welfareIV.setImageRatio(0.7f);
+        }else {
+            welfareIV.setImageRatio(0.6f);
+        }
+
         /*
          * 图片
          */

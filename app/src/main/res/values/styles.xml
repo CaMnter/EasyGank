@@ -32,9 +32,17 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/appBackground</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="EasyGank.Card" parent="CardView">
+        <item name="contentPadding">0dp</item>
+        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+        <item name="cardPreventCornerOverlap">false</item>
+        <item name="cardBackgroundColor">@drawable/shape_card_background_default</item>
     </style>
 
 

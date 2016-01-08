@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 
   {EasyGank}  Copyright (C) {2015}  {CaMnter}
 
@@ -24,66 +23,80 @@
   <http://www.gnu.org/philosophy/why-not-lgpl.html>.
 
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="12dp">
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="3dp"
+    app:cardPreventCornerOverlap="false"
+    app:contentPadding="0dp">
 
-    <TextView
-        android:id="@+id/data_title_tv"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:gravity="top|start"
-        android:lineSpacingExtra="2dp"
-        android:maxLines="2"
-        android:paddingBottom="6dp"
-        android:textColor="@color/item_title_tv"
-        android:textSize="@dimen/item_title_tv" />
-
-    <TextView
-        android:id="@+id/data_via_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/data_title_tv"
-        android:layout_marginTop="9dp"
-        android:textColor="@color/item_via"
-        android:textSize="@dimen/technology_via_tv"
-        android:paddingRight="4dp"
-        android:paddingEnd="4dp"
-        android:paddingLeft="0dp"
-        android:textStyle="italic"
-        android:typeface="serif" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/data_via_tv"
-        android:layout_marginTop="12dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:background="@drawable/selector_item_clickable"
+        android:padding="12dp">
 
         <TextView
-            android:id="@+id/data_tag_tv"
+            android:id="@+id/data_title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="top|start"
+            android:lineSpacingExtra="2dp"
+            android:maxLines="2"
+            android:paddingBottom="6dp"
+            android:textColor="@color/item_title_tv"
+            android:textSize="@dimen/item_title_tv" />
+
+        <TextView
+            android:id="@+id/data_via_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/bg_data_tag"
-            android:gravity="center"
-            android:textColor="@color/item_tag_tv"
-            android:textSize="@dimen/item_tag_tv" />
+            android:layout_below="@id/data_title_tv"
+            android:layout_marginTop="9dp"
+            android:paddingEnd="4dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="4dp"
+            android:textColor="@color/item_via"
+            android:textSize="@dimen/data_via_tv"
+            android:textStyle="italic"
+            android:typeface="serif" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/data_tag_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/data_via_tv"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/data_date_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/item_date"
-        android:textSize="@dimen/item_date_tv" />
+            <TextView
+                android:id="@+id/data_tag_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_data_tag"
+                android:gravity="center"
+                android:textColor="@color/item_tag_tv"
+                android:textSize="@dimen/item_tag_tv" />
 
+        </LinearLayout>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/data_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/data_tag_ll"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="222"
+            android:textColor="@color/item_date"
+            android:textSize="@dimen/item_date_tv" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

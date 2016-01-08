@@ -44,6 +44,7 @@ import com.camnter.easygank.gank.GankTypeDict;
 import com.camnter.easygank.presenter.MainPresenter;
 import com.camnter.easygank.presenter.iview.MainView;
 import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
+import com.camnter.easyrecyclerview.widget.decorator.EasyBorderDividerItemDecoration;
 import com.camnter.easyrecyclerview.widget.decorator.EasyDividerItemDecoration;
 
 import java.util.List;
@@ -51,7 +52,7 @@ import java.util.List;
 public class MainActivity extends BaseAppCompatActivity implements MainView {
 
     private EasyRecyclerView mainRV;
-    private EasyDividerItemDecoration dailyDecoration;
+    private EasyBorderDividerItemDecoration dataDecoration;
     private LinearLayoutManager mLinearLayoutManager;
     private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
     private MainAdapter mainAdapter;
@@ -89,8 +90,11 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
     @Override
     protected void initViews(Bundle savedInstanceState) {
         this.mainRV = this.findView(R.id.main_rv);
-        this.dailyDecoration = new EasyDividerItemDecoration(this, EasyDividerItemDecoration.VERTICAL_LIST);
-        this.mainRV.addItemDecoration(this.dailyDecoration);
+        this.dataDecoration = new EasyBorderDividerItemDecoration(
+                this.getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height),
+                this.getResources().getDimensionPixelOffset(R.dimen.data_border_padding_infra_spans)
+        );
+        this.mainRV.addItemDecoration(this.dataDecoration);
         this.mLinearLayoutManager = (LinearLayoutManager) this.mainRV.getLayoutManager();
         this.mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
     }
@@ -135,17 +139,23 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
                     // 不滚动
                     if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                         // 最后完成显示的item的position 正好是 最后一条数据的index
-                        if (manager.findLastCompletelyVisibleItemPosition() == (manager.getItemCount() - 1) && toLast) {
-                            MainActivity.this.loadMoreQuest();
+                        if (toLast && manager.findLastCompletelyVisibleItemPosition() == (manager.getItemCount() - 1)) {
+                            MainActivity.this.loadMoreRequest();
                         }
                     }
                 } else if (layoutManager instanceof StaggeredGridLayoutManager) {
                     StaggeredGridLayoutManager manager = (StaggeredGridLayoutManager) layoutManager;
                     // 不滚动
                     if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        // 最后完成显示的item的position 正好是 最后一条数据的index
-                        if (manager.findLastCompletelyVisibleItemPositions(new int[2])[1] == (manager.getItemCount() - 1) && toLast) {
-                            MainActivity.this.loadMoreQuest();
+                        /*
+                         * 由于是StaggeredGridLayoutManager
+                         * 取最底部数据可能有两个item，所以判断这之中有一个正好是 最后一条数据的index
+                         * 就OK
+                         */
+                        int[] bottom = manager.findLastCompletelyVisibleItemPositions(new int[2]);
+                        int lastItemCount = manager.getItemCount() - 1;
+                        if (toLast && (bottom[0] == lastItemCount || bottom[1] == lastItemCount)) {
+                            MainActivity.this.loadMoreRequest();
                         }
                     }
                 }
@@ -157,7 +167,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
     /**
      * 请求加载更多
      */
-    private void loadMoreQuest() {
+    private void loadMoreRequest() {
         // 没数据了
         if (this.emptyCount >= EMPTY_LIMIT) {
             this.showToast(MainActivity.this.getString(R.string.main_empty_data), Toast.LENGTH_LONG);
@@ -289,10 +299,10 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
         this.gankType = type;
 
         // 重置分割线
-        if (type == GankType.daily) {
-            this.mainRV.addItemDecoration(this.dailyDecoration);
+        if (type == GankType.welfare) {
+            this.mainRV.removeItemDecoration(this.dataDecoration);
         } else {
-            this.mainRV.removeItemDecoration(this.dailyDecoration);
+            this.mainRV.addItemDecoration(this.dataDecoration);
         }
 
         // 重置LayoutManager

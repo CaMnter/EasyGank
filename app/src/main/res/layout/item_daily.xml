@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 
   {EasyGank}  Copyright (C) {2015}  {CaMnter}
 
@@ -24,93 +23,105 @@
   <http://www.gnu.org/philosophy/why-not-lgpl.html>.
 
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="9dp">
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="3dp"
+    app:cardPreventCornerOverlap="false"
+    app:contentPadding="0dp">
 
-    <ImageView
-        android:id="@+id/daily_iv"
-        android:layout_width="120dp"
-        android:layout_height="90dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/img_default_gray" />
-
-    <TextView
-        android:id="@+id/daily_title_tv"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/daily_iv"
-        android:layout_marginLeft="9dp"
-        android:layout_marginStart="9dp"
-        android:layout_toEndOf="@id/daily_iv"
-        android:layout_toRightOf="@id/daily_iv"
-        android:ellipsize="end"
-        android:gravity="top|start"
-        android:lineSpacingExtra="2dp"
-        android:maxLines="2"
-        android:paddingBottom="6dp"
-        android:textColor="@color/item_title_tv"
-        android:textSize="@dimen/item_title_tv" />
+        android:layout_height="match_parent"
+        android:background="@drawable/selector_item_clickable"
+        android:padding="9dp">
 
-    <TextView
-        android:id="@+id/daily_date_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/item_date"
-        android:textSize="@dimen/item_date_tv" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/daily_iv"
-        android:layout_marginLeft="9dp"
-        android:layout_marginStart="9dp"
-        android:layout_toEndOf="@id/daily_iv"
-        android:layout_toRightOf="@id/daily_iv"
-        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/daily_iv"
+            android:layout_width="120dp"
+            android:layout_height="90dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/img_default_gray" />
 
         <TextView
-            android:id="@+id/daily_android_tag_tv"
-            android:layout_width="wrap_content"
+            android:id="@+id/daily_title_tv"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/bg_android_tag"
-            android:text="@string/daily_android_tag_tv"
-            android:gravity="center"
-            android:textColor="@color/item_tag_tv"
-            android:textSize="@dimen/item_tag_tv" />
+            android:layout_alignTop="@id/daily_iv"
+            android:layout_marginLeft="9dp"
+            android:layout_marginStart="9dp"
+            android:layout_toEndOf="@id/daily_iv"
+            android:layout_toRightOf="@id/daily_iv"
+            android:ellipsize="end"
+            android:gravity="top|start"
+            android:lineSpacingExtra="2dp"
+            android:maxLines="2"
+            android:paddingBottom="6dp"
+            android:textColor="@color/item_title_tv"
+            android:textSize="@dimen/item_title_tv" />
 
         <TextView
-            android:id="@+id/daily_ios_tag_tv"
+            android:id="@+id/daily_date_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/bg_ios_tag"
-            android:text="@string/daily_ios_tag_tv"
-            android:gravity="center"
-            android:textColor="@color/item_tag_tv"
-            android:textSize="@dimen/item_tag_tv" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/item_date"
+            android:textSize="@dimen/item_date_tv" />
 
-        <TextView
-            android:id="@+id/daily_js_tag_tv"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/bg_js_tag"
-            android:text="@string/daily_js_tag_tv"
-            android:gravity="center"
-            android:textColor="@color/item_tag_tv"
-            android:textSize="@dimen/item_tag_tv" />
+            android:layout_alignBottom="@id/daily_iv"
+            android:layout_marginLeft="9dp"
+            android:layout_marginStart="9dp"
+            android:layout_toEndOf="@id/daily_iv"
+            android:layout_toRightOf="@id/daily_iv"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/daily_android_tag_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_android_tag"
+                android:gravity="center"
+                android:text="@string/daily_android_tag_tv"
+                android:textColor="@color/item_tag_tv"
+                android:textSize="@dimen/item_tag_tv" />
+
+            <TextView
+                android:id="@+id/daily_ios_tag_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_ios_tag"
+                android:gravity="center"
+                android:text="@string/daily_ios_tag_tv"
+                android:textColor="@color/item_tag_tv"
+                android:textSize="@dimen/item_tag_tv" />
+
+            <TextView
+                android:id="@+id/daily_js_tag_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_js_tag"
+                android:gravity="center"
+                android:text="@string/daily_js_tag_tv"
+                android:textColor="@color/item_tag_tv"
+                android:textSize="@dimen/item_tag_tv" />
 
 
-    </LinearLayout>
+        </LinearLayout>
 
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
