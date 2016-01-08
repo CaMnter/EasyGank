@@ -45,7 +45,6 @@ import com.camnter.easygank.presenter.MainPresenter;
 import com.camnter.easygank.presenter.iview.MainView;
 import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
 import com.camnter.easyrecyclerview.widget.decorator.EasyBorderDividerItemDecoration;
-import com.camnter.easyrecyclerview.widget.decorator.EasyDividerItemDecoration;
 
 import java.util.List;
 
@@ -298,14 +297,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
         this.mainAdapter.clear();
         this.gankType = type;
 
-        // 重置分割线
-        if (type == GankType.welfare) {
-            this.mainRV.removeItemDecoration(this.dataDecoration);
-        } else {
-            this.mainRV.addItemDecoration(this.dataDecoration);
-        }
-
-        // 重置LayoutManager
+        // 重置LayoutManager 和 分割线
         switch (gankType) {
             case daily:
             case android:
@@ -313,9 +305,14 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
             case js:
             case resources:
             case video:
+                // 防止重复添加一样的
+                this.mainRV.removeItemDecoration(this.dataDecoration);
+
                 this.mainRV.setLayoutManager(this.mLinearLayoutManager);
+                this.mainRV.addItemDecoration(this.dataDecoration);
                 break;
             case welfare:
+                this.mainRV.removeItemDecoration(this.dataDecoration);
                 this.mainRV.setLayoutManager(this.mStaggeredGridLayoutManager);
                 break;
         }
