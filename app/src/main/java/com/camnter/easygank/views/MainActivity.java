@@ -40,6 +40,7 @@ import com.camnter.easygank.adapter.MainAdapter;
 import com.camnter.easygank.bean.BaseGankData;
 import com.camnter.easygank.bean.GankDaily;
 import com.camnter.easygank.core.BaseAppCompatActivity;
+import com.camnter.easygank.core.BaseDrawerLayoutActivity;
 import com.camnter.easygank.gank.GankType;
 import com.camnter.easygank.gank.GankTypeDict;
 import com.camnter.easygank.presenter.MainPresenter;
@@ -50,7 +51,7 @@ import com.camnter.easyrecyclerview.widget.decorator.EasyBorderDividerItemDecora
 
 import java.util.List;
 
-public class MainActivity extends BaseAppCompatActivity implements MainView {
+public class MainActivity extends BaseDrawerLayoutActivity implements MainView {
 
     private EasyRecyclerView mainRV;
     private EasyBorderDividerItemDecoration dataDecoration;
@@ -90,6 +91,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
      */
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        super.initViews(savedInstanceState);
         this.mainRV = this.findView(R.id.main_rv);
         this.dataDecoration = new EasyBorderDividerItemDecoration(
                 this.getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height),
@@ -191,7 +193,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
             return;
         }
 
-        // 如果没在刷新
+        // 如果没在刷新中
         if (!MainActivity.this.isRefreshStatus()) {
             // 加载更多
             this.presenter.setPage(MainActivity.this.presenter.getPage() + 1);
@@ -325,7 +327,6 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
             case video:
                 // 防止重复添加一样的
                 this.mainRV.removeItemDecoration(this.dataDecoration);
-
                 this.mainRV.setLayoutManager(this.mLinearLayoutManager);
                 this.mainRV.addItemDecoration(this.dataDecoration);
                 break;

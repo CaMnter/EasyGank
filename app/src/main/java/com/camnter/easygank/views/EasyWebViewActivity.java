@@ -132,37 +132,11 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.setTitle(getWebViewTitle());
-        this.mWebView = this.findView(R.id.webview);
-        this.mProgressBar = (ProgressBar) this.findViewById(R.id.webview_pb);
-        this.enableJavascript();
-        this.enableCaching();
-        this.enableCustomClients();
-        this.enableAdjust();
-        this.zoomedOut();
-        this.mWebView.loadUrl(this.getUrl());
-        this.showBack();
-        this.setTitle(this.getUrlTitle());
-    }
-
-    /**
-     * @see #onPrepareOptionsMenu
-     * @see #onOptionsItemSelected
-     */
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.menu_web_view, menu);
         return true;
     }
 
-    /**
-     * @param item The menu item that was selected.
-     * @return boolean Return false to allow normal menu processing to
-     * proceed, true to consume it here.
-     * @see #onCreateOptionsMenu
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -209,11 +183,42 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
         return R.layout.activity_webview;
     }
 
+    /**
+     * Initialize the view in the layout
+     *
+     * @param savedInstanceState savedInstanceState
+     */
+    @Override
+    protected void initViews(Bundle savedInstanceState) {
+        super.initViews(savedInstanceState);
+        this.mWebView = this.findView(R.id.webview);
+        this.mProgressBar = (ProgressBar) this.findViewById(R.id.webview_pb);
 
-    private String getWebViewTitle() {
-        String title = getIntent().getStringExtra(EXTRA_TITLE);
-        return title == null ? "" : title;
     }
+
+    /**
+     * Initialize the View of the listener
+     */
+    @Override
+    protected void initListeners() {
+
+    }
+
+    /**
+     * Initialize the Activity data
+     */
+    @Override
+    protected void initData() {
+        this.enableJavascript();
+        this.enableCaching();
+        this.enableCustomClients();
+        this.enableAdjust();
+        this.zoomedOut();
+        this.mWebView.loadUrl(this.getUrl());
+        this.showBack();
+        this.setTitle(this.getUrlTitle());
+    }
+
 
     private void enableCustomClients() {
         this.mWebView.setWebViewClient(new WebViewClient() {
@@ -224,11 +229,6 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
             }
 
             /**
-             * Notify the host application that a page has finished loading. This method
-             * is called only for main frame. When onPageFinished() is called, the
-             * rendering picture may not be updated yet. To get the notification for the
-             * new Picture, use {@link WebView.PictureListener#onNewPicture}.
-             *
              * @param view The WebView that is initiating the callback.
              * @param url  The url of the page.
              */
@@ -312,7 +312,6 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-
             // 横屏优先级最高
             if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 this.switchScreenConfiguration(null);

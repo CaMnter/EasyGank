@@ -28,7 +28,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,22 +40,27 @@ import com.camnter.easygank.R;
  * Created by：CaMnter
  * Time：2016-01-05 00:32
  */
-public abstract class BaseToolbarActivity extends AppCompatActivity {
+public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
 
     protected Toolbar mToolbar;
     protected AppBarLayout mAppBarLayout;
     protected ActionBarHelper mActionBarHelper;
     protected boolean mIsHidden = false;
 
+    /**
+     * Initialize the view in the layout
+     *
+     * @param savedInstanceState savedInstanceState
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.setContentView(this.getLayoutId());
+    protected void initViews(Bundle savedInstanceState) {
         this.initToolbar();
     }
 
+    /**
+     * init the toolbar
+     */
     protected void initToolbar() {
-
         this.mToolbar = this.findView(R.id.toolbar);
         this.mAppBarLayout = this.findView(R.id.app_bar_layout);
 
@@ -73,7 +77,6 @@ public abstract class BaseToolbarActivity extends AppCompatActivity {
             this.mAppBarLayout.setElevation(6.6f);
         }
     }
-
 
     /**
      * @param item The menu item that was selected.
@@ -122,25 +125,6 @@ public abstract class BaseToolbarActivity extends AppCompatActivity {
             this.mAppBarLayout.setVisibility(View.GONE);
         }
 
-    }
-
-    /**
-     * Fill in layout id
-     *
-     * @return layout id
-     */
-    protected abstract int getLayoutId();
-
-    /**
-     * Find the view by id
-     *
-     * @param id  id
-     * @param <V> V
-     * @return V
-     */
-    @SuppressWarnings("unchecked")
-    protected <V extends View> V findView(int id) {
-        return (V) this.findViewById(id);
     }
 
     /**

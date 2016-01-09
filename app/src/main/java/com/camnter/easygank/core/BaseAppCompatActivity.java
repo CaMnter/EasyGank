@@ -28,6 +28,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -39,14 +40,34 @@ import com.camnter.easygank.utils.ToastUtils;
  * Created by：CaMnter
  * Time：2016-01-02 15:02
  */
-public abstract class BaseAppCompatActivity extends BaseDrawerLayoutActivity {
+public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setContentView(this.getLayoutId());
         this.initViews(savedInstanceState);
         this.initData();
         this.initListeners();
+    }
+
+    /**
+     * Fill in layout id
+     *
+     * @return layout id
+     */
+    protected abstract int getLayoutId();
+
+    /**
+     * Find the view by id
+     *
+     * @param id  id
+     * @param <V> V
+     * @return V
+     */
+    @SuppressWarnings("unchecked")
+    protected <V extends View> V findView(int id) {
+        return (V) this.findViewById(id);
     }
 
 
@@ -66,18 +87,6 @@ public abstract class BaseAppCompatActivity extends BaseDrawerLayoutActivity {
      * Initialize the Activity data
      */
     protected abstract void initData();
-
-    /**
-     * Find the view by id
-     *
-     * @param id  id
-     * @param <V> V
-     * @return V
-     */
-    @SuppressWarnings("unchecked")
-    protected <V extends View> V findView(int id) {
-        return (V) this.findViewById(id);
-    }
 
     /**
      * @param intent The intent to start.
