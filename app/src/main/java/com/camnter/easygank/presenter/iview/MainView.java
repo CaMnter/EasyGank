@@ -26,7 +26,7 @@ package com.camnter.easygank.presenter.iview;
 
 import com.camnter.easygank.bean.BaseGankData;
 import com.camnter.easygank.bean.GankDaily;
-import com.camnter.easygank.core.MvpView;
+import com.camnter.easygank.core.mvp.MvpView;
 import com.camnter.easygank.gank.GankType;
 
 import java.util.List;

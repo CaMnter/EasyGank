@@ -312,20 +312,21 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            // 横屏优先级最高
+            if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                this.switchScreenConfiguration(null);
+                return true;
+            }
             if (GankTypeDict.urlType2TypeDict.get(this.getGankType()) == GankType.video) {
-                // 横屏
-                if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    this.switchScreenConfiguration(null);
+                if (this.goBack) {
+                    this.finish();
                 } else {
-                    if (this.goBack) {
-                        this.finish();
-                    } else {
-                        this.goBack = true;
-                        Message msg = this.mHandler.obtainMessage();
-                        msg.what = MSG_WHAT_RESET_GO_BACK;
-                        this.mHandler.sendMessageDelayed(msg, RESET_GO_BACK_INTERVAL);
-                        ToastUtils.show(this, this.getString(R.string.common_go_back_tip), ToastUtils.LENGTH_SHORT);
-                    }
+                    this.goBack = true;
+                    Message msg = this.mHandler.obtainMessage();
+                    msg.what = MSG_WHAT_RESET_GO_BACK;
+                    this.mHandler.sendMessageDelayed(msg, RESET_GO_BACK_INTERVAL);
+                    ToastUtils.show(this, this.getString(R.string.common_go_back_tip), ToastUtils.LENGTH_SHORT);
                 }
             } else {
                 this.finish();

@@ -24,6 +24,9 @@
 
 package com.camnter.easygank.core;
 
+import com.camnter.easygank.core.mvp.MvpView;
+import com.camnter.easygank.core.mvp.Presenter;
+
 import rx.subscriptions.CompositeSubscription;
 
 /**

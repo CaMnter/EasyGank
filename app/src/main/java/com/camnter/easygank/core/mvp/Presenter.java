@@ -22,7 +22,7 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package com.camnter.easygank.core;
+package com.camnter.easygank.core.mvp;
 
 /**
  * Description：Presenter
