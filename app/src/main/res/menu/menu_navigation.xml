@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 
   {EasyGank}  Copyright (C) {2015}  {CaMnter}
 
@@ -28,7 +27,7 @@
     <item
         android:id="@+id/navigation_sub_setting"
 
-        android:title="@string/app_name" />
+        android:title="@string/app_menu" />
     <item
         android:id="@+id/navigation_title"
         android:title="@string/navigation_title">

@@ -47,7 +47,16 @@
     <string name="common_video">休息视频</string>
     <string name="common_resources">拓展资源</string>
     <string name="common_via">via. %s</string>
+    <string name="common_go_back_tip">再按一次退出</string>
+    <string name="common_copy_success">复制成功</string>
 
     <string name="technology_github_tag_tv">github</string>
     <string name="technology_blog_tag_tv">文章</string>
+
+    <string name="menu_web_refresh">重新加载</string>
+    <string name="menu_web_copy">复制链接</string>
+    <string name="menu_web_horizontal">横屏显示</string>
+    <string name="menu_web_vertical">竖屏显示</string>
+
+
 </resources>

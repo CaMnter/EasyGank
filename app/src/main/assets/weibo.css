@@ -1,0 +1,15 @@
+html, body, .video_wrap, .video_inner, .poster_wrap {
+    width:100%!important;
+    height:100%!important;
+    margin: 0!important;
+    padding: 0!important;
+}
+.video_wrap .poster_wrap img.poster {
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+}
+.cover_ad {
+    display: none;
+}

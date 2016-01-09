@@ -23,7 +23,25 @@
   <http://www.gnu.org/philosophy/why-not-lgpl.html>.
 
 -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/item_card_background" />
-    <corners android:radius="@dimen/card_corner_radius" />
-</shape>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/web_refresh"
+        android:orderInCategory="6"
+        android:title="@string/menu_web_refresh"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/web_copy"
+        android:orderInCategory="26"
+        android:title="@string/menu_web_copy"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/web_switch_screen_mode"
+        android:orderInCategory="26"
+        android:title="@string/menu_web_horizontal"
+        app:showAsAction="never" />
+
+</menu>

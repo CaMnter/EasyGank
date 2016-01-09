@@ -18,6 +18,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java/']
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
+            res.srcDirs = ['src/main/res','src/main/res/']
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+        }
+    }
+
 }
 
 repositories {
@@ -33,7 +43,7 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:cardview-v7:23.1.1'
 
-    // CaMnter
+    // CaMnter ( Yuanyu Zhang https://github.com/CaMnter )
     compile 'com.camnter.easyrecyclerview:easyrecyclerview:1.1.0'
 
     // Google

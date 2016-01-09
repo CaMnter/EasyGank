@@ -32,6 +32,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.camnter.easygank.R;
@@ -43,6 +44,7 @@ import com.camnter.easygank.gank.GankType;
 import com.camnter.easygank.gank.GankTypeDict;
 import com.camnter.easygank.presenter.MainPresenter;
 import com.camnter.easygank.presenter.iview.MainView;
+import com.camnter.easyrecyclerview.holder.EasyRecyclerViewHolder;
 import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
 import com.camnter.easyrecyclerview.widget.decorator.EasyBorderDividerItemDecoration;
 
@@ -96,6 +98,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
         this.mainRV.addItemDecoration(this.dataDecoration);
         this.mLinearLayoutManager = (LinearLayoutManager) this.mainRV.getLayoutManager();
         this.mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        this.mActionBarHelper.setDrawerTitle(this.getResources().getString(R.string.app_menu));
     }
 
     /**
@@ -104,6 +107,21 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
     @Override
     protected void initListeners() {
         this.mainRV.addOnScrollListener(this.getRecyclerViewOnScrollListener());
+        this.mainAdapter.setOnItemClickListener(new EasyRecyclerViewHolder.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Object o = MainActivity.this.mainAdapter.getItem(position);
+                if (o instanceof BaseGankData) {
+                    BaseGankData baseGankData = (BaseGankData) o;
+                    EasyWebViewActivity.toUrl(
+                            MainActivity.this,
+                            baseGankData.url,
+                            baseGankData.desc,
+                            baseGankData.type
+                    );
+                }
+            }
+        });
     }
 
     /**
@@ -385,5 +403,6 @@ public class MainActivity extends BaseAppCompatActivity implements MainView {
         this.refresh(true);
         this.presenter.switchType(gankType);
     }
+
 
 }

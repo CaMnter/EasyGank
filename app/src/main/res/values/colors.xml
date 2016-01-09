@@ -27,9 +27,7 @@
     <color name="appBackground">#ffF6F6EF</color>
     <color name="colorPrimary">#ff2C1883</color>
     <color name="colorPrimaryDark">#ff301B91</color>
-    <color name="colorAccent">#ffEF6C02</color>
-
-    <color name="common_green">#ff80E54E</color>
+    <color name="colorAccent">#ff388E3C</color>
 
     <color name="common_android_tag_bg">#ff388E3C</color>
     <color name="common_ios_tag_bg">#ff0377BC</color>

@@ -1,0 +1,22 @@
+html,body, .video_wrap, .vid, .vid_img, .video {
+    width: 100%!important;
+    height: 100%!important;
+}
+.detail_head_padding {
+    padding:0;
+}
+.video_wrap {
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 10000;
+}
+.video_img {
+    margin: 0px auto;
+    height: 100%!important;
+    width:auto;
+    z-index: 0;
+}
+#video {
+    height:auto!important;
+}

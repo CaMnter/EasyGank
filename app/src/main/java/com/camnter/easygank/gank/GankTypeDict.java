@@ -29,6 +29,7 @@ import android.util.SparseArray;
 import com.camnter.easygank.R;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Description：GankTypeDict
@@ -50,6 +51,7 @@ public class GankTypeDict {
     };
     public static final SparseArray<GankType> menuId2TypeDict = new SparseArray<>();
     public static final HashMap<GankType, String> type2UrlTypeDict = new HashMap<>();
+    public static final HashMap<String, GankType> urlType2TypeDict = new HashMap<>();
 
     static {
         menuId2TypeDict.put(R.id.navigation_daily, GankType.daily);
@@ -67,5 +69,8 @@ public class GankTypeDict {
         type2UrlTypeDict.put(GankType.video, "休息视频");
         type2UrlTypeDict.put(GankType.resources, "拓展资源");
         type2UrlTypeDict.put(GankType.js, "前端");
+        for (Map.Entry<GankType, String> entry : type2UrlTypeDict.entrySet()) {
+            urlType2TypeDict.put(entry.getValue(), entry.getKey());
+        }
     }
 }

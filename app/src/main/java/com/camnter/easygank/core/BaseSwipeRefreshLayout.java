@@ -40,13 +40,6 @@ public abstract class BaseSwipeRefreshLayout extends BaseToolbarActivity {
 
     private boolean refreshStatus = false;
 
-    /**
-     * Fill in layout id
-     *
-     * @return layout id
-     */
-    protected abstract int getLayoutId();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
