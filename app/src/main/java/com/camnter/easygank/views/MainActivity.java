@@ -48,6 +48,7 @@ import com.camnter.easyrecyclerview.holder.EasyRecyclerViewHolder;
 import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
 import com.camnter.easyrecyclerview.widget.decorator.EasyBorderDividerItemDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseDrawerLayoutActivity implements MainView {
@@ -125,6 +126,9 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView {
                             baseGankData.desc,
                             baseGankData.type
                     );
+                } else if (o instanceof GankDaily) {
+                    GankDaily daily = (GankDaily) o;
+                    MainActivity.this.presenter.getDailyDetail(daily.results);
                 }
             }
         });
@@ -342,7 +346,19 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView {
         }
     }
 
-    private void clearDecoration(){
+    /**
+     * 获取每日详情数据
+     *
+     * @param title  title
+     * @param detail detail
+     */
+    @Override
+    public void getDailyDetail(String title, ArrayList<ArrayList<BaseGankData>> detail) {
+        DailyDetailActivity.startActivity(this, title, detail);
+    }
+
+
+    private void clearDecoration() {
         this.mainRV.removeItemDecoration(this.dataDecoration);
         this.mainRV.removeItemDecoration(this.welfareDecoration);
     }

@@ -29,6 +29,7 @@ import com.camnter.easygank.bean.GankDaily;
 import com.camnter.easygank.core.mvp.MvpView;
 import com.camnter.easygank.gank.GankType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,5 +62,13 @@ public interface MainView extends MvpView {
      * @param type type
      */
     void onSwitchSuccess(GankType type);
+
+    /**
+     * 获取每日详情数据
+     *
+     * @param title  title
+     * @param detail detail
+     */
+    void getDailyDetail(String title, ArrayList<ArrayList<BaseGankData>> detail);
 
 }

@@ -23,30 +23,8 @@
   <http://www.gnu.org/philosophy/why-not-lgpl.html>.
 
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    tools:context="com.camnter.easygank.views.DailyDetailActivity">
-
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinator_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include layout="@layout/include_toolbar" />
-
-        <com.camnter.easyrecyclerview.widget.EasyRecyclerView
-            android:id="@+id/daily_detail_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-    </android.support.design.widget.CoordinatorLayout>
-
-</LinearLayout>
-
+<resources>
+    <item name="tag_card_item_url" type="id" />
+    <item name="tag_card_item_desc" type="id" />
+    <item name="tag_card_item_type" type="id" />
+</resources>

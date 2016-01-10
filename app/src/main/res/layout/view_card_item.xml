@@ -23,30 +23,12 @@
   <http://www.gnu.org/philosophy/why-not-lgpl.html>.
 
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_item_tv"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    tools:context="com.camnter.easygank.views.DailyDetailActivity">
-
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinator_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include layout="@layout/include_toolbar" />
-
-        <com.camnter.easyrecyclerview.widget.EasyRecyclerView
-            android:id="@+id/daily_detail_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-    </android.support.design.widget.CoordinatorLayout>
-
-</LinearLayout>
-
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_item_clickable"
+    android:gravity="start|top"
+    android:lineSpacingExtra="4dp"
+    android:textColor="@color/common_title_tv"
+    android:textSize="@dimen/card_item_title_tv" />

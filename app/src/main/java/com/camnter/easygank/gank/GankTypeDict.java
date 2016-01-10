@@ -50,8 +50,11 @@ public class GankTypeDict {
             R.id.navigation_resources
     };
     public static final SparseArray<GankType> menuId2TypeDict = new SparseArray<>();
+
     public static final HashMap<GankType, String> type2UrlTypeDict = new HashMap<>();
     public static final HashMap<String, GankType> urlType2TypeDict = new HashMap<>();
+
+    public static final HashMap<String, Integer> urlType2ColorDict = new HashMap<>();
 
     static {
         menuId2TypeDict.put(R.id.navigation_daily, GankType.daily);
@@ -62,7 +65,6 @@ public class GankTypeDict {
         menuId2TypeDict.put(R.id.navigation_resources, GankType.resources);
         menuId2TypeDict.put(R.id.navigation_video, GankType.video);
 
-
         type2UrlTypeDict.put(GankType.welfare, "福利");
         type2UrlTypeDict.put(GankType.android, "Android");
         type2UrlTypeDict.put(GankType.ios, "iOS");
@@ -72,5 +74,15 @@ public class GankTypeDict {
         for (Map.Entry<GankType, String> entry : type2UrlTypeDict.entrySet()) {
             urlType2TypeDict.put(entry.getValue(), entry.getKey());
         }
+
+        urlType2ColorDict.put("福利", 0xffFFAEC9);
+        urlType2ColorDict.put("Android", 0xff388E3C);
+        urlType2ColorDict.put("iOS", 0xff0377BC);
+        urlType2ColorDict.put("休息视频", 0xff039588);
+        urlType2ColorDict.put("拓展资源", 0xff546E7A);
+        urlType2ColorDict.put("前端", 0xffEF6C02);
+        urlType2ColorDict.put("App", 0xffC02E34);
+        urlType2ColorDict.put("瞎推荐", 0xff4527A0);
+
     }
 }

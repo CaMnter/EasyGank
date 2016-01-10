@@ -63,7 +63,7 @@ public class GankDaily extends Error implements Serializable {
         public ArrayList<BaseGankData> resourcesData;
 
         @SerializedName("App")
-        public ArrayList<BaseGankData> appfareData;
+        public ArrayList<BaseGankData> appData;
 
         @SerializedName("瞎推荐")
         public ArrayList<BaseGankData> recommendData;

@@ -27,6 +27,7 @@ package com.camnter.easygank.presenter;
 import com.camnter.easygank.bean.BaseGankData;
 import com.camnter.easygank.bean.GankDaily;
 import com.camnter.easygank.bean.GankData;
+import com.camnter.easygank.constant.Constant;
 import com.camnter.easygank.core.BasePresenter;
 import com.camnter.easygank.gank.GankApi;
 import com.camnter.easygank.gank.GankType;
@@ -295,8 +296,6 @@ public class MainPresenter extends BasePresenter<MainView> {
                             if (MainPresenter.this.getMvpView() != null)
                                 MainPresenter.this.getMvpView().onSwitchSuccess(type);
                         }
-
-
                         if (MainPresenter.this.getMvpView() != null)
                             MainPresenter.this.getMvpView().onGetDataSuccess(baseGankData, refresh);
                     }
@@ -323,7 +322,60 @@ public class MainPresenter extends BasePresenter<MainView> {
                 this.getData(type, true, oldPage);
                 break;
         }
+    }
 
+
+    public void getDailyDetail(final GankDaily.DailyResults results) {
+        this.mCompositeSubscription.add(Observable.just(results)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<GankDaily.DailyResults, ArrayList<ArrayList<BaseGankData>>>() {
+                    @Override
+                    public ArrayList<ArrayList<BaseGankData>> call(GankDaily.DailyResults dailyResults) {
+                        ArrayList<ArrayList<BaseGankData>> cardData = new ArrayList<>();
+                        if (dailyResults.welfareData != null && dailyResults.welfareData.size() > 0)
+                            cardData.add(dailyResults.welfareData);
+                        if (dailyResults.androidData != null && dailyResults.androidData.size() > 0)
+                            cardData.add(dailyResults.androidData);
+                        if (dailyResults.iosData != null && dailyResults.iosData.size() > 0)
+                            cardData.add(dailyResults.iosData);
+                        if (dailyResults.jsData != null && dailyResults.jsData.size() > 0)
+                            cardData.add(dailyResults.jsData);
+                        if (dailyResults.videoData != null && dailyResults.videoData.size() > 0)
+                            cardData.add(dailyResults.videoData);
+                        if (dailyResults.resourcesData != null && dailyResults.resourcesData.size() > 0)
+                            cardData.add(dailyResults.resourcesData);
+                        if (dailyResults.appData != null && dailyResults.appData.size() > 0)
+                            cardData.add(dailyResults.appData);
+                        if (dailyResults.recommendData != null && dailyResults.recommendData.size() > 0)
+                            cardData.add(dailyResults.recommendData);
+                        return cardData;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ArrayList<ArrayList<BaseGankData>>>() {
+                    @Override
+                    public void onCompleted() {
+                        if (MainPresenter.this.mCompositeSubscription != null)
+                            MainPresenter.this.mCompositeSubscription.remove(this);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Logger.d(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<ArrayList<BaseGankData>> detail) {
+                        if (MainPresenter.this.getMvpView() != null) {
+                            // 相信福利一定有
+                            MainPresenter.this.getMvpView().getDailyDetail(
+                                    DateUtils.date2String(results.welfareData.get(0).publishedAt.getTime(),
+                                            Constant.DAILY_DATE_FORMAT), detail
+                            );
+                        }
+
+                    }
+                }));
     }
 
 

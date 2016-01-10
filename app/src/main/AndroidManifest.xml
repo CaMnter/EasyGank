@@ -54,6 +54,12 @@
             android:hardwareAccelerated="true"
             android:launchMode="singleTask" />
 
+        <activity
+            android:name=".views.DailyDetailActivity"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+
     </application>
 
 </manifest>

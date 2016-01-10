@@ -147,7 +147,6 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         TextView iOSTagTV = easyRecyclerViewHolder.findViewById(R.id.daily_ios_tag_tv);
         TextView jsTagTV = easyRecyclerViewHolder.findViewById(R.id.daily_js_tag_tv);
 
-
         /*
          * 标题 和 日期
          *
@@ -289,9 +288,7 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
             welfareIV.setImageRatio(0.6f);
         }
 
-        /*
-         * 图片
-         */
+        // 图片
         if (TextUtils.isEmpty(baseGankData.url)) {
             GlideUtils.displayNative(welfareIV, R.mipmap.img_default_gray);
         } else {

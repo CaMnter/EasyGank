@@ -30,8 +30,6 @@ package com.camnter.easygank.constant;
  */
 public class Constant {
 
-
-
     public static final String DAILY_DATE_FORMAT = "yyyy.MM.dd";
 
 }
