@@ -41,6 +41,9 @@
     <dimen name="data_border_padding_infra_spans">8dp</dimen>
     <dimen name="data_border_divider_height">8dp</dimen>
 
+    <dimen name="welfare_border_padding_infra_spans">3dp</dimen>
+    <dimen name="welfare_border_divider_height">6dp</dimen>
+
     <dimen name="card_corner_radius">2dp</dimen>
 
 

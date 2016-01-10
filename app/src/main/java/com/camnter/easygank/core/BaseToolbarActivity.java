@@ -45,7 +45,6 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
     protected Toolbar mToolbar;
     protected AppBarLayout mAppBarLayout;
     protected ActionBarHelper mActionBarHelper;
-    protected boolean mIsHidden = false;
 
     /**
      * Initialize the view in the layout
@@ -113,18 +112,11 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
      * @param visibility visibility
      */
     protected void setAppBarLayoutVisibility(boolean visibility) {
-        // 0.4秒内
-        this.mAppBarLayout.animate()
-                .setDuration(400)
-                .translationY(visibility ? 0 : -this.mAppBarLayout.getHeight())
-                .setInterpolator(new DecelerateInterpolator(2))
-                .start();
         if (visibility) {
             this.mAppBarLayout.setVisibility(View.VISIBLE);
         } else {
             this.mAppBarLayout.setVisibility(View.GONE);
         }
-
     }
 
     /**

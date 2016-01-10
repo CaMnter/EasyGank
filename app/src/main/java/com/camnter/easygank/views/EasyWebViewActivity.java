@@ -53,7 +53,7 @@ import com.camnter.easygank.utils.ToastUtils;
 import com.camnter.easygank.utils.WebViewUtils;
 
 /**
- * Description：WebViewUtils
+ * Description：EasyWebViewActivity
  * Created by：CaMnter
  * Time：2016-01-08 16:43
  */

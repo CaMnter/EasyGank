@@ -39,7 +39,6 @@ import com.camnter.easygank.R;
 import com.camnter.easygank.adapter.MainAdapter;
 import com.camnter.easygank.bean.BaseGankData;
 import com.camnter.easygank.bean.GankDaily;
-import com.camnter.easygank.core.BaseAppCompatActivity;
 import com.camnter.easygank.core.BaseDrawerLayoutActivity;
 import com.camnter.easygank.gank.GankType;
 import com.camnter.easygank.gank.GankTypeDict;
@@ -55,6 +54,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView {
 
     private EasyRecyclerView mainRV;
     private EasyBorderDividerItemDecoration dataDecoration;
+    private EasyBorderDividerItemDecoration welfareDecoration;
     private LinearLayoutManager mLinearLayoutManager;
     private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
     private MainAdapter mainAdapter;
@@ -96,6 +96,10 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView {
         this.dataDecoration = new EasyBorderDividerItemDecoration(
                 this.getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height),
                 this.getResources().getDimensionPixelOffset(R.dimen.data_border_padding_infra_spans)
+        );
+        this.welfareDecoration = new EasyBorderDividerItemDecoration(
+                this.getResources().getDimensionPixelOffset(R.dimen.welfare_border_divider_height),
+                this.getResources().getDimensionPixelOffset(R.dimen.welfare_border_padding_infra_spans)
         );
         this.mainRV.addItemDecoration(this.dataDecoration);
         this.mLinearLayoutManager = (LinearLayoutManager) this.mainRV.getLayoutManager();
@@ -326,15 +330,21 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView {
             case resources:
             case video:
                 // 防止重复添加一样的
-                this.mainRV.removeItemDecoration(this.dataDecoration);
+                this.clearDecoration();
                 this.mainRV.setLayoutManager(this.mLinearLayoutManager);
                 this.mainRV.addItemDecoration(this.dataDecoration);
                 break;
             case welfare:
-                this.mainRV.removeItemDecoration(this.dataDecoration);
+                this.clearDecoration();
                 this.mainRV.setLayoutManager(this.mStaggeredGridLayoutManager);
+                this.mainRV.addItemDecoration(this.welfareDecoration);
                 break;
         }
+    }
+
+    private void clearDecoration(){
+        this.mainRV.removeItemDecoration(this.dataDecoration);
+        this.mainRV.removeItemDecoration(this.welfareDecoration);
     }
 
     /**

@@ -143,8 +143,14 @@ public class MainPresenter extends BasePresenter<MainView> {
         if (oldPage != GankTypeDict.DONT_SWITCH) {
             this.page = 1;
         }
-        this.mCompositeSubscription.add(Observable.from(this.currentDate.getPastTime())
+        this.mCompositeSubscription.add(Observable.just(this.currentDate)
                 .subscribeOn(Schedulers.io())
+                .flatMapIterable(new Func1<EasyDate, List<EasyDate>>() {
+                    @Override
+                    public List<EasyDate> call(EasyDate easyDate) {
+                        return easyDate.getPastTime();
+                    }
+                })
                 .flatMap(new Func1<EasyDate, Observable<GankDaily>>() {
                     @Override
                     public Observable<GankDaily> call(EasyDate easyDate) {
