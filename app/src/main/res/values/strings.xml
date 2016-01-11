@@ -47,6 +47,7 @@
     <string name="common_video">休息视频</string>
     <string name="common_resources">拓展资源</string>
     <string name="common_via">via. %s</string>
+    <string name="common_via_key">via. </string>
     <string name="common_go_back_tip">再按一次退出</string>
     <string name="common_copy_success">复制成功</string>
 

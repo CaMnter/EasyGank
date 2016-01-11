@@ -23,12 +23,6 @@
   <http://www.gnu.org/philosophy/why-not-lgpl.html>.
 
 -->
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/card_item_tv"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/selector_card_item_clickable"
-    android:gravity="start|top"
-    android:lineSpacingExtra="4dp"
-    android:textColor="@color/common_title_tv"
-    android:textSize="@dimen/card_item_title_tv" />
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/item_card_background" />
+</shape>

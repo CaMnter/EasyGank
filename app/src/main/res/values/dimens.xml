@@ -45,11 +45,13 @@
     <dimen name="card_item_title_tv">15sp</dimen>
     <dimen name="card_item_content_padding">12dp</dimen>
     <dimen name="card_category_padding_top_bottom">15dp</dimen>
+    <dimen name="card_item_divider">0.6dp</dimen>
 
     <dimen name="welfare_border_padding_infra_spans">3dp</dimen>
     <dimen name="welfare_border_divider_height">6dp</dimen>
 
     <dimen name="card_corner_radius">2dp</dimen>
+    <dimen name="card_elevation">3dp</dimen>
 
 
 </resources>

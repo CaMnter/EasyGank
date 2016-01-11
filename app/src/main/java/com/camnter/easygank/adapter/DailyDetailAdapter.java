@@ -26,8 +26,10 @@ package com.camnter.easygank.adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -49,6 +51,8 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
     private Context context;
     private int cardItemPadding;
     private int cardCategoryPaddingTopBottom;
+    private int cardItemDivider;
+    private static final int dividerColor = 0xffCCCCCC;
 
     private DailyDetailAdapter.onCardItemClickListener onCardItemClickListener;
 
@@ -56,6 +60,7 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
         this.context = context;
         this.cardItemPadding = this.context.getResources().getDimensionPixelOffset(R.dimen.card_item_content_padding);
         this.cardCategoryPaddingTopBottom = this.context.getResources().getDimensionPixelOffset(R.dimen.card_category_padding_top_bottom);
+        this.cardItemDivider = this.context.getResources().getDimensionPixelOffset(R.dimen.card_item_divider);
     }
 
     @Override
@@ -76,8 +81,10 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
             if (i == 0) {
                 TextView categoryTV = this.createCardCategory(baseGankData.type);
                 detailLL.addView(categoryTV);
+                detailLL.addView(this.createDivider());
             }
             detailLL.addView(itemModel);
+            detailLL.addView(this.createDivider());
         }
 
     }
@@ -95,6 +102,11 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
                 this.cardItemPadding,
                 this.cardItemPadding
         );
+        String content = baseGankData.desc.trim() +
+                "   " +
+                this.context.getString(R.string.common_via, baseGankData.who);
+        SpannableStringBuilder ssb = new SpannableStringBuilder(content);
+
         itemModel.setText(baseGankData.desc.trim());
         itemModel.setTag(R.id.tag_card_item_url, baseGankData.url);
         itemModel.setTag(R.id.tag_card_item_desc, baseGankData.desc.trim());
@@ -127,6 +139,16 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
         categoryTV.setTextColor(GankTypeDict.urlType2ColorDict.get(urlType));
         categoryTV.setBackgroundResource(R.drawable.shape_card_background_default);
         return categoryTV;
+    }
+
+    private View createDivider() {
+        View divider = new View(this.context);
+        divider.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                this.cardItemDivider)
+        );
+        divider.setBackgroundColor(dividerColor);
+        return divider;
     }
 
     public void setOnCardItemClickListener(DailyDetailAdapter.onCardItemClickListener onCardItemClickListener) {
