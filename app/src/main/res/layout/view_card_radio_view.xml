@@ -23,32 +23,13 @@
   <http://www.gnu.org/philosophy/why-not-lgpl.html>.
 
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.camnter.easygank.widget.RatioImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_item_iv"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/colorPrimaryDark"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    tools:context="com.camnter.easygank.views.EasyWebViewActivity">
-
-    <include layout="@layout/include_toolbar" />
-
-    <ProgressBar
-        android:id="@+id/webview_pb"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:max="100"
-        android:progress="0"
-        android:progressDrawable="@drawable/layerlist_webview_progress" />
-
-    <WebView
-        android:id="@+id/webview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layerType="hardware" />
-
-
-</LinearLayout>
-
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_card_item_clickable"
+    android:padding="@dimen/card_item_content_padding"
+    android:scaleType="centerCrop"
+    app:imageRatio="1.0"
+    app:imageRatioType="widthHeight" />

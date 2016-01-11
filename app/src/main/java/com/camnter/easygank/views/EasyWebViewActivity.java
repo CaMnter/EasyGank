@@ -24,6 +24,7 @@
 
 package com.camnter.easygank.views;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -157,15 +158,24 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            this.setAppBarLayoutVisibility(true);
+        }
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            this.setAppBarLayoutVisibility(false);
+        }
+    }
+
     public void switchScreenConfiguration(MenuItem item) {
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
             if (item != null) item.setTitle(this.getString(R.string.menu_web_vertical));
-            this.setAppBarLayoutVisibility(false);
         } else {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
             if (item != null) item.setTitle(this.getString(R.string.menu_web_horizontal));
-            this.setAppBarLayoutVisibility(true);
         }
     }
 
@@ -217,6 +227,9 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
         this.mWebView.loadUrl(this.getUrl());
         this.showBack();
         this.setTitle(this.getUrlTitle());
+        if (GankTypeDict.urlType2TypeDict.get(this.getGankType()) == GankType.video) {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+        }
     }
 
 
@@ -257,6 +270,7 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
         });
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void enableJavascript() {
         this.mWebView.getSettings().setJavaScriptEnabled(true);
         this.mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
@@ -312,11 +326,6 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            // 横屏优先级最高
-            if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                this.switchScreenConfiguration(null);
-                return true;
-            }
             if (GankTypeDict.urlType2TypeDict.get(this.getGankType()) == GankType.video) {
                 if (this.goBack) {
                     this.finish();
@@ -328,7 +337,13 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
                     ToastUtils.show(this, this.getString(R.string.common_go_back_tip), ToastUtils.LENGTH_SHORT);
                 }
             } else {
-                this.finish();
+                // 横屏优先级高
+                if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    this.switchScreenConfiguration(null);
+                    return true;
+                } else {
+                    this.finish();
+                }
             }
             return true;
         }

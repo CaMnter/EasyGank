@@ -56,7 +56,6 @@
 
         <activity
             android:name=".views.DailyDetailActivity"
-            android:hardwareAccelerated="true"
             android:screenOrientation="portrait" />
 
     </application>

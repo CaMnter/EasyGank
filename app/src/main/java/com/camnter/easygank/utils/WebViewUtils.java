@@ -24,8 +24,11 @@
 
 package com.camnter.easygank.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
 import android.util.Base64;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import java.io.InputStream;
@@ -39,13 +42,18 @@ public class WebViewUtils {
 
     // Inject CSS method: read style.css from assets folder
     // Append stylesheet to document head
+    @SuppressLint("SetJavaScriptEnabled")
     public static void injectCSS(Context context, WebView webView, String filename) {
         try {
+            webView.getSettings().setJavaScriptEnabled(true);
             webView.getSettings().setAllowFileAccess(true);
             webView.getSettings().setDatabaseEnabled(true);
             webView.getSettings().setDomStorageEnabled(true);
             webView.getSettings().setSaveFormData(false);
             webView.getSettings().setAppCacheEnabled(true);
+            webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+            webView.getSettings().setLoadWithOverviewMode(false);
+            webView.getSettings().setUseWideViewPort(true);
             InputStream inputStream = context.getAssets().open(filename);
             byte[] buffer = new byte[inputStream.available()];
             inputStream.read(buffer);
@@ -59,6 +67,9 @@ public class WebViewUtils {
                     "style.innerHTML = window.atob('" + encoded + "');" +
                     "parent.appendChild(style)" +
                     "})()");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    WebView.setWebContentsDebuggingEnabled(true);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
