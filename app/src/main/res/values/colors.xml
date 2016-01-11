@@ -34,19 +34,13 @@
     <color name="common_js_tag_bg">#ffEF6C02</color>
     <color name="common_github_tag_bg">#ff000000</color>
     <color name="common_title_tv">#ff000000</color>
+    <color name="common_item_via">#ffA8A8A8</color>
 
     <color name="item_card_background">#ffF6F6EF</color>
     <color name="item_selectable_pressed">#ff9475CD</color>
 
-    <color name="common_tudou_tag_bg">#ffFD6600</color>
-    <color name="common_youku_tag_bg">#ff00A6E0</color>
-    <color name="common_tencent_tag_bg">#ff7ED800</color>
-    <color name="common_weibo_tag_bg">#ffF60C04</color>
-    <color name="common_miaopai_tag_bg">#ffFFD800</color>
-
     <!-- item -->
     <color name="item_date">#ffA8A8A8</color>
-    <color name="item_via">#ffA8A8A8</color>
     <color name="item_title_tv">#ff000000</color>
     <color name="item_tag_tv">#ffFFFFFF</color>
 

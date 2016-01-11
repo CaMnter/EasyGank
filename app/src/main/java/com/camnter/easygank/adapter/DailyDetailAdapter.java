@@ -25,8 +25,15 @@
 package com.camnter.easygank.adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.MaskFilterSpan;
+import android.text.style.StyleSpan;
+import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +43,7 @@ import android.widget.TextView;
 import com.camnter.easygank.R;
 import com.camnter.easygank.bean.BaseGankData;
 import com.camnter.easygank.gank.GankTypeDict;
+import com.camnter.easygank.utils.ResourcesUtils;
 import com.camnter.easyrecyclerview.adapter.EasyRecyclerViewAdapter;
 import com.camnter.easyrecyclerview.holder.EasyRecyclerViewHolder;
 
@@ -49,18 +57,40 @@ import java.util.List;
 public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
 
     private Context context;
+
     private int cardItemPadding;
     private int cardCategoryPaddingTopBottom;
     private int cardItemDivider;
+
+    private int viaTextSize;
+    private String viaModel;
+    private String viaModelKey;
+    private ColorStateList viaColorStateList;
+
     private static final int dividerColor = 0xffCCCCCC;
+
 
     private DailyDetailAdapter.onCardItemClickListener onCardItemClickListener;
 
     public DailyDetailAdapter(Context context) {
         this.context = context;
-        this.cardItemPadding = this.context.getResources().getDimensionPixelOffset(R.dimen.card_item_content_padding);
-        this.cardCategoryPaddingTopBottom = this.context.getResources().getDimensionPixelOffset(R.dimen.card_category_padding_top_bottom);
-        this.cardItemDivider = this.context.getResources().getDimensionPixelOffset(R.dimen.card_item_divider);
+        Resources res = this.context.getResources();
+        this.initCardItemStyle(res);
+        this.initViaTextStyle(res);
+    }
+
+    private void initCardItemStyle(Resources res) {
+        this.cardItemPadding = res.getDimensionPixelOffset(R.dimen.card_item_content_padding);
+        this.cardCategoryPaddingTopBottom = res.getDimensionPixelOffset(R.dimen.card_category_padding_top_bottom);
+        this.cardItemDivider = res.getDimensionPixelOffset(R.dimen.card_item_divider);
+    }
+
+    private void initViaTextStyle(Resources res) {
+        int viaTextColor = ResourcesUtils.getColor(this.context, R.color.common_item_via);
+        this.viaTextSize = res.getDimensionPixelSize(R.dimen.item_via_tv);
+        this.viaModel = res.getString(R.string.common_via);
+        this.viaModelKey = res.getString(R.string.common_via_key);
+        this.viaColorStateList = ResourcesUtils.createColorStateList(viaTextColor, viaTextColor, viaTextColor, viaTextColor);
     }
 
     @Override
@@ -84,7 +114,6 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
                 detailLL.addView(this.createDivider());
             }
             detailLL.addView(itemModel);
-            detailLL.addView(this.createDivider());
         }
 
     }
@@ -104,10 +133,14 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
         );
         String content = baseGankData.desc.trim() +
                 "   " +
-                this.context.getString(R.string.common_via, baseGankData.who);
+                String.format(this.viaModel, baseGankData.who);
         SpannableStringBuilder ssb = new SpannableStringBuilder(content);
-
-        itemModel.setText(baseGankData.desc.trim());
+        ssb.setSpan(new TextAppearanceSpan("serif", Typeface.ITALIC, this.viaTextSize, this.viaColorStateList, this.viaColorStateList),
+                content.indexOf(this.viaModelKey),
+                content.length(),
+                Spanned.SPAN_INCLUSIVE_INCLUSIVE
+        );
+        itemModel.setText(ssb);
         itemModel.setTag(R.id.tag_card_item_url, baseGankData.url);
         itemModel.setTag(R.id.tag_card_item_desc, baseGankData.desc.trim());
         itemModel.setTag(R.id.tag_card_item_type, baseGankData.type);
@@ -135,7 +168,7 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
         );
         categoryTV.setText(urlType);
         categoryTV.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        categoryTV.setTextSize(18);
+        categoryTV.setTextSize(20);
         categoryTV.setTextColor(GankTypeDict.urlType2ColorDict.get(urlType));
         categoryTV.setBackgroundResource(R.drawable.shape_card_background_default);
         return categoryTV;

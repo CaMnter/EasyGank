@@ -57,8 +57,8 @@
             android:paddingEnd="4dp"
             android:paddingLeft="0dp"
             android:paddingRight="4dp"
-            android:textColor="@color/item_via"
-            android:textSize="@dimen/data_via_tv"
+            android:textColor="@color/common_item_via"
+            android:textSize="@dimen/item_via_tv"
             android:textStyle="italic"
             android:typeface="serif" />
 
