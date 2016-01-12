@@ -120,4 +120,9 @@ public class DailyDetailActivity extends BaseToolbarActivity implements DailyDet
         EasyWebViewActivity.toUrl(this, url, title, urlType);
     }
 
+    @Override
+    public void onWelfareOnClick(String url, String title) {
+        PictureActivity.startActivity(this, url, title);
+    }
+
 }

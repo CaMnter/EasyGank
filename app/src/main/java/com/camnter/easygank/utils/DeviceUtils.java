@@ -27,6 +27,8 @@ package com.camnter.easygank.utils;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -39,6 +41,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+
+import com.camnter.easygank.R;
 
 import java.io.File;
 import java.util.Iterator;
@@ -342,6 +346,19 @@ public class DeviceUtils {
             e.printStackTrace();
         }
         return value;
+    }
+
+    /**
+     * 复制到剪贴板
+     *
+     * @param context context
+     * @param content content
+     */
+    public static void copy2Clipboard(Context context, String content) {
+        ClipData clipData = ClipData.newPlainText(context.getString(R.string.app_name), content);
+        ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(
+                Context.CLIPBOARD_SERVICE);
+        clipboardManager.setPrimaryClip(clipData);
     }
 
 }

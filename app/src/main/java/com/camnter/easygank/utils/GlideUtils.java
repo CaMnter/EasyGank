@@ -45,7 +45,6 @@ public class GlideUtils {
 
     private static final String TAG = "GlideUtils";
 
-
     /**
      * glide加载图片
      *
@@ -131,6 +130,7 @@ public class GlideUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
 }

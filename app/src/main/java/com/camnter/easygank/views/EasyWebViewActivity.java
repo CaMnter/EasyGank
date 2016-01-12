@@ -49,6 +49,7 @@ import com.camnter.easygank.R;
 import com.camnter.easygank.core.BaseToolbarActivity;
 import com.camnter.easygank.gank.GankType;
 import com.camnter.easygank.gank.GankTypeDict;
+import com.camnter.easygank.utils.DeviceUtils;
 import com.camnter.easygank.utils.IntentUtils;
 import com.camnter.easygank.utils.ToastUtils;
 import com.camnter.easygank.utils.WebViewUtils;
@@ -145,10 +146,7 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
                 this.refreshWebView();
                 return true;
             case R.id.web_copy:
-                ClipData clipData = ClipData.newPlainText(this.getString(R.string.app_name), this.mWebView.getUrl());
-                ClipboardManager clipboardManager = (ClipboardManager) this.getSystemService(
-                        Context.CLIPBOARD_SERVICE);
-                clipboardManager.setPrimaryClip(clipData);
+                DeviceUtils.copy2Clipboard(this,this.mWebView.getUrl());
                 Snackbar.make(this.mWebView, this.getString(R.string.common_copy_success), Snackbar.LENGTH_SHORT).show();
                 return true;
             case R.id.web_switch_screen_mode:

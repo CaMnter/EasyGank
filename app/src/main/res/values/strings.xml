@@ -24,7 +24,7 @@
 
 -->
 <resources>
-    <string name="app_name">EasyGank</string>
+    <string name="app_name">EasyGank妹子</string>
     <string name="app_menu">EasyGank Menu</string>
 
     <string name="hello_world">Hello world!</string>
@@ -63,6 +63,8 @@
     <string name="menu_picture_download">下载图片</string>
     <string name="menu_picture_copy">复制链接</string>
     <string name="menu_picture_share">分享出去</string>
+
+    <string name="picture_loading">图片还在加载中，请稍等...</string>
 
 
 </resources>

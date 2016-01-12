@@ -119,12 +119,16 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
                 Object o = MainActivity.this.mainAdapter.getItem(position);
                 if (o instanceof BaseGankData) {
                     BaseGankData baseGankData = (BaseGankData) o;
-                    EasyWebViewActivity.toUrl(
-                            MainActivity.this,
-                            baseGankData.url,
-                            baseGankData.desc,
-                            baseGankData.type
-                    );
+                    if (GankTypeDict.urlType2TypeDict.get(baseGankData.type) == GankType.welfare) {
+                        PictureActivity.startActivity(MainActivity.this, baseGankData.url, baseGankData.desc);
+                    } else {
+                        EasyWebViewActivity.toUrl(
+                                MainActivity.this,
+                                baseGankData.url,
+                                baseGankData.desc,
+                                baseGankData.type
+                        );
+                    }
                 } else if (o instanceof GankDaily) {
                     GankDaily daily = (GankDaily) o;
                     MainActivity.this.presenter.getDailyDetail(daily.results);

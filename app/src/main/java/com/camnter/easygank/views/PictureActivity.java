@@ -27,26 +27,44 @@ package com.camnter.easygank.views;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.SizeReadyCallback;
+import com.bumptech.glide.request.target.Target;
+import com.camnter.easygank.EasyApplication;
 import com.camnter.easygank.R;
 import com.camnter.easygank.core.BaseToolbarActivity;
-import com.camnter.easygank.utils.GlideUtils;
+import com.camnter.easygank.presenter.PicturePresenter;
+import com.camnter.easygank.presenter.iview.PictureView;
+import com.camnter.easygank.utils.DeviceUtils;
 import com.camnter.easygank.utils.IntentUtils;
+import com.camnter.easygank.utils.ToastUtils;
 
 /**
  * Description：PictureActivity
  * Created by：CaMnter
  * Time：2016-01-11 19:25
  */
-public class PictureActivity extends BaseToolbarActivity {
+public class PictureActivity extends BaseToolbarActivity implements PictureView {
 
     private static final String EXTRA_URL = "com.camnter.easygank.EXTRA_URL";
     private static final String EXTRA_TITLE = "com.camnter.easygank.EXTRA_TITLE";
 
     private ImageView pictureIV;
+
+    private PicturePresenter presenter;
+
+    private GlideBitmapDrawable glideBitmapDrawable;
 
     public static void startActivity(Context context, String url, String title) {
         Intent intent = new Intent(context, PictureActivity.class);
@@ -90,7 +108,36 @@ public class PictureActivity extends BaseToolbarActivity {
     protected void initData() {
         this.showBack();
         this.setTitle(this.getUrlTitle());
-        GlideUtils.display(this.pictureIV, this.getUrl());
+        Glide.with(this)
+                .load(this.getUrl())
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        // 加载完成了
+                        PictureActivity.this.glideBitmapDrawable = (GlideBitmapDrawable) resource;
+                        return false;
+                    }
+                })
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade()
+                .centerCrop()
+                .into(this.pictureIV)
+                .getSize(new SizeReadyCallback() {
+                    @Override
+                    public void onSizeReady(int width, int height) {
+                        if (!PictureActivity.this.pictureIV.isShown()) {
+                            PictureActivity.this.pictureIV.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+        this.presenter = new PicturePresenter();
+        this.presenter.attachView(this);
     }
 
     @Override
@@ -101,10 +148,17 @@ public class PictureActivity extends BaseToolbarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_picture_download:
+                if (this.glideBitmapDrawable != null) {
+                    this.presenter.downloadPicture(this.glideBitmapDrawable, this, EasyApplication.getInstance());
+                } else {
+                    Snackbar.make(this.pictureIV, this.getString(R.string.picture_loading), Snackbar.LENGTH_LONG).show();
+                }
                 return true;
             case R.id.menu_picture_copy:
+                DeviceUtils.copy2Clipboard(this, this.getUrl());
+                Snackbar.make(this.pictureIV, this.getString(R.string.common_copy_success), Snackbar.LENGTH_SHORT).show();
                 return true;
             case R.id.menu_picture_share:
                 return true;
@@ -118,6 +172,34 @@ public class PictureActivity extends BaseToolbarActivity {
 
     private String getUrlTitle() {
         return IntentUtils.getStringExtra(this.getIntent(), EXTRA_TITLE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        this.glideBitmapDrawable.setCallback(null);
+        this.glideBitmapDrawable = null;
+        this.presenter.detachView();
+        super.onDestroy();
+    }
+
+    /**
+     * 下载成功
+     *
+     * @param path path
+     */
+    @Override
+    public void onDownloadSuccess(String path) {
+        ToastUtils.show(this, path, Toast.LENGTH_SHORT);
+    }
+
+    /**
+     * 发生错误
+     *
+     * @param e e
+     */
+    @Override
+    public void onFailure(Throwable e) {
+
     }
 
 }

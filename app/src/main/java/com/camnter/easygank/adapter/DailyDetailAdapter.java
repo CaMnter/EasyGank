@@ -72,6 +72,7 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
 
     private DailyDetailAdapter.onCardItemClickListener onCardItemClickListener;
 
+
     public DailyDetailAdapter(Context context) {
         this.context = context;
         Resources res = this.context.getResources();
@@ -106,7 +107,7 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
 
         detailLL.removeAllViews();
         for (int i = 0; i < categoryData.size(); i++) {
-            BaseGankData baseGankData = categoryData.get(i);
+            final BaseGankData baseGankData = categoryData.get(i);
             if (i == 0) {
                 TextView categoryTV = this.createCardCategory(baseGankData.type);
                 detailLL.addView(categoryTV);
@@ -115,6 +116,13 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
             if (GankTypeDict.urlType2TypeDict.get(baseGankData.type) == GankType.welfare) {
                 RatioImageView welfareIV = this.createRatioImageView();
                 GlideUtils.display(welfareIV, baseGankData.url);
+                welfareIV.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (DailyDetailAdapter.this.onCardItemClickListener != null)
+                            DailyDetailAdapter.this.onCardItemClickListener.onWelfareOnClick(baseGankData.url, baseGankData.desc);
+                    }
+                });
                 detailLL.addView(welfareIV);
             } else {
                 TextView itemText = this.createCardItemText(baseGankData);
@@ -199,6 +207,8 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
 
     public interface onCardItemClickListener {
         void onCardItemOnClick(String urlType, String title, String url);
+
+        void onWelfareOnClick(String url, String title);
     }
 
 }
