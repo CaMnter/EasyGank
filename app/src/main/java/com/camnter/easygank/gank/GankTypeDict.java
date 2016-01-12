@@ -65,26 +65,26 @@ public class GankTypeDict {
         menuId2TypeDict.put(R.id.navigation_resources, GankType.resources);
         menuId2TypeDict.put(R.id.navigation_video, GankType.video);
 
-        type2UrlTypeDict.put(GankType.welfare, "福利");
-        type2UrlTypeDict.put(GankType.android, "Android");
-        type2UrlTypeDict.put(GankType.ios, "iOS");
-        type2UrlTypeDict.put(GankType.video, "休息视频");
-        type2UrlTypeDict.put(GankType.resources, "拓展资源");
-        type2UrlTypeDict.put(GankType.js, "前端");
-        type2UrlTypeDict.put(GankType.app, "App");
-        type2UrlTypeDict.put(GankType.recommend, "瞎推荐");
+        type2UrlTypeDict.put(GankType.welfare, GankApi.DATA_TYPE_WELFARE);
+        type2UrlTypeDict.put(GankType.android, GankApi.DATA_TYPE_ANDROID);
+        type2UrlTypeDict.put(GankType.ios, GankApi.DATA_TYPE_IOS);
+        type2UrlTypeDict.put(GankType.video, GankApi.DATA_TYPE_REST_VIDEO);
+        type2UrlTypeDict.put(GankType.resources, GankApi.DATA_TYPE_EXTEND_RESOURCES);
+        type2UrlTypeDict.put(GankType.js, GankApi.DATA_TYPE_JS);
+        type2UrlTypeDict.put(GankType.app, GankApi.DATA_TYPE_APP);
+        type2UrlTypeDict.put(GankType.recommend, GankApi.DATA_TYPE_RECOMMEND);
         for (Map.Entry<Integer, String> entry : type2UrlTypeDict.entrySet()) {
             urlType2TypeDict.put(entry.getValue(), entry.getKey());
         }
 
-        urlType2ColorDict.put("福利", 0xffFFAEC9);
-        urlType2ColorDict.put("Android", 0xff388E3C);
-        urlType2ColorDict.put("iOS", 0xff0377BC);
-        urlType2ColorDict.put("休息视频", 0xff039588);
-        urlType2ColorDict.put("拓展资源", 0xff546E7A);
-        urlType2ColorDict.put("前端", 0xffEF6C02);
-        urlType2ColorDict.put("App", 0xffC02E34);
-        urlType2ColorDict.put("瞎推荐", 0xff4527A0);
+        urlType2ColorDict.put(GankApi.DATA_TYPE_WELFARE, 0xffFFAEC9);
+        urlType2ColorDict.put(GankApi.DATA_TYPE_ANDROID, 0xff388E3C);
+        urlType2ColorDict.put(GankApi.DATA_TYPE_IOS, 0xff0377BC);
+        urlType2ColorDict.put(GankApi.DATA_TYPE_REST_VIDEO, 0xff039588);
+        urlType2ColorDict.put(GankApi.DATA_TYPE_EXTEND_RESOURCES, 0xff546E7A);
+        urlType2ColorDict.put(GankApi.DATA_TYPE_JS, 0xffEF6C02);
+        urlType2ColorDict.put(GankApi.DATA_TYPE_APP, 0xffC02E34);
+        urlType2ColorDict.put(GankApi.DATA_TYPE_RECOMMEND, 0xff4527A0);
 
     }
 }

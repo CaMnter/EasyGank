@@ -26,6 +26,10 @@ package com.camnter.easygank;
 
 import android.app.Application;
 
+import com.anupcowkur.reservoir.Reservoir;
+import com.camnter.easygank.gank.GankApi;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.orhanobut.logger.Logger;
 
 /**
@@ -36,6 +40,13 @@ import com.orhanobut.logger.Logger;
 public class EasyApplication extends Application {
     private static EasyApplication ourInstance = new EasyApplication();
     public boolean log = false;
+    public Gson gson;
+
+    public static final long ONE_KB = 1024L;
+    public static final long ONE_MB = ONE_KB * 1024L;
+    public static final long CACHE_DATA_MAX_SIZE = ONE_MB * 3L;
+
+    public static final String CACHE_DATA_KEY_DAILY = "cache_data_key_daily";
 
     public static EasyApplication getInstance() {
         return ourInstance;
@@ -46,5 +57,23 @@ public class EasyApplication extends Application {
         super.onCreate();
         ourInstance = this;
         Logger.init();
+        this.initGson();
+        this.initReservoir();
     }
+
+    private void initGson() {
+        this.gson = new GsonBuilder()
+                .setDateFormat(GankApi.GANK_DATA_FORMAT)
+                .create();
+    }
+
+    private void initReservoir() {
+        try {
+            Reservoir.init(this, CACHE_DATA_MAX_SIZE, this.gson);
+        } catch (Exception e) {
+            //failure
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -170,12 +170,9 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         if (dailyData.results.welfareData != null && dailyData.results.welfareData.size() > 0) {
             final BaseGankData welfare = dailyData.results.welfareData.get(0);
             GlideUtils.display(dailyIV, welfare.url);
-            dailyIV.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (MainAdapter.this.listener != null)
-                        MainAdapter.this.listener.onClickPicture(welfare.url, welfare.desc);
-                }
+            dailyIV.setOnClickListener(v -> {
+                if (MainAdapter.this.listener != null)
+                    MainAdapter.this.listener.onClickPicture(welfare.url, welfare.desc);
             });
         } else {
             GlideUtils.displayNative(dailyIV, R.mipmap.img_default_gray);

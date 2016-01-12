@@ -29,7 +29,6 @@ package com.camnter.easygank.constant;
  * Time：2016-01-07 00:06
  */
 public class Constant {
-
     public static final String DAILY_DATE_FORMAT = "yyyy.MM.dd";
-
+    public static final String GIHUB_TRENDING = "https://github.com/trending?l=java";
 }

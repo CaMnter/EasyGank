@@ -73,16 +73,13 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
     private boolean goBack = false;
     private static final int RESET_GO_BACK_INTERVAL = 2666;
     private static final int MSG_WHAT_RESET_GO_BACK = 206;
-    private final Handler mHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            switch (msg.what) {
-                case EasyWebViewActivity.MSG_WHAT_RESET_GO_BACK:
-                    EasyWebViewActivity.this.goBack = false;
-                    return true;
-            }
-            return false;
+    private final Handler mHandler = new Handler(msg -> {
+        switch (msg.what) {
+            case EasyWebViewActivity.MSG_WHAT_RESET_GO_BACK:
+                EasyWebViewActivity.this.goBack = false;
+                return true;
         }
+        return false;
     });
 
 
@@ -221,6 +218,8 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
         this.mWebView.loadUrl(this.getUrl());
         this.showBack();
         this.setTitle(this.getUrlTitle());
+
+        if (this.getGankType() == null) return;
         if (GankTypeDict.urlType2TypeDict.get(this.getGankType()) == GankType.video) {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
         }
@@ -320,7 +319,12 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (GankTypeDict.urlType2TypeDict.get(this.getGankType()) == GankType.video) {
+            // 优先拦截没gankType 和 不是video类型的
+            if (this.getGankType() == null) {
+                this.keyBackProcessScreenLandscape();
+            } else if (GankTypeDict.urlType2TypeDict.get(this.getGankType()) != GankType.video) {
+                this.keyBackProcessScreenLandscape();
+            } else {
                 if (this.goBack) {
                     this.finish();
                 } else {
@@ -330,18 +334,25 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
                     this.mHandler.sendMessageDelayed(msg, RESET_GO_BACK_INTERVAL);
                     ToastUtils.show(this, this.getString(R.string.common_go_back_tip), ToastUtils.LENGTH_SHORT);
                 }
-            } else {
-                // 横屏优先级高
-                if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    this.switchScreenConfiguration(null);
-                    return true;
-                } else {
-                    this.finish();
-                }
             }
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 非视频页面 并 横屏的时候 的细节处理
+     */
+    private void keyBackProcessScreenLandscape() {
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            this.switchScreenConfiguration(null);
+        } else {
+            if(this.mWebView.canGoBack()){
+                this.mWebView.goBack();
+            }else {
+                this.finish();
+            }
+        }
     }
 
 }

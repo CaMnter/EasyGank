@@ -25,8 +25,6 @@
 package com.camnter.easygank.gank;
 
 import com.camnter.easygank.EasyApplication;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Response;
@@ -61,7 +59,7 @@ public class EasyGank {
         /*
          * 查看网络请求发送状况
          */
-        if(EasyApplication.getInstance().log) {
+        if (EasyApplication.getInstance().log) {
             okHttpClient.interceptors().add(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
@@ -72,14 +70,11 @@ public class EasyGank {
             });
         }
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat(GankApi.GANK_DATA_FORMAT)
-                .create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(GankApi.BASE_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create(EasyApplication.getInstance().gson))
                 .client(okHttpClient)
                 .build();
         this.gankService = retrofit.create(GankService.class);

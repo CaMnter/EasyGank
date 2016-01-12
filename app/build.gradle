@@ -28,6 +28,15 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    retrolambda {
+        javaVersion JavaVersion.VERSION_1_6
+    }
+
 }
 
 repositories {
@@ -65,6 +74,9 @@ dependencies {
 
     // Glide
     compile 'com.github.bumptech.glide:glide:3.6.1'
+
+    // Reservoir
+    compile 'com.anupcowkur:reservoir:2.1'
 
     // other
     compile 'com.github.orhanobut:logger:1.12'

@@ -31,6 +31,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -39,7 +40,9 @@ import com.camnter.easygank.R;
 import com.camnter.easygank.adapter.MainAdapter;
 import com.camnter.easygank.bean.BaseGankData;
 import com.camnter.easygank.bean.GankDaily;
+import com.camnter.easygank.constant.Constant;
 import com.camnter.easygank.core.BaseDrawerLayoutActivity;
+import com.camnter.easygank.gank.GankApi;
 import com.camnter.easygank.gank.GankType;
 import com.camnter.easygank.gank.GankTypeDict;
 import com.camnter.easygank.presenter.MainPresenter;
@@ -84,6 +87,32 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
         this.refreshData(this.gankType);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    /**
+     * @param item The menu item that was selected.
+     * @return boolean Return false to allow normal menu processing to
+     * proceed, true to consume it here.
+     * @see #onCreateOptionsMenu
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_main_about:
+                return true;
+            case R.id.menu_main_home_page:
+                EasyWebViewActivity.toUrl(this, GankApi.GANK_HOME_PAGE_URL, GankApi.GANK_HOME_PAGE_NAME);
+                return true;
+            case R.id.menu_main_top_github:
+                EasyWebViewActivity.toUrl(this, Constant.GIHUB_TRENDING, Constant.GIHUB_TRENDING);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     /**
      * Initialize the view in the layout

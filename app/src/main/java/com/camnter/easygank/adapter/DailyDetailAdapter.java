@@ -116,12 +116,9 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
             if (GankTypeDict.urlType2TypeDict.get(baseGankData.type) == GankType.welfare) {
                 RatioImageView welfareIV = this.createRatioImageView();
                 GlideUtils.display(welfareIV, baseGankData.url);
-                welfareIV.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (DailyDetailAdapter.this.onCardItemClickListener != null)
-                            DailyDetailAdapter.this.onCardItemClickListener.onWelfareOnClick(baseGankData.url, baseGankData.desc);
-                    }
+                welfareIV.setOnClickListener(v -> {
+                    if (DailyDetailAdapter.this.onCardItemClickListener != null)
+                        DailyDetailAdapter.this.onCardItemClickListener.onWelfareOnClick(baseGankData.url, baseGankData.desc);
                 });
                 detailLL.addView(welfareIV);
             } else {
@@ -157,16 +154,13 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
         itemText.setTag(R.id.tag_card_item_url, baseGankData.url);
         itemText.setTag(R.id.tag_card_item_desc, baseGankData.desc.trim());
         itemText.setTag(R.id.tag_card_item_type, baseGankData.type);
-        itemText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (DailyDetailAdapter.this.onCardItemClickListener != null)
-                    DailyDetailAdapter.this.onCardItemClickListener.onCardItemOnClick(
-                            (String) v.getTag(R.id.tag_card_item_type),
-                            (String) v.getTag(R.id.tag_card_item_desc),
-                            (String) v.getTag(R.id.tag_card_item_url)
-                    );
-            }
+        itemText.setOnClickListener(v -> {
+            if (DailyDetailAdapter.this.onCardItemClickListener != null)
+                DailyDetailAdapter.this.onCardItemClickListener.onCardItemOnClick(
+                        (String) v.getTag(R.id.tag_card_item_type),
+                        (String) v.getTag(R.id.tag_card_item_desc),
+                        (String) v.getTag(R.id.tag_card_item_url)
+                );
         });
         return itemText;
     }
@@ -206,6 +200,7 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
     }
 
     public interface onCardItemClickListener {
+
         void onCardItemOnClick(String urlType, String title, String url);
 
         void onWelfareOnClick(String url, String title);

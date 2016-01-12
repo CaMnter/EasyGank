@@ -127,12 +127,9 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView 
                 .crossFade()
                 .centerCrop()
                 .into(this.pictureIV)
-                .getSize(new SizeReadyCallback() {
-                    @Override
-                    public void onSizeReady(int width, int height) {
-                        if (!PictureActivity.this.pictureIV.isShown()) {
-                            PictureActivity.this.pictureIV.setVisibility(View.VISIBLE);
-                        }
+                .getSize((width, height) -> {
+                    if (!PictureActivity.this.pictureIV.isShown()) {
+                        PictureActivity.this.pictureIV.setVisibility(View.VISIBLE);
                     }
                 });
 

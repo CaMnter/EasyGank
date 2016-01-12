@@ -26,7 +26,6 @@ package com.camnter.easygank.presenter;
 
 import com.camnter.easygank.bean.BaseGankData;
 import com.camnter.easygank.bean.GankDaily;
-import com.camnter.easygank.bean.GankData;
 import com.camnter.easygank.constant.Constant;
 import com.camnter.easygank.core.BasePresenter;
 import com.camnter.easygank.gank.GankApi;
@@ -46,8 +45,6 @@ import java.util.List;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 /**
@@ -146,34 +143,18 @@ public class MainPresenter extends BasePresenter<MainView> {
         }
         this.mCompositeSubscription.add(Observable.just(this.currentDate)
                 .subscribeOn(Schedulers.io())
-                .flatMapIterable(new Func1<EasyDate, List<EasyDate>>() {
-                    @Override
-                    public List<EasyDate> call(EasyDate easyDate) {
-                        return easyDate.getPastTime();
-                    }
+                .flatMapIterable(easyDate -> easyDate.getPastTime())
+                .flatMap(easyDate -> {
+                    /*
+                     * 感觉Android的数据应该不会为null
+                     * 所以以Android的数据为判断是否当天有数据
+                     */
+                    return DailyModel.getInstance()
+                            .getDaily(easyDate.getYear(), easyDate.getMonth(), easyDate.getDay())
+                            .filter(dailyData -> dailyData.results.androidData != null);
                 })
-                .flatMap(new Func1<EasyDate, Observable<GankDaily>>() {
-                    @Override
-                    public Observable<GankDaily> call(EasyDate easyDate) {
-                        /*
-                         * 感觉Android的数据应该不会为null
-                         * 所以以Android的数据为判断是否当天有数据
-                         */
-                        return DailyModel.getInstance()
-                                .getDaily(easyDate.getYear(), easyDate.getMonth(), easyDate.getDay())
-                                .filter(new Func1<GankDaily, Boolean>() {
-                                    @Override
-                                    public Boolean call(GankDaily dailyData) {
-                                        return dailyData.results.androidData != null;
-                                    }
-                                });
-                    }
-                })
-                .toSortedList(new Func2<GankDaily, GankDaily, Integer>() {
-                    @Override
-                    public Integer call(GankDaily dailyData, GankDaily dailyData2) {
-                        return dailyData2.results.androidData.get(0).publishedAt.compareTo(dailyData.results.androidData.get(0).publishedAt);
-                    }
+                .toSortedList((dailyData, dailyData2) -> {
+                    return dailyData2.results.androidData.get(0).publishedAt.compareTo(dailyData.results.androidData.get(0).publishedAt);
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<GankDaily>>() {
@@ -216,7 +197,6 @@ public class MainPresenter extends BasePresenter<MainView> {
                             if (MainPresenter.this.getMvpView() != null)
                                 MainPresenter.this.getMvpView().onSwitchSuccess(GankType.daily);
                         }
-
                         if (MainPresenter.this.getMvpView() != null)
                             MainPresenter.this.getMvpView().onGetDailySuccess(dailyData, refresh);
                     }
@@ -243,19 +223,9 @@ public class MainPresenter extends BasePresenter<MainView> {
 
         this.mCompositeSubscription.add(DataModel.getInstance().getData(gankType, GankApi.DEFAULT_DATA_SIZE, this.page)
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<GankData, ArrayList<BaseGankData>>() {
-                    @Override
-                    public ArrayList<BaseGankData> call(GankData gankData) {
-                        return gankData.results;
-                    }
-                })
+                .map(gankData -> gankData.results)
                 .observeOn(AndroidSchedulers.mainThread())
-                .onErrorReturn(new Func1<Throwable, ArrayList<BaseGankData>>() {
-                    @Override
-                    public ArrayList<BaseGankData> call(Throwable throwable) {
-                        return null;
-                    }
-                })
+                .onErrorReturn(throwable -> null)
                 .subscribe(new Subscriber<ArrayList<BaseGankData>>() {
                     @Override
                     public void onCompleted() {
@@ -328,28 +298,25 @@ public class MainPresenter extends BasePresenter<MainView> {
     public void getDailyDetail(final GankDaily.DailyResults results) {
         this.mCompositeSubscription.add(Observable.just(results)
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<GankDaily.DailyResults, ArrayList<ArrayList<BaseGankData>>>() {
-                    @Override
-                    public ArrayList<ArrayList<BaseGankData>> call(GankDaily.DailyResults dailyResults) {
-                        ArrayList<ArrayList<BaseGankData>> cardData = new ArrayList<>();
-                        if (dailyResults.welfareData != null && dailyResults.welfareData.size() > 0)
-                            cardData.add(dailyResults.welfareData);
-                        if (dailyResults.androidData != null && dailyResults.androidData.size() > 0)
-                            cardData.add(dailyResults.androidData);
-                        if (dailyResults.iosData != null && dailyResults.iosData.size() > 0)
-                            cardData.add(dailyResults.iosData);
-                        if (dailyResults.jsData != null && dailyResults.jsData.size() > 0)
-                            cardData.add(dailyResults.jsData);
-                        if (dailyResults.videoData != null && dailyResults.videoData.size() > 0)
-                            cardData.add(dailyResults.videoData);
-                        if (dailyResults.resourcesData != null && dailyResults.resourcesData.size() > 0)
-                            cardData.add(dailyResults.resourcesData);
-                        if (dailyResults.appData != null && dailyResults.appData.size() > 0)
-                            cardData.add(dailyResults.appData);
-                        if (dailyResults.recommendData != null && dailyResults.recommendData.size() > 0)
-                            cardData.add(dailyResults.recommendData);
-                        return cardData;
-                    }
+                .map(dailyResults -> {
+                    ArrayList<ArrayList<BaseGankData>> cardData = new ArrayList<>();
+                    if (dailyResults.welfareData != null && dailyResults.welfareData.size() > 0)
+                        cardData.add(dailyResults.welfareData);
+                    if (dailyResults.androidData != null && dailyResults.androidData.size() > 0)
+                        cardData.add(dailyResults.androidData);
+                    if (dailyResults.iosData != null && dailyResults.iosData.size() > 0)
+                        cardData.add(dailyResults.iosData);
+                    if (dailyResults.jsData != null && dailyResults.jsData.size() > 0)
+                        cardData.add(dailyResults.jsData);
+                    if (dailyResults.videoData != null && dailyResults.videoData.size() > 0)
+                        cardData.add(dailyResults.videoData);
+                    if (dailyResults.resourcesData != null && dailyResults.resourcesData.size() > 0)
+                        cardData.add(dailyResults.resourcesData);
+                    if (dailyResults.appData != null && dailyResults.appData.size() > 0)
+                        cardData.add(dailyResults.appData);
+                    if (dailyResults.recommendData != null && dailyResults.recommendData.size() > 0)
+                        cardData.add(dailyResults.recommendData);
+                    return cardData;
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ArrayList<ArrayList<BaseGankData>>>() {
