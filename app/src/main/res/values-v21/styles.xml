@@ -41,5 +41,9 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="AppWindowTranslucentBackgroundTheme" parent="AppTheme">
+        <item name="android:windowBackground">@null</item>
+    </style>
+
 
 </resources>

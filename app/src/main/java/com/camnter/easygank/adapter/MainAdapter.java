@@ -56,9 +56,10 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
     public static final int LAYOUT_TYPE_TECHNOLOGY = 1;
     public static final int LAYOUT_TYPE_WELFARE = 2;
 
-    private GankType type;
-
     private Context context;
+
+    private GankType type;
+    private MainAdapter.OnClickListener listener;
 
     public MainAdapter(Context context, GankType type) {
         this.context = context;
@@ -167,7 +168,15 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
 
         // 图片
         if (dailyData.results.welfareData != null && dailyData.results.welfareData.size() > 0) {
-            GlideUtils.display(dailyIV, dailyData.results.welfareData.get(0).url);
+            final BaseGankData welfare = dailyData.results.welfareData.get(0);
+            GlideUtils.display(dailyIV, welfare.url);
+            dailyIV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (MainAdapter.this.listener != null)
+                        MainAdapter.this.listener.onClickPicture(welfare.url, welfare.desc);
+                }
+            });
         } else {
             GlideUtils.displayNative(dailyIV, R.mipmap.img_default_gray);
         }
@@ -282,9 +291,9 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         if (baseGankData == null) return;
         RatioImageView welfareIV = easyRecyclerViewHolder.findViewById(R.id.welfare_iv);
 
-        if(position%2==0){
+        if (position % 2 == 0) {
             welfareIV.setImageRatio(0.7f);
-        }else {
+        } else {
             welfareIV.setImageRatio(0.6f);
         }
 
@@ -297,5 +306,12 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
 
     }
 
+    public void setListener(OnClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnClickListener {
+        void onClickPicture(String url, String title);
+    }
 
 }

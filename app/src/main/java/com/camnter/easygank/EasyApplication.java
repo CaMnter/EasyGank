@@ -41,7 +41,6 @@ public class EasyApplication extends Application {
         return ourInstance;
     }
 
-
     @Override
     public void onCreate() {
         super.onCreate();

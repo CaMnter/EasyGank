@@ -22,19 +22,25 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package com.camnter.easygank.utils.annotation;
+package com.camnter.easygank.event;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.camnter.easygank.widget.rx.RxEvent;
 
 /**
- * Description：Exclude
+ * Description：MainActivityEvent
  * Created by：CaMnter
- * Time：2016-01-03 15:14
+ * Time：2016-01-12 15:25
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface Exclude {
+public class MainActivityEvent extends RxEvent {
+
+    public static final int ON_FAILURE = 2061;
+    public static final int ON_SWITCH_SUCCESS = 2062;
+    public static final int ON_GET_DATA_SUCCESS = 2063;
+    public static final int ON_GET_DAILY_SUCCESS = 2064;
+    public static final int ON_GET_DAILY_DETAIL_SUCCESS = 2064;
+
+    public MainActivityEvent(int type) {
+        super(type);
+    }
+
 }

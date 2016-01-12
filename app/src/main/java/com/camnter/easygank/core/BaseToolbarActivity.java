@@ -31,7 +31,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.DecelerateInterpolator;
 
 import com.camnter.easygank.R;
 
@@ -47,19 +46,19 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
     protected ActionBarHelper mActionBarHelper;
 
     /**
-     * Initialize the view in the layout
+     * Initialize the toolbar in the layout
      *
      * @param savedInstanceState savedInstanceState
      */
     @Override
-    protected void initViews(Bundle savedInstanceState) {
-        this.initToolbar();
+    protected void initToolbar(Bundle savedInstanceState) {
+        this.initToolbarHelper();
     }
 
     /**
      * init the toolbar
      */
-    protected void initToolbar() {
+    protected void initToolbarHelper() {
         this.mToolbar = this.findView(R.id.toolbar);
         this.mAppBarLayout = this.findView(R.id.app_bar_layout);
 
@@ -94,7 +93,8 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
     }
 
     protected void showBack() {
-        this.mActionBarHelper.setDisplayHomeAsUpEnabled(true);
+        if (this.mActionBarHelper != null)
+            this.mActionBarHelper.setDisplayHomeAsUpEnabled(true);
     }
 
     /**

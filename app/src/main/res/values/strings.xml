@@ -60,4 +60,9 @@
     <string name="menu_web_vertical">竖屏显示</string>
 
 
+    <string name="menu_picture_download">下载图片</string>
+    <string name="menu_picture_copy">复制链接</string>
+    <string name="menu_picture_share">分享出去</string>
+
+
 </resources>

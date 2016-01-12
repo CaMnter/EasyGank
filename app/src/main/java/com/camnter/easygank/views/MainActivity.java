@@ -51,7 +51,7 @@ import com.camnter.easyrecyclerview.widget.decorator.EasyBorderDividerItemDecora
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseDrawerLayoutActivity implements MainView {
+public class MainActivity extends BaseDrawerLayoutActivity implements MainView, MainAdapter.OnClickListener {
 
     private EasyRecyclerView mainRV;
     private EasyBorderDividerItemDecoration dataDecoration;
@@ -92,7 +92,6 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView {
      */
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        super.initViews(savedInstanceState);
         this.mainRV = this.findView(R.id.main_rv);
         this.dataDecoration = new EasyBorderDividerItemDecoration(
                 this.getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height),
@@ -242,6 +241,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView {
         this.gankType = GankType.daily;
         // 默认是每日干货
         this.mainAdapter = new MainAdapter(this, this.gankType);
+        this.mainAdapter.setListener(this);
         this.mainRV.setAdapter(this.mainAdapter);
 
         this.refreshData(this.gankType);
@@ -431,5 +431,10 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView {
         this.presenter.switchType(gankType);
     }
 
+
+    @Override
+    public void onClickPicture(String url, String title) {
+        PictureActivity.startActivity(this, url, title);
+    }
 
 }

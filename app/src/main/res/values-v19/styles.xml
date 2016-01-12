@@ -40,4 +40,8 @@
     <style name="AppWindowTranslucentStatusTheme" parent="AppTheme">
     </style>
 
+    <style name="AppWindowTranslucentBackgroundTheme" parent="AppTheme">
+        <item name="android:windowBackground">@null</item>
+    </style>
+
 </resources>

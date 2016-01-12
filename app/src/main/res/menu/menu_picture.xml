@@ -23,31 +23,26 @@
   <http://www.gnu.org/philosophy/why-not-lgpl.html>.
 
 -->
-<resources>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <!--<item name="android:windowBackground">@color/appBackground</item>-->
-    </style>
+    <item
+        android:id="@+id/menu_picture_download"
+        android:icon="@mipmap/ic_download"
+        android:orderInCategory="6"
+        android:title="@string/menu_picture_download"
+        app:showAsAction="ifRoom" />
 
-    <style name="AppWindowTranslucentStatusTheme" parent="AppTheme"></style>
+    <item
+        android:id="@+id/menu_picture_copy"
+        android:orderInCategory="26"
+        android:title="@string/menu_picture_copy"
+        app:showAsAction="never" />
 
-    <style name="AppWindowTranslucentBackgroundTheme" parent="AppTheme">
-        <item name="android:windowBackground">@null</item>
-    </style>
+    <item
+        android:id="@+id/menu_picture_share"
+        android:orderInCategory="26"
+        android:title="@string/menu_picture_share"
+        app:showAsAction="never" />
 
-    <style name="EasyGank.Card" parent="CardView">
-        <item name="contentPadding">0dp</item>
-        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
-        <item name="cardPreventCornerOverlap">false</item>
-        <item name="cardElevation">@dimen/card_elevation</item>
-    </style>
-
-
-</resources>
+</menu>

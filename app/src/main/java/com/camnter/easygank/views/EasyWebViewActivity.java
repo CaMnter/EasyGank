@@ -60,11 +60,11 @@ import com.camnter.easygank.utils.WebViewUtils;
  */
 public class EasyWebViewActivity extends BaseToolbarActivity {
 
-    public static final String EXTRA_URL = "com.camnter.easygank.EXTRA_URL";
-    public static final String EXTRA_TITLE = "com.camnter.easygank.EXTRA_TITLE";
+    private static final String EXTRA_URL = "com.camnter.easygank.EXTRA_URL";
+    private static final String EXTRA_TITLE = "com.camnter.easygank.EXTRA_TITLE";
 
     // For gank api
-    public static final String EXTRA_GANK_TYPE = "com.camnter.easygank.EXTRA_GANK_TYPE";
+    private static final String EXTRA_GANK_TYPE = "com.camnter.easygank.EXTRA_GANK_TYPE";
 
     private static final int PROGRESS_RATIO = 1000;
 
@@ -200,10 +200,8 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
      */
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        super.initViews(savedInstanceState);
         this.mWebView = this.findView(R.id.webview);
         this.mProgressBar = (ProgressBar) this.findViewById(R.id.webview_pb);
-
     }
 
     /**

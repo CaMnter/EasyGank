@@ -24,37 +24,34 @@
 
 package com.camnter.easygank.views;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.camnter.easygank.R;
-import com.camnter.easygank.adapter.DailyDetailAdapter;
-import com.camnter.easygank.bean.BaseGankData;
 import com.camnter.easygank.core.BaseToolbarActivity;
+import com.camnter.easygank.utils.GlideUtils;
 import com.camnter.easygank.utils.IntentUtils;
-import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
-import com.camnter.easyrecyclerview.widget.decorator.EasyBorderDividerItemDecoration;
-
-import java.util.ArrayList;
 
 /**
- * Description：DailyDetailActivity
+ * Description：PictureActivity
  * Created by：CaMnter
- * Time：2016-01-09 19:01
+ * Time：2016-01-11 19:25
  */
-public class DailyDetailActivity extends BaseToolbarActivity implements DailyDetailAdapter.onCardItemClickListener {
+public class PictureActivity extends BaseToolbarActivity {
 
-    private DailyDetailAdapter detailAdapter;
-
-    private static final String EXTRA_DETAIL = "com.camnter.easygank.EXTRA_DETAIL";
+    private static final String EXTRA_URL = "com.camnter.easygank.EXTRA_URL";
     private static final String EXTRA_TITLE = "com.camnter.easygank.EXTRA_TITLE";
 
-    public static void startActivity(Context context, String title, ArrayList<ArrayList<BaseGankData>> detail) {
-        Intent intent = new Intent(context, DailyDetailActivity.class);
+    private ImageView pictureIV;
+
+    public static void startActivity(Context context, String url, String title) {
+        Intent intent = new Intent(context, PictureActivity.class);
+        intent.putExtra(EXTRA_URL, url);
         intent.putExtra(EXTRA_TITLE, title);
-        intent.putExtra(EXTRA_DETAIL, detail);
         context.startActivity(intent);
     }
 
@@ -65,7 +62,7 @@ public class DailyDetailActivity extends BaseToolbarActivity implements DailyDet
      */
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_daily_detail;
+        return R.layout.activity_picture;
     }
 
     /**
@@ -73,20 +70,9 @@ public class DailyDetailActivity extends BaseToolbarActivity implements DailyDet
      *
      * @param savedInstanceState savedInstanceState
      */
-    @SuppressLint("InflateParams")
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        EasyRecyclerView detailRV = this.findView(R.id.daily_detail_rv);
-        EasyBorderDividerItemDecoration detailDecoration = new EasyBorderDividerItemDecoration(
-                this.getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height),
-                this.getResources().getDimensionPixelOffset(R.dimen.data_border_padding_infra_spans)
-        );
-        detailRV.addItemDecoration(detailDecoration);
-        this.detailAdapter = new DailyDetailAdapter(this);
-        this.detailAdapter.setOnCardItemClickListener(this);
-        detailRV.setAdapter(this.detailAdapter);
-        this.showBack();
-        this.setTitle(this.getDetailTitle());
+        this.pictureIV = this.findView(R.id.picture_iv);
     }
 
     /**
@@ -102,22 +88,36 @@ public class DailyDetailActivity extends BaseToolbarActivity implements DailyDet
      */
     @Override
     protected void initData() {
-        this.detailAdapter.setList(this.getDetail());
-        this.detailAdapter.notifyDataSetChanged();
-    }
-
-    @SuppressWarnings("unchecked")
-    private ArrayList<ArrayList<BaseGankData>> getDetail() {
-        return (ArrayList<ArrayList<BaseGankData>>) IntentUtils.getSerializableExtra(this.getIntent(), EXTRA_DETAIL);
-    }
-
-    private String getDetailTitle() {
-        return IntentUtils.getStringExtra(this.getIntent(), EXTRA_TITLE);
+        this.showBack();
+        this.setTitle(this.getUrlTitle());
+        GlideUtils.display(this.pictureIV, this.getUrl());
     }
 
     @Override
-    public void onCardItemOnClick(String urlType, String title, String url) {
-        EasyWebViewActivity.toUrl(this, url, title, urlType);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.menu_picture, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_picture_download:
+                return true;
+            case R.id.menu_picture_copy:
+                return true;
+            case R.id.menu_picture_share:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private String getUrl() {
+        return IntentUtils.getStringExtra(this.getIntent(), EXTRA_URL);
+    }
+
+    private String getUrlTitle() {
+        return IntentUtils.getStringExtra(this.getIntent(), EXTRA_TITLE);
     }
 
 }

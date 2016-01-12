@@ -46,6 +46,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(this.getLayoutId());
+        this.initToolbar(savedInstanceState);
         this.initViews(savedInstanceState);
         this.initData();
         this.initListeners();
@@ -77,6 +78,13 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
      * @param savedInstanceState savedInstanceState
      */
     protected abstract void initViews(Bundle savedInstanceState);
+
+    /**
+     * Initialize the toolbar in the layout
+     *
+     * @param savedInstanceState savedInstanceState
+     */
+    protected abstract void initToolbar(Bundle savedInstanceState);
 
     /**
      * Initialize the View of the listener
