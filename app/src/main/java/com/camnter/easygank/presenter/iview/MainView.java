@@ -61,7 +61,7 @@ public interface MainView extends MvpView {
      *
      * @param type type
      */
-    void onSwitchSuccess(GankType type);
+    void onSwitchSuccess(int type);
 
     /**
      * 获取每日详情数据

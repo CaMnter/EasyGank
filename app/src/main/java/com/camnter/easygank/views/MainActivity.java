@@ -64,7 +64,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
     private int emptyCount = 0;
     private static final int EMPTY_LIMIT = 5;
 
-    private GankType gankType;
+    private int gankType;
 
     /**
      * Fill in layout id
@@ -219,17 +219,17 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
      *
      * @param gankType gankType
      */
-    private void loadMore(GankType gankType) {
+    private void loadMore(int gankType) {
         switch (gankType) {
-            case daily:
+            case GankType.daily:
                 this.presenter.getDaily(false, GankTypeDict.DONT_SWITCH);
                 break;
-            case android:
-            case ios:
-            case js:
-            case resources:
-            case welfare:
-            case video:
+            case GankType.android:
+            case GankType.ios:
+            case GankType.js:
+            case GankType.resources:
+            case GankType.welfare:
+            case GankType.video:
                 this.presenter.getData(this.gankType, false, GankTypeDict.DONT_SWITCH);
                 break;
         }
@@ -254,7 +254,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
     /**
      * 刷新 or 下拉刷新
      */
-    private void refreshData(GankType gankType) {
+    private void refreshData(int gankType) {
         this.presenter.setPage(1);
         new Handler().post(new Runnable() {
             @Override
@@ -263,15 +263,15 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
             }
         });
         switch (gankType) {
-            case daily:
+            case GankType.daily:
                 this.presenter.getDaily(true, GankTypeDict.DONT_SWITCH);
                 break;
-            case android:
-            case ios:
-            case js:
-            case resources:
-            case welfare:
-            case video:
+            case GankType.android:
+            case GankType.ios:
+            case GankType.js:
+            case GankType.resources:
+            case GankType.welfare:
+            case GankType.video:
                 this.presenter.getData(this.gankType, true, GankTypeDict.DONT_SWITCH);
                 break;
         }
@@ -323,7 +323,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
      * @param type type
      */
     @Override
-    public void onSwitchSuccess(GankType type) {
+    public void onSwitchSuccess(int type) {
         this.emptyCount = 0;
         this.mainAdapter.setType(type);
         this.mainAdapter.clear();
@@ -331,18 +331,18 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
 
         // 重置LayoutManager 和 分割线
         switch (gankType) {
-            case daily:
-            case android:
-            case ios:
-            case js:
-            case resources:
-            case video:
+            case GankType.daily:
+            case GankType.android:
+            case GankType.ios:
+            case GankType.js:
+            case GankType.resources:
+            case GankType.video:
                 // 防止重复添加一样的
                 this.clearDecoration();
                 this.mainRV.setLayoutManager(this.mLinearLayoutManager);
                 this.mainRV.addItemDecoration(this.dataDecoration);
                 break;
-            case welfare:
+            case GankType.welfare:
                 this.clearDecoration();
                 this.mainRV.setLayoutManager(this.mStaggeredGridLayoutManager);
                 this.mainRV.addItemDecoration(this.welfareDecoration);
@@ -430,7 +430,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
      *
      * @param gankType gankType
      */
-    private void changeGankType(GankType gankType) {
+    private void changeGankType(int gankType) {
         this.refresh(true);
         this.presenter.switchType(gankType);
     }

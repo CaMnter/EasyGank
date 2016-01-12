@@ -58,10 +58,10 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
 
     private Context context;
 
-    private GankType type;
+    private int type;
     private MainAdapter.OnClickListener listener;
 
-    public MainAdapter(Context context, GankType type) {
+    public MainAdapter(Context context, int type) {
         this.context = context;
         this.type = type;
     }
@@ -91,7 +91,7 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         }
     }
 
-    public GankType getType() {
+    public int getType() {
         return type;
     }
 
@@ -100,7 +100,7 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
      *
      * @param type type
      */
-    public void setType(GankType type) {
+    public void setType(int type) {
         this.type = type;
     }
 
@@ -116,15 +116,15 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
          * android、ios、js、resource是一套布局
          */
         switch (this.type) {
-            case daily:
+            case GankType.daily:
                 return LAYOUT_TYPE_DAILY;
-            case android:
-            case ios:
-            case js:
-            case resources:
-            case video:
+            case GankType.android:
+            case GankType.ios:
+            case GankType.js:
+            case GankType.resources:
+            case GankType.video:
                 return LAYOUT_TYPE_TECHNOLOGY;
-            case welfare:
+            case GankType.welfare:
                 return LAYOUT_TYPE_WELFARE;
             default:
                 return LAYOUT_TYPE_DAILY;

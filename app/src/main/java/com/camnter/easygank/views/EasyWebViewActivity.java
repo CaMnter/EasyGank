@@ -25,8 +25,6 @@
 package com.camnter.easygank.views;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -146,7 +144,7 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
                 this.refreshWebView();
                 return true;
             case R.id.web_copy:
-                DeviceUtils.copy2Clipboard(this,this.mWebView.getUrl());
+                DeviceUtils.copy2Clipboard(this, this.mWebView.getUrl());
                 Snackbar.make(this.mWebView, this.getString(R.string.common_copy_success), Snackbar.LENGTH_SHORT).show();
                 return true;
             case R.id.web_switch_screen_mode:

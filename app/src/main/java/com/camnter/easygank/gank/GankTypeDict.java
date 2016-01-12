@@ -49,10 +49,10 @@ public class GankTypeDict {
             R.id.navigation_video,
             R.id.navigation_resources
     };
-    public static final SparseArray<GankType> menuId2TypeDict = new SparseArray<>();
+    public static final SparseArray<Integer> menuId2TypeDict = new SparseArray<>();
 
-    public static final HashMap<GankType, String> type2UrlTypeDict = new HashMap<>();
-    public static final HashMap<String, GankType> urlType2TypeDict = new HashMap<>();
+    public static final HashMap<Integer, String> type2UrlTypeDict = new HashMap<>();
+    public static final HashMap<String, Integer> urlType2TypeDict = new HashMap<>();
 
     public static final HashMap<String, Integer> urlType2ColorDict = new HashMap<>();
 
@@ -71,7 +71,7 @@ public class GankTypeDict {
         type2UrlTypeDict.put(GankType.video, "休息视频");
         type2UrlTypeDict.put(GankType.resources, "拓展资源");
         type2UrlTypeDict.put(GankType.js, "前端");
-        for (Map.Entry<GankType, String> entry : type2UrlTypeDict.entrySet()) {
+        for (Map.Entry<Integer, String> entry : type2UrlTypeDict.entrySet()) {
             urlType2TypeDict.put(entry.getValue(), entry.getKey());
         }
 

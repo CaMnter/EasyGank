@@ -230,7 +230,7 @@ public class MainPresenter extends BasePresenter<MainView> {
      * @param refresh 是否是刷新
      * @param oldPage olaPage==GankTypeDict.DONT_SWITCH表示不是切换数据
      */
-    public void getData(final GankType type, final boolean refresh, final int oldPage) {
+    public void getData(final int type, final boolean refresh, final int oldPage) {
         /*
          * 切换数据源的话,尝试页数1
          */
@@ -303,22 +303,22 @@ public class MainPresenter extends BasePresenter<MainView> {
 
     }
 
-    public void switchType(GankType type) {
+    public void switchType(int type) {
         /*
          * 记录没切换前的数据的页数
          * 以防切换数据后，网络又跪导致的page对不上问题
          */
         int oldPage = this.page;
         switch (type) {
-            case daily:
+            case GankType.daily:
                 this.getDaily(true, oldPage);
                 break;
-            case android:
-            case ios:
-            case js:
-            case resources:
-            case welfare:
-            case video:
+            case GankType.android:
+            case GankType.ios:
+            case GankType.js:
+            case GankType.resources:
+            case GankType.welfare:
+            case GankType.video:
                 this.getData(type, true, oldPage);
                 break;
         }
