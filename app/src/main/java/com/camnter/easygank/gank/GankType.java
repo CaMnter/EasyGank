@@ -37,4 +37,6 @@ public class GankType {
     public static final int resources = 22065;
     public static final int welfare = 22066;
     public static final int video = 22067;
+    public static final int app = 22068;
+    public static final int recommend = 22060;
 }

@@ -71,6 +71,8 @@ public class GankTypeDict {
         type2UrlTypeDict.put(GankType.video, "休息视频");
         type2UrlTypeDict.put(GankType.resources, "拓展资源");
         type2UrlTypeDict.put(GankType.js, "前端");
+        type2UrlTypeDict.put(GankType.app, "App");
+        type2UrlTypeDict.put(GankType.recommend, "瞎推荐");
         for (Map.Entry<Integer, String> entry : type2UrlTypeDict.entrySet()) {
             urlType2TypeDict.put(entry.getValue(), entry.getKey());
         }
