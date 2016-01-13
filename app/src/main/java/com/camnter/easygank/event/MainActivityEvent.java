@@ -24,7 +24,7 @@
 
 package com.camnter.easygank.event;
 
-import com.camnter.easygank.widget.rx.RxEvent;
+import com.camnter.easygank.utils.rx.RxEvent;
 
 /**
  * Description：MainActivityEvent

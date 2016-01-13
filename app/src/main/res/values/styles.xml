@@ -33,10 +33,10 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <!--<item name="android:windowBackground">@color/appBackground</item>-->
     </style>
 
-    <style name="AppWindowTranslucentStatusTheme" parent="AppTheme"></style>
+    <style name="AppWindowTranslucentStatusTheme" parent="AppTheme">
+    </style>
 
     <style name="AppWindowTranslucentBackgroundTheme" parent="AppTheme">
         <item name="android:windowBackground">@null</item>

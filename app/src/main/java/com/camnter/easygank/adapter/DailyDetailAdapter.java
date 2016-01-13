@@ -118,7 +118,7 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
                 GlideUtils.display(welfareIV, baseGankData.url);
                 welfareIV.setOnClickListener(v -> {
                     if (DailyDetailAdapter.this.onCardItemClickListener != null)
-                        DailyDetailAdapter.this.onCardItemClickListener.onWelfareOnClick(baseGankData.url, baseGankData.desc);
+                        DailyDetailAdapter.this.onCardItemClickListener.onWelfareOnClick(baseGankData.url, baseGankData.desc, v);
                 });
                 detailLL.addView(welfareIV);
             } else {
@@ -203,7 +203,7 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
 
         void onCardItemOnClick(String urlType, String title, String url);
 
-        void onWelfareOnClick(String url, String title);
+        void onWelfareOnClick(String url, String title, View v);
     }
 
 }

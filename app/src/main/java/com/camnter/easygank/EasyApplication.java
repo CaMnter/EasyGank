@@ -46,8 +46,6 @@ public class EasyApplication extends Application {
     public static final long ONE_MB = ONE_KB * 1024L;
     public static final long CACHE_DATA_MAX_SIZE = ONE_MB * 3L;
 
-    public static final String CACHE_DATA_KEY_DAILY = "cache_data_key_daily";
-
     public static EasyApplication getInstance() {
         return ourInstance;
     }

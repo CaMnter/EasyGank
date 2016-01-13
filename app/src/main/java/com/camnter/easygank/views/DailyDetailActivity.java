@@ -28,6 +28,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.camnter.easygank.R;
 import com.camnter.easygank.adapter.DailyDetailAdapter;
@@ -121,8 +122,8 @@ public class DailyDetailActivity extends BaseToolbarActivity implements DailyDet
     }
 
     @Override
-    public void onWelfareOnClick(String url, String title) {
-        PictureActivity.startActivity(this, url, title);
+    public void onWelfareOnClick(String url, String title, View v) {
+        PictureActivity.startActivityByActivityOptionsCompat(this, url, title, v);
     }
 
 }

@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.camnter.easygank.R;
-import com.camnter.easygank.core.BasePresenter;
+import com.camnter.easygank.core.mvp.BasePresenter;
 import com.camnter.easygank.presenter.iview.PictureView;
 import com.camnter.easygank.utils.DeviceUtils;
 

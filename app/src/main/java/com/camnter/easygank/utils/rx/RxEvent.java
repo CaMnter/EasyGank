@@ -13,8 +13,7 @@
  * limitations under the License.
  */
 
-
-package com.camnter.easygank.widget.rx;
+package com.camnter.easygank.utils.rx;
 
 /**
  * Description：RxEvent

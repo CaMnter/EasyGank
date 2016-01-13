@@ -47,7 +47,6 @@ import com.camnter.easygank.gank.GankType;
 import com.camnter.easygank.gank.GankTypeDict;
 import com.camnter.easygank.presenter.MainPresenter;
 import com.camnter.easygank.presenter.iview.MainView;
-import com.camnter.easyrecyclerview.holder.EasyRecyclerViewHolder;
 import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
 import com.camnter.easyrecyclerview.widget.decorator.EasyBorderDividerItemDecoration;
 
@@ -142,26 +141,23 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
     @Override
     protected void initListeners() {
         this.mainRV.addOnScrollListener(this.getRecyclerViewOnScrollListener());
-        this.mainAdapter.setOnItemClickListener(new EasyRecyclerViewHolder.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Object o = MainActivity.this.mainAdapter.getItem(position);
-                if (o instanceof BaseGankData) {
-                    BaseGankData baseGankData = (BaseGankData) o;
-                    if (GankTypeDict.urlType2TypeDict.get(baseGankData.type) == GankType.welfare) {
-                        PictureActivity.startActivity(MainActivity.this, baseGankData.url, baseGankData.desc);
-                    } else {
-                        EasyWebViewActivity.toUrl(
-                                MainActivity.this,
-                                baseGankData.url,
-                                baseGankData.desc,
-                                baseGankData.type
-                        );
-                    }
-                } else if (o instanceof GankDaily) {
-                    GankDaily daily = (GankDaily) o;
-                    MainActivity.this.presenter.getDailyDetail(daily.results);
+        this.mainAdapter.setOnItemClickListener((view, position) -> {
+            Object o = MainActivity.this.mainAdapter.getItem(position);
+            if (o instanceof BaseGankData) {
+                BaseGankData baseGankData = (BaseGankData) o;
+                if (GankTypeDict.urlType2TypeDict.get(baseGankData.type) == GankType.welfare) {
+                    PictureActivity.startActivityByActivityOptionsCompat(MainActivity.this, baseGankData.url, baseGankData.desc, view);
+                } else {
+                    EasyWebViewActivity.toUrl(
+                            MainActivity.this,
+                            baseGankData.url,
+                            baseGankData.desc,
+                            baseGankData.type
+                    );
                 }
+            } else if (o instanceof GankDaily) {
+                GankDaily daily = (GankDaily) o;
+                MainActivity.this.presenter.getDailyDetail(daily.results);
             }
         });
     }
@@ -285,12 +281,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
      */
     private void refreshData(int gankType) {
         this.presenter.setPage(1);
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                MainActivity.this.refresh(true);
-            }
-        });
+        new Handler().post(() -> MainActivity.this.refresh(true));
         switch (gankType) {
             case GankType.daily:
                 this.presenter.getDaily(true, GankTypeDict.DONT_SWITCH);
@@ -421,12 +412,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
      */
     @Override
     protected NavigationView.OnNavigationItemSelectedListener getNavigationItemSelectedListener() {
-        return new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                return MainActivity.this.menuItemChecked(item.getItemId());
-            }
-        };
+        return item -> MainActivity.this.menuItemChecked(item.getItemId());
     }
 
     /**
@@ -441,7 +427,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
 
     /**
      * Fill in your menu operation on click
-     * <p/>
+     * <p>
      * 走到这，就不会有两次点击都一样的情况
      * Come to this, there would be no two clicks are all the same
      *
@@ -464,10 +450,8 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
         this.presenter.switchType(gankType);
     }
 
-
     @Override
-    public void onClickPicture(String url, String title) {
-        PictureActivity.startActivity(this, url, title);
+    public void onClickPicture(String url, String title,View view) {
+        PictureActivity.startActivityByActivityOptionsCompat(this, url, title, view);
     }
-
 }

@@ -24,10 +24,14 @@
 
 package com.camnter.easygank.views;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +43,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.bumptech.glide.request.target.Target;
 import com.camnter.easygank.EasyApplication;
 import com.camnter.easygank.R;
@@ -60,6 +63,8 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView 
     private static final String EXTRA_URL = "com.camnter.easygank.EXTRA_URL";
     private static final String EXTRA_TITLE = "com.camnter.easygank.EXTRA_TITLE";
 
+    private static final String SHARED_ELEMENT_NAME = "PictureActivity";
+
     private ImageView pictureIV;
 
     private PicturePresenter presenter;
@@ -67,10 +72,25 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView 
     private GlideBitmapDrawable glideBitmapDrawable;
 
     public static void startActivity(Context context, String url, String title) {
+        context.startActivity(createIntent(context, url, title));
+    }
+
+    public static void startActivityByActivityOptionsCompat(Activity activity, String url, String title, View view) {
+        Intent intent = createIntent(activity, url, title);
+        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(view, view.getWidth() / 2, view.getHeight() / 2, view.getWidth(), view.getHeight() );
+        try {
+            ActivityCompat.startActivity(activity, intent, activityOptionsCompat.toBundle());
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            startActivity(activity, url, title);
+        }
+    }
+
+    private static Intent createIntent(Context context, String url, String title) {
         Intent intent = new Intent(context, PictureActivity.class);
         intent.putExtra(EXTRA_URL, url);
         intent.putExtra(EXTRA_TITLE, title);
-        context.startActivity(intent);
+        return intent;
     }
 
     /**
@@ -91,6 +111,7 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView 
     @Override
     protected void initViews(Bundle savedInstanceState) {
         this.pictureIV = this.findView(R.id.picture_iv);
+        ViewCompat.setTransitionName(this.pictureIV, SHARED_ELEMENT_NAME);
     }
 
     /**

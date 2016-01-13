@@ -22,20 +22,19 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package com.camnter.easygank.core;
+package com.camnter.easygank.core.mvp;
 
-import com.camnter.easygank.core.mvp.MvpView;
-import com.camnter.easygank.core.mvp.Presenter;
+import com.camnter.easygank.data.DataManager;
 
 import rx.subscriptions.CompositeSubscription;
 
 /**
  * Description：BasePresenter
- * <p/>
+ * <p>
  * Base class that implements the Presenter interface and provides a base implementation for
  * attachView() and detachView(). It also handles keeping a reference to the mvpView that
  * can be accessed from the children classes by calling getMvpView().
- * <p/>
+ * <p>
  * Created by：CaMnter
  * Time：2016-01-03 18:10
  */
@@ -43,11 +42,14 @@ public class BasePresenter<T extends MvpView> implements Presenter<T> {
 
     private T mMvpView;
     public CompositeSubscription mCompositeSubscription;
+    public DataManager mDataManager;
+
 
     @Override
     public void attachView(T mvpView) {
         this.mMvpView = mvpView;
         this.mCompositeSubscription = new CompositeSubscription();
+        this.mDataManager = DataManager.getInstance();
     }
 
     @Override
@@ -55,6 +57,7 @@ public class BasePresenter<T extends MvpView> implements Presenter<T> {
         this.mMvpView = null;
         this.mCompositeSubscription.unsubscribe();
         this.mCompositeSubscription = null;
+        this.mDataManager = null;
     }
 
     public boolean isViewAttached() {

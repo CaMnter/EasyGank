@@ -38,6 +38,7 @@
     </style>
 
     <style name="AppWindowTranslucentStatusTheme" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">false</item>
     </style>
 
     <style name="AppWindowTranslucentBackgroundTheme" parent="AppTheme">

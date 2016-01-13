@@ -172,7 +172,7 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
             GlideUtils.display(dailyIV, welfare.url);
             dailyIV.setOnClickListener(v -> {
                 if (MainAdapter.this.listener != null)
-                    MainAdapter.this.listener.onClickPicture(welfare.url, welfare.desc);
+                    MainAdapter.this.listener.onClickPicture(welfare.url, welfare.desc, v);
             });
         } else {
             GlideUtils.displayNative(dailyIV, R.mipmap.img_default_gray);
@@ -308,7 +308,7 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
     }
 
     public interface OnClickListener {
-        void onClickPicture(String url, String title);
+        void onClickPicture(String url, String title, View view);
     }
 
 }

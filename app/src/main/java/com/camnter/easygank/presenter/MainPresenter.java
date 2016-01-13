@@ -24,28 +24,27 @@
 
 package com.camnter.easygank.presenter;
 
+import com.anupcowkur.reservoir.ReservoirGetCallback;
 import com.camnter.easygank.bean.BaseGankData;
 import com.camnter.easygank.bean.GankDaily;
 import com.camnter.easygank.constant.Constant;
-import com.camnter.easygank.core.BasePresenter;
+import com.camnter.easygank.core.mvp.BasePresenter;
 import com.camnter.easygank.gank.GankApi;
 import com.camnter.easygank.gank.GankType;
 import com.camnter.easygank.gank.GankTypeDict;
-import com.camnter.easygank.model.impl.DailyModel;
-import com.camnter.easygank.model.impl.DataModel;
 import com.camnter.easygank.presenter.iview.MainView;
 import com.camnter.easygank.utils.DateUtils;
+import com.camnter.easygank.utils.ReservoirUtils;
+import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import rx.Observable;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Description：MainPresenter
@@ -56,6 +55,8 @@ public class MainPresenter extends BasePresenter<MainView> {
 
     private EasyDate currentDate;
     private int page;
+
+    private ReservoirUtils reservoirUtils;
 
     /**
      * 查每日干货需要的特殊的类
@@ -79,10 +80,6 @@ public class MainPresenter extends BasePresenter<MainView> {
             return calendar.get(Calendar.DAY_OF_MONTH);
         }
 
-        public Calendar getCalendar() {
-            return this.calendar;
-        }
-
         public List<EasyDate> getPastTime() {
             List<EasyDate> easyDates = new ArrayList<>();
             for (int i = 0; i < GankApi.DEFAULT_DAILY_SIZE; i++) {
@@ -103,6 +100,7 @@ public class MainPresenter extends BasePresenter<MainView> {
 
 
     public MainPresenter() {
+        this.reservoirUtils = new ReservoirUtils();
         long time = System.currentTimeMillis();
         Calendar mCalendar = Calendar.getInstance();
         mCalendar.setTimeInMillis(time);
@@ -141,22 +139,7 @@ public class MainPresenter extends BasePresenter<MainView> {
         if (oldPage != GankTypeDict.DONT_SWITCH) {
             this.page = 1;
         }
-        this.mCompositeSubscription.add(Observable.just(this.currentDate)
-                .subscribeOn(Schedulers.io())
-                .flatMapIterable(easyDate -> easyDate.getPastTime())
-                .flatMap(easyDate -> {
-                    /*
-                     * 感觉Android的数据应该不会为null
-                     * 所以以Android的数据为判断是否当天有数据
-                     */
-                    return DailyModel.getInstance()
-                            .getDaily(easyDate.getYear(), easyDate.getMonth(), easyDate.getDay())
-                            .filter(dailyData -> dailyData.results.androidData != null);
-                })
-                .toSortedList((dailyData, dailyData2) -> {
-                    return dailyData2.results.androidData.get(0).publishedAt.compareTo(dailyData.results.androidData.get(0).publishedAt);
-                })
-                .observeOn(AndroidSchedulers.mainThread())
+        this.mCompositeSubscription.add(this.mDataManager.getDailyDataByNetwork(this.currentDate)
                 .subscribe(new Subscriber<List<GankDaily>>() {
                     @Override
                     public void onCompleted() {
@@ -171,19 +154,33 @@ public class MainPresenter extends BasePresenter<MainView> {
                         } catch (Throwable e1) {
                             e1.getMessage();
                         } finally {
-                            /*
-                             * 如果是切换数据源
-                             * 刚才尝试的page＝1失败了的请求
-                             * 加载失败
-                             * 会影响到原来页面的page
-                             * 在这里执行复原page操作
-                             */
-                            if (oldPage != GankTypeDict.DONT_SWITCH)
-                                MainPresenter.this.page = oldPage;
+                            if (refresh) {
+                                Type resultType = new TypeToken<List<GankDaily>>() {
+                                }.getType();
+                                MainPresenter.this.reservoirUtils.get(GankType.daily + "", resultType, new ReservoirGetCallback<List<GankDaily>>() {
+                                    @Override
+                                    public void onSuccess(List<GankDaily> object) {
+                                        // 有缓存显示缓存数据
+                                        if (oldPage != GankTypeDict.DONT_SWITCH) {
+                                            if (MainPresenter.this.getMvpView() != null)
+                                                MainPresenter.this.getMvpView().onSwitchSuccess(GankType.daily);
+                                        }
+                                        if (MainPresenter.this.getMvpView() != null)
+                                            MainPresenter.this.getMvpView().onGetDailySuccess(object, refresh);
+                                        if (MainPresenter.this.getMvpView() != null)
+                                            MainPresenter.this.getMvpView().onFailure(e);
+                                    }
 
-                            if (MainPresenter.this.getMvpView() != null)
-                                MainPresenter.this.getMvpView().onFailure(e);
+                                    @Override
+                                    public void onFailure(Exception e) {
+                                        MainPresenter.this.switchFailure(oldPage, e);
+                                    }
+                                });
+                            } else {
+                                MainPresenter.this.switchFailure(oldPage, e);
+                            }
                         }
+
                     }
 
                     @Override
@@ -197,6 +194,9 @@ public class MainPresenter extends BasePresenter<MainView> {
                             if (MainPresenter.this.getMvpView() != null)
                                 MainPresenter.this.getMvpView().onSwitchSuccess(GankType.daily);
                         }
+                        // 刷新缓存
+                        if (refresh)
+                            MainPresenter.this.reservoirUtils.refresh(GankType.daily + "", dailyData);
                         if (MainPresenter.this.getMvpView() != null)
                             MainPresenter.this.getMvpView().onGetDailySuccess(dailyData, refresh);
                     }
@@ -217,15 +217,9 @@ public class MainPresenter extends BasePresenter<MainView> {
         if (oldPage != GankTypeDict.DONT_SWITCH) {
             this.page = 1;
         }
-
         String gankType = GankTypeDict.type2UrlTypeDict.get(type);
         if (gankType == null) return;
-
-        this.mCompositeSubscription.add(DataModel.getInstance().getData(gankType, GankApi.DEFAULT_DATA_SIZE, this.page)
-                .subscribeOn(Schedulers.io())
-                .map(gankData -> gankData.results)
-                .observeOn(AndroidSchedulers.mainThread())
-                .onErrorReturn(throwable -> null)
+        this.mCompositeSubscription.add(this.mDataManager.getDataByNetWork(gankType, GankApi.DEFAULT_DATA_SIZE, this.page)
                 .subscribe(new Subscriber<ArrayList<BaseGankData>>() {
                     @Override
                     public void onCompleted() {
@@ -240,18 +234,31 @@ public class MainPresenter extends BasePresenter<MainView> {
                         } catch (Throwable e1) {
                             e1.getMessage();
                         } finally {
-                            /*
-                             * 如果是切换数据源
-                             * 刚才尝试的page＝1失败了的请求
-                             * 加载失败
-                             * 会影响到原来页面的page
-                             * 在这里执行复原page操作
-                             */
-                            if (oldPage != GankTypeDict.DONT_SWITCH)
-                                MainPresenter.this.page = oldPage;
+                            if (refresh) {
+                                Type resultType = new TypeToken<ArrayList<BaseGankData>>() {
+                                }.getType();
+                                MainPresenter.this.reservoirUtils.get(type + "", resultType, new ReservoirGetCallback<ArrayList<BaseGankData>>() {
+                                    @Override
+                                    public void onSuccess(ArrayList<BaseGankData> object) {
+                                        // 有缓存显示缓存数据
+                                        if (oldPage != GankTypeDict.DONT_SWITCH) {
+                                            if (MainPresenter.this.getMvpView() != null)
+                                                MainPresenter.this.getMvpView().onSwitchSuccess(type);
+                                        }
+                                        if (MainPresenter.this.getMvpView() != null)
+                                            MainPresenter.this.getMvpView().onGetDataSuccess(object, refresh);
+                                        if (MainPresenter.this.getMvpView() != null)
+                                            MainPresenter.this.getMvpView().onFailure(e);
+                                    }
 
-                            if (MainPresenter.this.getMvpView() != null)
-                                MainPresenter.this.getMvpView().onFailure(e);
+                                    @Override
+                                    public void onFailure(Exception e) {
+                                        MainPresenter.this.switchFailure(oldPage, e);
+                                    }
+                                });
+                            } else {
+                                MainPresenter.this.switchFailure(oldPage, e);
+                            }
                         }
                     }
 
@@ -266,8 +273,13 @@ public class MainPresenter extends BasePresenter<MainView> {
                             if (MainPresenter.this.getMvpView() != null)
                                 MainPresenter.this.getMvpView().onSwitchSuccess(type);
                         }
+                        // 刷新缓存
+                        if (refresh)
+                            MainPresenter.this.reservoirUtils.refresh(type + "", baseGankData);
                         if (MainPresenter.this.getMvpView() != null)
                             MainPresenter.this.getMvpView().onGetDataSuccess(baseGankData, refresh);
+
+
                     }
                 }));
 
@@ -296,29 +308,7 @@ public class MainPresenter extends BasePresenter<MainView> {
 
 
     public void getDailyDetail(final GankDaily.DailyResults results) {
-        this.mCompositeSubscription.add(Observable.just(results)
-                .subscribeOn(Schedulers.io())
-                .map(dailyResults -> {
-                    ArrayList<ArrayList<BaseGankData>> cardData = new ArrayList<>();
-                    if (dailyResults.welfareData != null && dailyResults.welfareData.size() > 0)
-                        cardData.add(dailyResults.welfareData);
-                    if (dailyResults.androidData != null && dailyResults.androidData.size() > 0)
-                        cardData.add(dailyResults.androidData);
-                    if (dailyResults.iosData != null && dailyResults.iosData.size() > 0)
-                        cardData.add(dailyResults.iosData);
-                    if (dailyResults.jsData != null && dailyResults.jsData.size() > 0)
-                        cardData.add(dailyResults.jsData);
-                    if (dailyResults.videoData != null && dailyResults.videoData.size() > 0)
-                        cardData.add(dailyResults.videoData);
-                    if (dailyResults.resourcesData != null && dailyResults.resourcesData.size() > 0)
-                        cardData.add(dailyResults.resourcesData);
-                    if (dailyResults.appData != null && dailyResults.appData.size() > 0)
-                        cardData.add(dailyResults.appData);
-                    if (dailyResults.recommendData != null && dailyResults.recommendData.size() > 0)
-                        cardData.add(dailyResults.recommendData);
-                    return cardData;
-                })
-                .observeOn(AndroidSchedulers.mainThread())
+        this.mCompositeSubscription.add(this.mDataManager.getDailyDetailByDailyResults(results)
                 .subscribe(new Subscriber<ArrayList<ArrayList<BaseGankData>>>() {
                     @Override
                     public void onCompleted() {
@@ -328,7 +318,11 @@ public class MainPresenter extends BasePresenter<MainView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        Logger.d(e.getMessage());
+                        try {
+                            Logger.d(e.getMessage());
+                        } catch (Throwable e1) {
+                            e1.getMessage();
+                        }
                     }
 
                     @Override
@@ -340,9 +334,27 @@ public class MainPresenter extends BasePresenter<MainView> {
                                             Constant.DAILY_DATE_FORMAT), detail
                             );
                         }
-
                     }
                 }));
+    }
+
+    /**
+     * 切换分类失败
+     *
+     * @param oldPage oldPage
+     */
+    private void switchFailure(int oldPage, Throwable e) {
+        /*
+         * 如果是切换数据源
+         * 刚才尝试的page＝1失败了的请求
+         * 加载失败
+         * 会影响到原来页面的page
+         * 在这里执行复原page操作
+         */
+        if (oldPage != GankTypeDict.DONT_SWITCH)
+            MainPresenter.this.page = oldPage;
+        if (MainPresenter.this.getMvpView() != null)
+            MainPresenter.this.getMvpView().onFailure(e);
     }
 
 
