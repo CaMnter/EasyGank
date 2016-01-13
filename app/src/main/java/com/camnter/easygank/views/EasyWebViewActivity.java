@@ -49,6 +49,7 @@ import com.camnter.easygank.gank.GankType;
 import com.camnter.easygank.gank.GankTypeDict;
 import com.camnter.easygank.utils.DeviceUtils;
 import com.camnter.easygank.utils.IntentUtils;
+import com.camnter.easygank.utils.ShareUtils;
 import com.camnter.easygank.utils.ToastUtils;
 import com.camnter.easygank.utils.WebViewUtils;
 
@@ -143,6 +144,9 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
             case R.id.web_copy:
                 DeviceUtils.copy2Clipboard(this, this.mWebView.getUrl());
                 Snackbar.make(this.mWebView, this.getString(R.string.common_copy_success), Snackbar.LENGTH_SHORT).show();
+                return true;
+            case R.id.menu_web_share:
+                ShareUtils.share(this, this.getUrl());
                 return true;
             case R.id.web_switch_screen_mode:
                 this.switchScreenConfiguration(item);
@@ -347,9 +351,9 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             this.switchScreenConfiguration(null);
         } else {
-            if(this.mWebView.canGoBack()){
+            if (this.mWebView.canGoBack()) {
                 this.mWebView.goBack();
-            }else {
+            } else {
                 this.finish();
             }
         }

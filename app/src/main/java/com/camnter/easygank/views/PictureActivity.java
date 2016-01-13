@@ -27,6 +27,7 @@ package com.camnter.easygank.views;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -51,6 +52,7 @@ import com.camnter.easygank.presenter.PicturePresenter;
 import com.camnter.easygank.presenter.iview.PictureView;
 import com.camnter.easygank.utils.DeviceUtils;
 import com.camnter.easygank.utils.IntentUtils;
+import com.camnter.easygank.utils.ShareUtils;
 import com.camnter.easygank.utils.ToastUtils;
 
 /**
@@ -77,7 +79,7 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView 
 
     public static void startActivityByActivityOptionsCompat(Activity activity, String url, String title, View view) {
         Intent intent = createIntent(activity, url, title);
-        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(view, view.getWidth() / 2, view.getHeight() / 2, view.getWidth(), view.getHeight() );
+        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(view, view.getWidth() / 2, view.getHeight() / 2, view.getWidth(), view.getHeight());
         try {
             ActivityCompat.startActivity(activity, intent, activityOptionsCompat.toBundle());
         } catch (IllegalArgumentException e) {
@@ -179,6 +181,11 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView 
                 Snackbar.make(this.pictureIV, this.getString(R.string.common_copy_success), Snackbar.LENGTH_SHORT).show();
                 return true;
             case R.id.menu_picture_share:
+                if (this.glideBitmapDrawable != null) {
+                    this.presenter.sharePicture(this.glideBitmapDrawable, this, EasyApplication.getInstance());
+                } else {
+                    Snackbar.make(this.pictureIV, this.getString(R.string.picture_loading), Snackbar.LENGTH_LONG).show();
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -208,6 +215,16 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView 
     @Override
     public void onDownloadSuccess(String path) {
         ToastUtils.show(this, path, Toast.LENGTH_SHORT);
+    }
+
+    /**
+     * 分享
+     *
+     * @param uri uri
+     */
+    @Override
+    public void onShare(Uri uri) {
+        ShareUtils.shareImage(this, uri, "分享妹子");
     }
 
     /**

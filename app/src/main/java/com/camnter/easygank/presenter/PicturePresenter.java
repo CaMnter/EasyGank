@@ -12,6 +12,7 @@ import com.camnter.easygank.R;
 import com.camnter.easygank.core.mvp.BasePresenter;
 import com.camnter.easygank.presenter.iview.PictureView;
 import com.camnter.easygank.utils.DeviceUtils;
+import com.camnter.easygank.utils.RxUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,8 +21,6 @@ import java.util.UUID;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Description：PicturePresenter
@@ -30,8 +29,8 @@ import rx.schedulers.Schedulers;
  */
 public class PicturePresenter extends BasePresenter<PictureView> {
 
-    public void downloadPicture(@NonNull final GlideBitmapDrawable glideBitmapDrawable, final Context context, final Application application) {
-        this.mCompositeSubscription.add(Observable
+    public Observable<String> getSavePictureObservable(@NonNull final GlideBitmapDrawable glideBitmapDrawable, @NonNull final Context context, @NonNull final Application application) {
+        return Observable
                 .create(new Observable.OnSubscribe<String>() {
                     @Override
                     public void call(Subscriber<? super String> subscriber) {
@@ -56,8 +55,11 @@ public class PicturePresenter extends BasePresenter<PictureView> {
                         }
                     }
                 })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxUtils.applyIOToMainThreadSchedulers());
+    }
+
+    public void downloadPicture(@NonNull final GlideBitmapDrawable glideBitmapDrawable, @NonNull final Context context, @NonNull final Application application) {
+        this.mCompositeSubscription.add(this.getSavePictureObservable(glideBitmapDrawable, context, application)
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
@@ -76,7 +78,30 @@ public class PicturePresenter extends BasePresenter<PictureView> {
                             PicturePresenter.this.getMvpView().onDownloadSuccess(s);
                     }
                 }));
+    }
 
+    public void sharePicture(@NonNull final GlideBitmapDrawable glideBitmapDrawable, @NonNull final Context context, @NonNull final Application application) {
+        this.mCompositeSubscription.add(this.getSavePictureObservable(glideBitmapDrawable, context, application)
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+                        PicturePresenter.this.mCompositeSubscription.remove(this);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (PicturePresenter.this.getMvpView() != null)
+                            PicturePresenter.this.getMvpView().onFailure(e);
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        if (PicturePresenter.this.getMvpView() != null) {
+                            Uri uri = Uri.parse("file://" + s);
+                            PicturePresenter.this.getMvpView().onShare(uri);
+                        }
+                    }
+                }));
     }
 
 }

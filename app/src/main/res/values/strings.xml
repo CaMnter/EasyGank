@@ -56,6 +56,7 @@
 
     <string name="menu_web_refresh">重新加载</string>
     <string name="menu_web_copy">复制链接</string>
+    <string name="menu_web_share">分享链接</string>
     <string name="menu_web_horizontal">横屏显示</string>
     <string name="menu_web_vertical">竖屏显示</string>
 

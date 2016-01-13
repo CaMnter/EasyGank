@@ -39,8 +39,15 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/menu_web_share"
+        android:orderInCategory="36"
+        android:title="@string/menu_web_share"
+        app:showAsAction="never" />
+
+
+    <item
         android:id="@+id/web_switch_screen_mode"
-        android:orderInCategory="26"
+        android:orderInCategory="56"
         android:title="@string/menu_web_horizontal"
         app:showAsAction="never" />
 
