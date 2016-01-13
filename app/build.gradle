@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+def keyStore = file('../easygank.jks')
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -11,6 +15,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -35,6 +40,97 @@ android {
 
     retrolambda {
         javaVersion JavaVersion.VERSION_1_6
+    }
+
+    //打包忽略掉第三方jar相同的文件
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+    // 这个是解决lint报错的代码
+    lintOptions {
+        abortOnError false
+    }
+
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+        //关闭预编译
+        preDexLibraries = false
+    }
+
+    // 签名配置
+    signingConfigs {
+        debug {
+            storeFile file("../easygank.jks")
+            storePassword project.hasProperty('STOREPASS') ? STOREPASS : ''
+            keyAlias project.hasProperty('KEYALIAS') ? KEYALIAS : ''
+            keyPassword project.hasProperty('KEYPASS') ? KEYPASS : ''
+        }
+
+        release {
+            storeFile file("../easygank.jks")
+            storePassword project.hasProperty('STOREPASS') ? STOREPASS : ''
+            keyAlias project.hasProperty('KEYALIAS') ? KEYALIAS : ''
+            keyPassword project.hasProperty('KEYPASS') ? KEYPASS : ''
+            if (keyStore.exists()) {
+                println "EasyGank: using camnter's key"
+                signingConfig signingConfigs.app1
+            } else {
+                println "EasyGank: using default key"
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+            //开启或者关闭 混淆 。
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles file('proguard-rules.pro')
+            if (keyStore.exists()) {
+                println "EasyGank: using jks key"
+                signingConfig signingConfigs.release
+            } else {
+                println "EasyGank: using default key"
+            }
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // EasyGank_版本_yyyy-MM-dd_渠道.apk
+                        def fileName = "EasyGank_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+    }
+
+    // 渠道Flavors
+    productFlavors {
+//        fir {
+//            manifestPlaceholders = [CHANNEL_NAME  : "fir",
+//                                    DEBUG         : "debug"]
+//        }
+        beta {
+            applicationId "com.camnter.easygank.test"
+            manifestPlaceholders = [CHANNEL_NAME: "beta",
+                                    DEBUG         : "debug"]
+        }
     }
 
 }

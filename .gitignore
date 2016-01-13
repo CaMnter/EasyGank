@@ -36,3 +36,6 @@ proguard/
 # # Mac
 .DS_Store
 apks/
+
+# jks
+.jks
