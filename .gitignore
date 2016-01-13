@@ -38,4 +38,4 @@ proguard/
 apks/
 
 # jks
-.jks
+*.jks
