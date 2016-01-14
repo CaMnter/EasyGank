@@ -16,11 +16,18 @@
 #   public *;
 #}
 
+# 代码压缩级别
 -optimizationpasses 5
+
+# 使用大小写混合
 -dontusemixedcaseclassnames
 -dontskipnonpubliclibraryclasses
+# 混淆时预校验
 -dontpreverify
+# 记录日志
 -verbose
+
+# 混淆时所用的算法
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
 
 
@@ -42,6 +49,8 @@
 -keep public class * extends android.content.ContentProvider
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.preference.Preference
+-keep public class * extends android.app.Fragment
+-keep public class * extends android.support.v4.app.Fragment
 
 
 # 泛型
@@ -114,9 +123,15 @@
     native <methods>;
 }
 
-# AttributeSet
+# 自定义View
 -keepclasseswithmembernames class * {
     public <init>(android.content.Context, android.util.AttributeSet);
+}
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+-keepclassmembers class * extends android.app.Activity {
+    public void *(android.view.View);
 }
 
 # Enum

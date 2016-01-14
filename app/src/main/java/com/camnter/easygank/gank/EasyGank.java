@@ -25,11 +25,9 @@
 package com.camnter.easygank.gank;
 
 import com.camnter.easygank.EasyApplication;
-import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Response;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import retrofit.GsonConverterFactory;
@@ -54,19 +52,16 @@ public class EasyGank {
 
     private EasyGank() {
         OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.setReadTimeout(13, TimeUnit.SECONDS);
+        okHttpClient.setReadTimeout(10, TimeUnit.SECONDS);
 
         /*
          * 查看网络请求发送状况
          */
         if (EasyApplication.getInstance().log) {
-            okHttpClient.interceptors().add(new Interceptor() {
-                @Override
-                public Response intercept(Chain chain) throws IOException {
-                    Response response = chain.proceed(chain.request());
-                    com.orhanobut.logger.Logger.d(chain.request().urlString());
-                    return response;
-                }
+            okHttpClient.interceptors().add(chain -> {
+                Response response = chain.proceed(chain.request());
+                com.orhanobut.logger.Logger.d(chain.request().urlString());
+                return response;
             });
         }
 
