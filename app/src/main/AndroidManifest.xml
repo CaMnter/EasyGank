@@ -72,6 +72,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppWindowTranslucentBackgroundTheme" />
 
+        <activity
+            android:name=".views.AboutActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
 
         <meta-data
             android:name="UMENG_APPKEY"

@@ -108,6 +108,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_main_about:
+                AboutActivity.startActivity(this);
                 return true;
             case R.id.menu_main_home_page:
                 EasyWebViewActivity.toUrl(this, GankApi.GANK_HOME_PAGE_URL, GankApi.GANK_HOME_PAGE_NAME);

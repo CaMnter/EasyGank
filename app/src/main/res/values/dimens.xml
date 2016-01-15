@@ -53,5 +53,9 @@
     <dimen name="card_corner_radius">2dp</dimen>
     <dimen name="card_elevation">3dp</dimen>
 
+    <dimen name="about_title">15sp</dimen>
+    <dimen name="about_sign">14sp</dimen>
+    <dimen name="about_content">13sp</dimen>
+
 
 </resources>

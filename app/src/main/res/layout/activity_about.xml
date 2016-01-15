@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+
+  {EasyGank}  Copyright (C) {2015}  {CaMnter}
+
+  This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+  This is free software, and you are welcome to redistribute it
+  under certain conditions; type `show c' for details.
+
+  The hypothetical commands `show w' and `show c' should show the appropriate
+  parts of the General Public License.  Of course, your program's commands
+  might be different; for a GUI interface, you would use an "about box".
+
+  You should also get your employer (if you work as a programmer) or school,
+  if any, to sign a "copyright disclaimer" for the program, if necessary.
+  For more information on this, and how to apply and follow the GNU GPL, see
+  <http://www.gnu.org/licenses/>.
+
+  The GNU General Public License does not permit incorporating your program
+  into proprietary programs.  If your program is a subroutine library, you
+  may consider it more useful to permit linking proprietary applications with
+  the library.  If this is what you want to do, use the GNU Lesser General
+  Public License instead of this License.  But first, please read
+  <http://www.gnu.org/philosophy/why-not-lgpl.html>.
+
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.camnter.easygank.views.AboutActivity">
+
+    <include layout="@layout/include_toolbar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                style="@style/EasyGank.About.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/about_profile_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/selector_item_clickable"
+                    android:padding="20dp">
+
+                    <ImageView
+                        android:id="@+id/about_avatar_iv"
+                        android:layout_width="66dp"
+                        android:layout_height="66dp"
+                        android:src="@mipmap/ic_camnter" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/about_avatar_iv"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_toEndOf="@id/about_avatar_iv"
+                        android:layout_toRightOf="@id/about_avatar_iv"
+                        android:text="@string/about_nickname"
+                        android:textColor="@color/about_title"
+                        android:textSize="@dimen/about_title"
+                        android:textStyle="bold"
+                        android:typeface="serif" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/about_avatar_iv"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_toEndOf="@id/about_avatar_iv"
+                        android:layout_toRightOf="@id/about_avatar_iv"
+                        android:text="@string/about_sign"
+                        android:textColor="@color/about_sign"
+                        android:textSize="@dimen/about_sign" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                style="@style/EasyGank.About.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_project_introduce"
+                        android:textColor="@color/about_title"
+                        android:textSize="@dimen/about_title"
+                        android:textStyle="bold"
+                        android:typeface="serif" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:autoLink="web"
+                        android:lineSpacingExtra="2dp"
+                        android:textIsSelectable="true"
+                        android:text="@string/about_project_introduce_content"
+                        android:textColor="@color/about_content"
+                        android:textSize="@dimen/about_content" />
+
+
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

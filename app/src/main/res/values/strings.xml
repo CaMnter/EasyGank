@@ -30,7 +30,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    <string name="main_empty_data">感谢你热爱学习，更重要的是妹子，可惜没干货了T~T</string>
+    <string name="main_empty_data">感谢你热爱学习，更重要的是妹纸，可惜没干货了T~T</string>
     <string name="main_load_error">加载失败，再试试T~T</string>
 
 
@@ -69,9 +69,16 @@
     <string name="picture_loading">图片还在加载中，请稍等...</string>
     <string name="picture_download">下载高清原图到手机?</string>
 
-    <string name="menu_main_about">关于EasyGank妹子</string>
+    <string name="menu_main_about">关于EasyGank妹纸</string>
     <string name="menu_main_top_github">热门 Github 仓库</string>
     <string name="menu_main_home_page">前往 gank.io 主页</string>
+
+
+    <string name="about_title">关于EasyGank妹纸</string>
+    <string name="about_nickname">CaMnter</string>
+    <string name="about_sign">离三次元渐行渐远的二次元的少年</string>
+    <string name="about_project_introduce">项目介绍</string>
+    <string name="about_project_introduce_content">EasyGank妹纸项目所用的基本上是Rx系列的框架 ( Square + ReactiveX ) :\n\n\tRxJava\n\tRxAndroid\n\tOkhttp\n\tRetrofit\n\tbutterknife\n\tGlide\n\tReservoir\n\n以基本的MVP模式为主划分模块，抽出Presenter作为View代理业务层，减轻View层代码的耦合度，然后集成了现在主流的RxJava+RxAndroid+Retrofit组合框架。\n\nEasyGank：https://github.com/CaMnter/EasyGank\n\nApi接口提供：http://gank.io/api</string>
 
 
 </resources>

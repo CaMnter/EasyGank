@@ -50,4 +50,12 @@
     </style>
 
 
+    <style name="EasyGank.About.Card" parent="EasyGank.Card">
+        <item name="contentPadding">0dp</item>
+        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+        <item name="cardPreventCornerOverlap">true</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+
+
 </resources>

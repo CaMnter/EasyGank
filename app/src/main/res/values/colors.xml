@@ -54,4 +54,9 @@
     <!-- item video -->
     <color name="video_cover_color">#4d000000</color>
 
+    <!-- About -->
+    <color name="about_title">#ff000000</color>
+    <color name="about_sign">#ff666666</color>
+    <color name="about_content">#ff414141</color>
+
 </resources>

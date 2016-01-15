@@ -24,8 +24,11 @@
 
 package com.camnter.easygank.views;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.camnter.easygank.R;
 import com.camnter.easygank.core.BaseToolbarActivity;
 
 /**
@@ -34,6 +37,13 @@ import com.camnter.easygank.core.BaseToolbarActivity;
  * Time：2016-01-15 23:10
  */
 public class AboutActivity extends BaseToolbarActivity {
+
+
+    public static void startActivity(Context context) {
+        Intent intent = new Intent(context, AboutActivity.class);
+        context.startActivity(intent);
+    }
+
     /**
      * Fill in layout id
      *
@@ -41,7 +51,7 @@ public class AboutActivity extends BaseToolbarActivity {
      */
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.activity_about;
     }
 
     /**
@@ -51,7 +61,8 @@ public class AboutActivity extends BaseToolbarActivity {
      */
     @Override
     protected void initViews(Bundle savedInstanceState) {
-
+        this.showBack();
+        this.setTitle(this.getString(R.string.about_title));
     }
 
     /**
