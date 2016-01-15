@@ -53,6 +53,8 @@ import com.camnter.easygank.utils.ShareUtils;
 import com.camnter.easygank.utils.ToastUtils;
 import com.camnter.easygank.utils.WebViewUtils;
 
+import butterknife.Bind;
+
 /**
  * Description：EasyWebViewActivity
  * Created by：CaMnter
@@ -68,8 +70,10 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
 
     private static final int PROGRESS_RATIO = 1000;
 
-    private WebView mWebView;
-    private ProgressBar mProgressBar;
+    @Bind(R.id.webview_pb)
+    ProgressBar webviewPb;
+    @Bind(R.id.webview)
+    WebView webview;
 
     private boolean goBack = false;
     private static final int RESET_GO_BACK_INTERVAL = 2666;
@@ -142,8 +146,8 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
                 this.refreshWebView();
                 return true;
             case R.id.web_copy:
-                DeviceUtils.copy2Clipboard(this, this.mWebView.getUrl());
-                Snackbar.make(this.mWebView, this.getString(R.string.common_copy_success), Snackbar.LENGTH_SHORT).show();
+                DeviceUtils.copy2Clipboard(this, this.webview.getUrl());
+                Snackbar.make(this.webview, this.getString(R.string.common_copy_success), Snackbar.LENGTH_SHORT).show();
                 return true;
             case R.id.menu_web_share:
                 ShareUtils.share(this, this.getUrl());
@@ -177,7 +181,7 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
     }
 
     protected void refreshWebView() {
-        this.mWebView.reload();
+        this.webview.reload();
     }
 
     /**
@@ -197,8 +201,6 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
      */
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        this.mWebView = this.findView(R.id.webview);
-        this.mProgressBar = (ProgressBar) this.findViewById(R.id.webview_pb);
     }
 
     /**
@@ -219,7 +221,7 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
         this.enableCustomClients();
         this.enableAdjust();
         this.zoomedOut();
-        this.mWebView.loadUrl(this.getUrl());
+        this.webview.loadUrl(this.getUrl());
         this.showBack();
         this.setTitle(this.getUrlTitle());
 
@@ -231,7 +233,7 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
 
 
     private void enableCustomClients() {
-        this.mWebView.setWebViewClient(new WebViewClient() {
+        this.webview.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -246,22 +248,22 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 if (url.contains("www.vmovier.com")) {
-                    WebViewUtils.injectCSS(EasyWebViewActivity.this, EasyWebViewActivity.this.mWebView, "vmovier.css");
+                    WebViewUtils.injectCSS(EasyWebViewActivity.this, EasyWebViewActivity.this.webview, "vmovier.css");
                 } else if (url.contains("video.weibo.com")) {
-                    WebViewUtils.injectCSS(EasyWebViewActivity.this, EasyWebViewActivity.this.mWebView, "weibo.css");
+                    WebViewUtils.injectCSS(EasyWebViewActivity.this, EasyWebViewActivity.this.webview, "weibo.css");
                 } else if (url.contains("m.miaopai.com")) {
-                    WebViewUtils.injectCSS(EasyWebViewActivity.this, EasyWebViewActivity.this.mWebView, "miaopai.css");
+                    WebViewUtils.injectCSS(EasyWebViewActivity.this, EasyWebViewActivity.this.webview, "miaopai.css");
                 }
             }
         });
-        this.mWebView.setWebChromeClient(new WebChromeClient() {
+        this.webview.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
-                EasyWebViewActivity.this.mProgressBar.setProgress(progress);
+                EasyWebViewActivity.this.webviewPb.setProgress(progress);
                 setProgress(progress * PROGRESS_RATIO);
                 if (progress >= 80) {
-                    EasyWebViewActivity.this.mProgressBar.setVisibility(View.GONE);
+                    EasyWebViewActivity.this.webviewPb.setVisibility(View.GONE);
                 } else {
-                    EasyWebViewActivity.this.mProgressBar.setVisibility(View.VISIBLE);
+                    EasyWebViewActivity.this.webviewPb.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -269,25 +271,25 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     private void enableJavascript() {
-        this.mWebView.getSettings().setJavaScriptEnabled(true);
-        this.mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        this.webview.getSettings().setJavaScriptEnabled(true);
+        this.webview.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
     }
 
     private void enableCaching() {
-        this.mWebView.getSettings().setAppCachePath(getFilesDir() + getPackageName() + "/cache");
-        this.mWebView.getSettings().setAppCacheEnabled(true);
-        this.mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        this.webview.getSettings().setAppCachePath(getFilesDir() + getPackageName() + "/cache");
+        this.webview.getSettings().setAppCacheEnabled(true);
+        this.webview.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
     }
 
     private void enableAdjust() {
-        this.mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        this.mWebView.getSettings().setLoadWithOverviewMode(true);
+        this.webview.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        this.webview.getSettings().setLoadWithOverviewMode(true);
     }
 
     private void zoomedOut() {
-        this.mWebView.getSettings().setLoadWithOverviewMode(true);
-        this.mWebView.getSettings().setUseWideViewPort(true);
-        this.mWebView.getSettings().setSupportZoom(true);
+        this.webview.getSettings().setLoadWithOverviewMode(true);
+        this.webview.getSettings().setUseWideViewPort(true);
+        this.webview.getSettings().setSupportZoom(true);
     }
 
 
@@ -311,7 +313,7 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (this.mWebView != null) this.mWebView.destroy();
+        if (this.webview != null) this.webview.destroy();
     }
 
     /**
@@ -351,8 +353,8 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             this.switchScreenConfiguration(null);
         } else {
-            if (this.mWebView.canGoBack()) {
-                this.mWebView.goBack();
+            if (this.webview.canGoBack()) {
+                this.webview.goBack();
             } else {
                 this.finish();
             }

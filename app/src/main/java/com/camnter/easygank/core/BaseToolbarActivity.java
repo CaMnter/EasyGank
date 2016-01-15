@@ -34,6 +34,8 @@ import android.view.View;
 
 import com.camnter.easygank.R;
 
+import butterknife.Bind;
+
 /**
  * Description：BaseToolbarActivity
  * Created by：CaMnter
@@ -41,8 +43,11 @@ import com.camnter.easygank.R;
  */
 public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
 
+    @Bind(R.id.toolbar)
     protected Toolbar mToolbar;
+    @Bind(R.id.app_bar_layout)
     protected AppBarLayout mAppBarLayout;
+
     protected ActionBarHelper mActionBarHelper;
 
     /**
@@ -59,9 +64,6 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
      * init the toolbar
      */
     protected void initToolbarHelper() {
-        this.mToolbar = this.findView(R.id.toolbar);
-        this.mAppBarLayout = this.findView(R.id.app_bar_layout);
-
         if (this.mToolbar == null || this.mAppBarLayout == null)
             return;
 

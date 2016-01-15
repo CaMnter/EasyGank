@@ -32,7 +32,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.camnter.easygank.R;
 import com.orhanobut.logger.Logger;
 

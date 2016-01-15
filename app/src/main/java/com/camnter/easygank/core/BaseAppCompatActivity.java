@@ -34,6 +34,8 @@ import android.widget.Toast;
 
 import com.camnter.easygank.utils.ToastUtils;
 
+import butterknife.ButterKnife;
+
 
 /**
  * Description：BaseAppCompatActivity
@@ -46,6 +48,8 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(this.getLayoutId());
+        ButterKnife.bind(this);
+
         this.initToolbar(savedInstanceState);
         this.initViews(savedInstanceState);
         this.initData();

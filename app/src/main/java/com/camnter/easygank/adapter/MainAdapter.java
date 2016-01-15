@@ -59,7 +59,7 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
     private Context context;
 
     private int type;
-    private MainAdapter.OnClickListener listener;
+    private OnClickListener listener;
 
     public MainAdapter(Context context, int type) {
         this.context = context;

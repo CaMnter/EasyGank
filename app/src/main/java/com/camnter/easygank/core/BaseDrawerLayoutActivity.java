@@ -38,6 +38,8 @@ import com.camnter.easygank.R;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.Bind;
+
 /**
  * Description：BaseDrawerLayoutActivity
  * Created by：CaMnter
@@ -45,9 +47,12 @@ import java.util.Map;
  */
 public abstract class BaseDrawerLayoutActivity extends BaseSwipeRefreshLayout {
 
-    private ActionBarDrawerToggle mDrawerToggle;
+    @Bind(R.id.root_view)
     protected DrawerLayout mDrawerLayout;
+    @Bind(R.id.navigation_view)
     protected NavigationView mNavigationView;
+
+    private ActionBarDrawerToggle mDrawerToggle;
 
 
     protected HashMap<Integer, MenuItem> mMenuItems;
@@ -55,8 +60,6 @@ public abstract class BaseDrawerLayoutActivity extends BaseSwipeRefreshLayout {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.mDrawerLayout = this.findView(R.id.root_view);
-        this.mNavigationView = this.findView(R.id.navigation_view);
         if (this.getNavigationItemSelectedListener() != null)
             this.mNavigationView.setNavigationItemSelectedListener(this.getNavigationItemSelectedListener());
 
@@ -97,7 +100,7 @@ public abstract class BaseDrawerLayoutActivity extends BaseSwipeRefreshLayout {
 
     /**
      * Fill in your menu operation on click
-     * <p/>
+     * <p>
      * 走到这，就不会有两次点击都一样的情况
      * Come to this, there would be no two clicks are all the same
      *

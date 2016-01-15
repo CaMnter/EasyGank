@@ -33,7 +33,7 @@
     <application
         android:name=".EasyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_easy_gank"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppTheme">

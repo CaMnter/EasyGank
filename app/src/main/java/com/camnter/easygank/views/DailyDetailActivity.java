@@ -40,6 +40,9 @@ import com.camnter.easyrecyclerview.widget.decorator.EasyBorderDividerItemDecora
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Description：DailyDetailActivity
  * Created by：CaMnter
@@ -47,6 +50,8 @@ import java.util.ArrayList;
  */
 public class DailyDetailActivity extends BaseToolbarActivity implements DailyDetailAdapter.onCardItemClickListener {
 
+    @Bind(R.id.daily_detail_rv)
+    EasyRecyclerView dailydailyDetailRv;
     private DailyDetailAdapter detailAdapter;
 
     private static final String EXTRA_DETAIL = "com.camnter.easygank.EXTRA_DETAIL";
@@ -77,15 +82,14 @@ public class DailyDetailActivity extends BaseToolbarActivity implements DailyDet
     @SuppressLint("InflateParams")
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        EasyRecyclerView detailRV = this.findView(R.id.daily_detail_rv);
         EasyBorderDividerItemDecoration detailDecoration = new EasyBorderDividerItemDecoration(
                 this.getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height),
                 this.getResources().getDimensionPixelOffset(R.dimen.data_border_padding_infra_spans)
         );
-        detailRV.addItemDecoration(detailDecoration);
+        this.dailydailyDetailRv.addItemDecoration(detailDecoration);
         this.detailAdapter = new DailyDetailAdapter(this);
         this.detailAdapter.setOnCardItemClickListener(this);
-        detailRV.setAdapter(this.detailAdapter);
+        this.dailydailyDetailRv.setAdapter(this.detailAdapter);
         this.showBack();
         this.setTitle(this.getDetailTitle());
     }
@@ -126,4 +130,10 @@ public class DailyDetailActivity extends BaseToolbarActivity implements DailyDet
         PictureActivity.startActivityByActivityOptionsCompat(this, url, title, v);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

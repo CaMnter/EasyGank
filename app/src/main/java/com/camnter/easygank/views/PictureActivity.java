@@ -56,6 +56,8 @@ import com.camnter.easygank.utils.IntentUtils;
 import com.camnter.easygank.utils.ShareUtils;
 import com.camnter.easygank.utils.ToastUtils;
 
+import butterknife.Bind;
+
 /**
  * Description：PictureActivity
  * Created by：CaMnter
@@ -68,7 +70,9 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView,
 
     private static final String SHARED_ELEMENT_NAME = "PictureActivity";
 
-    private ImageView pictureIV;
+    @Bind(R.id.picture_iv)
+    ImageView pictureIV;
+
 
     private PicturePresenter presenter;
 
@@ -261,4 +265,5 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView,
         }
         return false;
     }
+
 }

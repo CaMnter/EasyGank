@@ -25,10 +25,11 @@
 package com.camnter.easygank.core;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.camnter.easygank.R;
 import com.camnter.easygank.widget.MultiSwipeRefreshLayout;
+
+import butterknife.Bind;
 
 /**
  * Description：BaseSwipeRefreshLayout
@@ -37,6 +38,7 @@ import com.camnter.easygank.widget.MultiSwipeRefreshLayout;
  */
 public abstract class BaseSwipeRefreshLayout extends BaseToolbarActivity {
 
+    @Bind(R.id.multi_swipe_refresh_layout)
     protected MultiSwipeRefreshLayout mMultiSwipeRefreshLayout;
 
     private boolean refreshStatus = false;
@@ -45,7 +47,6 @@ public abstract class BaseSwipeRefreshLayout extends BaseToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.mMultiSwipeRefreshLayout = this.findView(R.id.multi_swipe_refresh_layout);
     }
 
     @Override
@@ -63,12 +64,8 @@ public abstract class BaseSwipeRefreshLayout extends BaseToolbarActivity {
             this.mMultiSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
         // 在刷新时，关闭刷新开关
-        this.mMultiSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                onSwipeRefresh();
-            }
-        });
+        if (this.mMultiSwipeRefreshLayout != null)
+            this.mMultiSwipeRefreshLayout.setOnRefreshListener(() -> onSwipeRefresh());
 
     }
 

@@ -53,9 +53,13 @@ import com.camnter.easyrecyclerview.widget.decorator.EasyBorderDividerItemDecora
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+
 public class MainActivity extends BaseDrawerLayoutActivity implements MainView, MainAdapter.OnClickListener {
 
-    private EasyRecyclerView mainRV;
+    @Bind(R.id.main_rv)
+    EasyRecyclerView mainRv;
+
     private EasyBorderDividerItemDecoration dataDecoration;
     private EasyBorderDividerItemDecoration welfareDecoration;
     private LinearLayoutManager mLinearLayoutManager;
@@ -120,7 +124,6 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
      */
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        this.mainRV = this.findView(R.id.main_rv);
         this.dataDecoration = new EasyBorderDividerItemDecoration(
                 this.getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height),
                 this.getResources().getDimensionPixelOffset(R.dimen.data_border_padding_infra_spans)
@@ -129,8 +132,8 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
                 this.getResources().getDimensionPixelOffset(R.dimen.welfare_border_divider_height),
                 this.getResources().getDimensionPixelOffset(R.dimen.welfare_border_padding_infra_spans)
         );
-        this.mainRV.addItemDecoration(this.dataDecoration);
-        this.mLinearLayoutManager = (LinearLayoutManager) this.mainRV.getLayoutManager();
+        this.mainRv.addItemDecoration(this.dataDecoration);
+        this.mLinearLayoutManager = (LinearLayoutManager) this.mainRv.getLayoutManager();
         this.mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         this.mActionBarHelper.setDrawerTitle(this.getResources().getString(R.string.app_menu));
     }
@@ -140,7 +143,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
      */
     @Override
     protected void initListeners() {
-        this.mainRV.addOnScrollListener(this.getRecyclerViewOnScrollListener());
+        this.mainRv.addOnScrollListener(this.getRecyclerViewOnScrollListener());
         this.mainAdapter.setOnItemClickListener((view, position) -> {
             Object o = MainActivity.this.mainAdapter.getItem(position);
             if (o instanceof BaseGankData) {
@@ -271,7 +274,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
         // 默认是每日干货
         this.mainAdapter = new MainAdapter(this, this.gankType);
         this.mainAdapter.setListener(this);
-        this.mainRV.setAdapter(this.mainAdapter);
+        this.mainRv.setAdapter(this.mainAdapter);
 
         this.refreshData(this.gankType);
     }
@@ -359,13 +362,13 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
             case GankType.video:
                 // 防止重复添加一样的
                 this.clearDecoration();
-                this.mainRV.setLayoutManager(this.mLinearLayoutManager);
-                this.mainRV.addItemDecoration(this.dataDecoration);
+                this.mainRv.setLayoutManager(this.mLinearLayoutManager);
+                this.mainRv.addItemDecoration(this.dataDecoration);
                 break;
             case GankType.welfare:
                 this.clearDecoration();
-                this.mainRV.setLayoutManager(this.mStaggeredGridLayoutManager);
-                this.mainRV.addItemDecoration(this.welfareDecoration);
+                this.mainRv.setLayoutManager(this.mStaggeredGridLayoutManager);
+                this.mainRv.addItemDecoration(this.welfareDecoration);
                 break;
         }
     }
@@ -383,8 +386,8 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
 
 
     private void clearDecoration() {
-        this.mainRV.removeItemDecoration(this.dataDecoration);
-        this.mainRV.removeItemDecoration(this.welfareDecoration);
+        this.mainRv.removeItemDecoration(this.dataDecoration);
+        this.mainRv.removeItemDecoration(this.welfareDecoration);
     }
 
     /**
@@ -396,7 +399,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
     public void onFailure(Throwable e) {
         this.refresh(false);
         this.setRefreshStatus(true);
-        Snackbar.make(this.mainRV, R.string.main_load_error, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(this.mainRv, R.string.main_load_error, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -451,7 +454,8 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
     }
 
     @Override
-    public void onClickPicture(String url, String title,View view) {
+    public void onClickPicture(String url, String title, View view) {
         PictureActivity.startActivityByActivityOptionsCompat(this, url, title, view);
     }
+
 }
