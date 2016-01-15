@@ -25,6 +25,7 @@
 package com.camnter.easygank;
 
 import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.anupcowkur.reservoir.Reservoir;
 import com.camnter.easygank.gank.GankApi;

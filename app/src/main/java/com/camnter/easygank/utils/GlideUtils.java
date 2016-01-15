@@ -85,12 +85,9 @@ public class GlideUtils {
                     .crossFade()
                     .centerCrop()
                     .into(view)
-                    .getSize(new SizeReadyCallback() {
-                        @Override
-                        public void onSizeReady(int width, int height) {
-                            if (!view.isShown()) {
-                                view.setVisibility(View.VISIBLE);
-                            }
+                    .getSize((width, height) -> {
+                        if (!view.isShown()) {
+                            view.setVisibility(View.VISIBLE);
                         }
                     });
         } catch (Exception e) {
@@ -119,12 +116,9 @@ public class GlideUtils {
                     .crossFade()
                     .centerCrop()
                     .into(view)
-                    .getSize(new SizeReadyCallback() {
-                        @Override
-                        public void onSizeReady(int width, int height) {
-                            if (!view.isShown()) {
-                                view.setVisibility(View.VISIBLE);
-                            }
+                    .getSize((width, height) -> {
+                        if (!view.isShown()) {
+                            view.setVisibility(View.VISIBLE);
                         }
                     });
         } catch (Exception e) {

@@ -50,6 +50,7 @@
     <string name="common_via_key">via. </string>
     <string name="common_go_back_tip">再按一次退出</string>
     <string name="common_copy_success">复制成功</string>
+    <string name="common_network_error">网络错误</string>
 
     <string name="technology_github_tag_tv">github</string>
     <string name="technology_blog_tag_tv">文章</string>
@@ -66,6 +67,7 @@
     <string name="menu_picture_share">分享出去</string>
 
     <string name="picture_loading">图片还在加载中，请稍等...</string>
+    <string name="picture_download">下载高清原图到手机?</string>
 
     <string name="menu_main_about">关于EasyGank妹子</string>
     <string name="menu_main_top_github">热门 Github 仓库</string>

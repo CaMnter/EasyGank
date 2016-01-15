@@ -33,6 +33,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,7 +61,7 @@ import com.camnter.easygank.utils.ToastUtils;
  * Created by：CaMnter
  * Time：2016-01-11 19:25
  */
-public class PictureActivity extends BaseToolbarActivity implements PictureView {
+public class PictureActivity extends BaseToolbarActivity implements PictureView, View.OnLongClickListener {
 
     private static final String EXTRA_URL = "com.camnter.easygank.EXTRA_URL";
     private static final String EXTRA_TITLE = "com.camnter.easygank.EXTRA_TITLE";
@@ -121,7 +122,7 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView 
      */
     @Override
     protected void initListeners() {
-
+        this.pictureIV.setOnLongClickListener(this);
     }
 
     /**
@@ -148,7 +149,6 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView 
                 })
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .crossFade()
-                .centerCrop()
                 .into(this.pictureIV)
                 .getSize((width, height) -> {
                     if (!PictureActivity.this.pictureIV.isShown()) {
@@ -170,22 +170,14 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_picture_download:
-                if (this.glideBitmapDrawable != null) {
-                    this.presenter.downloadPicture(this.glideBitmapDrawable, this, EasyApplication.getInstance());
-                } else {
-                    Snackbar.make(this.pictureIV, this.getString(R.string.picture_loading), Snackbar.LENGTH_LONG).show();
-                }
+                this.download();
                 return true;
             case R.id.menu_picture_copy:
                 DeviceUtils.copy2Clipboard(this, this.getUrl());
                 Snackbar.make(this.pictureIV, this.getString(R.string.common_copy_success), Snackbar.LENGTH_SHORT).show();
                 return true;
             case R.id.menu_picture_share:
-                if (this.glideBitmapDrawable != null) {
-                    this.presenter.sharePicture(this.glideBitmapDrawable, this, EasyApplication.getInstance());
-                } else {
-                    Snackbar.make(this.pictureIV, this.getString(R.string.picture_loading), Snackbar.LENGTH_LONG).show();
-                }
+                this.download();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -234,7 +226,39 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView 
      */
     @Override
     public void onFailure(Throwable e) {
-
+        Snackbar.make(this.pictureIV, this.getString(R.string.common_network_error), Snackbar.LENGTH_LONG).show();
     }
 
+    public void download() {
+        if (this.glideBitmapDrawable != null) {
+            this.presenter.downloadPicture(this.glideBitmapDrawable, this, EasyApplication.getInstance());
+        } else {
+            Snackbar.make(this.pictureIV, this.getString(R.string.picture_loading), Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Called when a view has been clicked and held.
+     *
+     * @param v The view that was clicked and held.
+     * @return true if the callback consumed the long click, false otherwise.
+     */
+    @Override
+    public boolean onLongClick(View v) {
+        switch (v.getId()) {
+            case R.id.picture_iv:
+                new AlertDialog.Builder(PictureActivity.this)
+                        .setMessage(getString(R.string.picture_download))
+                        .setNegativeButton(android.R.string.cancel,
+                                (dialog, which) -> dialog.dismiss())
+                        .setPositiveButton(android.R.string.ok,
+                                (dialog, which) -> {
+                                    this.download();
+                                    dialog.dismiss();
+                                })
+                        .show();
+                return true;
+        }
+        return false;
+    }
 }
