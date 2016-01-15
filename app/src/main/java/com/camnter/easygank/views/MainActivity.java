@@ -49,6 +49,8 @@ import com.camnter.easygank.presenter.MainPresenter;
 import com.camnter.easygank.presenter.iview.MainView;
 import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
 import com.camnter.easyrecyclerview.widget.decorator.EasyBorderDividerItemDecoration;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,6 +138,8 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
         this.mLinearLayoutManager = (LinearLayoutManager) this.mainRv.getLayoutManager();
         this.mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         this.mActionBarHelper.setDrawerTitle(this.getResources().getString(R.string.app_menu));
+
+        UmengUpdateAgent.update(this);
     }
 
     /**
@@ -457,5 +461,23 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
     public void onClickPicture(String url, String title, View view) {
         PictureActivity.startActivityByActivityOptionsCompat(this, url, title, view);
     }
+
+    /*********
+     * Umeng *
+     *********/
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    /*********
+     * Umeng *
+     *********/
 
 }

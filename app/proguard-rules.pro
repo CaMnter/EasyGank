@@ -142,3 +142,7 @@
 
 # Exceptions InnerClasses
 -keepattributes Exceptions,InnerClasses
+
+# umeng
+-keep class com.umeng.** { *; }
+-keep public class * extends com.umeng.**

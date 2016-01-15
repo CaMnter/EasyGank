@@ -30,6 +30,11 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <application
         android:name=".EasyApplication"
         android:allowBackup="true"
@@ -40,8 +45,8 @@
         <activity
             android:name=".views.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/AppWindowTranslucentStatusTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,9 +68,22 @@
 
         <activity
             android:name=".views.PictureActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/AppWindowTranslucentBackgroundTheme" />
+
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="${UMENG_APPKEY}" />
+
+        <meta-data
+            android:name="CHANNEL_NAME"
+            android:value="${CHANNEL_NAME}" />
+
+        <meta-data
+            android:name="DEBUG"
+            android:value="${DEBUG}" />
 
     </application>
 

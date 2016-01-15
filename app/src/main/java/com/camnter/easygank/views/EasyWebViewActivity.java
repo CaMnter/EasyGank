@@ -52,6 +52,7 @@ import com.camnter.easygank.utils.IntentUtils;
 import com.camnter.easygank.utils.ShareUtils;
 import com.camnter.easygank.utils.ToastUtils;
 import com.camnter.easygank.utils.WebViewUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 
@@ -360,5 +361,23 @@ public class EasyWebViewActivity extends BaseToolbarActivity {
             }
         }
     }
+
+    /*********
+     * Umeng *
+     *********/
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    /*********
+     * Umeng *
+     *********/
 
 }

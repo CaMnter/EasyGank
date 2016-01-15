@@ -94,6 +94,7 @@ android {
             println("properties.getProperty(\"storePassword\") = " + properties.getProperty("storePassword"))
             println("properties.getProperty(\"keyAlias\") = " + properties.getProperty("keyAlias"))
             println("properties.getProperty(\"keyPassword\") = " + properties.getProperty("keyPassword"))
+
         }
     }
 
@@ -122,9 +123,9 @@ android {
                     // EasyGank_版本_yyyy-MM-dd_渠道.apk
                     def fileName = "EasyGank_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
                     println("====== buildTypes.output ======")
-                    println("AppName: "+fileName)
+                    println("AppName: " + fileName)
                     output.outputFile = new File(outputFile.parent, fileName)
-                }else {
+                } else {
 
                 }
             }
@@ -134,13 +135,15 @@ android {
     // 渠道Flavors
     productFlavors {
 //        Fir {
-//            manifestPlaceholders = [CHANNEL_NAME  : "fir",
-//                                    DEBUG         : "debug"]
+//            manifestPlaceholders = [CHANNEL_NAME  : "Fir",
+//                                    UMENG_APPKEY: "569902f967e58e5e760003e1",
+//                                    DEBUG         : "true"]
 //        }
         DebugTest {
             applicationId "com.camnter.easygank.test"
-            manifestPlaceholders = [CHANNEL_NAME: "beta",
-                                    DEBUG       : "debug"]
+            manifestPlaceholders = [CHANNEL_NAME: "DebugTest",
+                                    UMENG_APPKEY: "569902f967e58e5e760003e1",
+                                    DEBUG       : "false"]
         }
     }
 
@@ -192,7 +195,10 @@ dependencies {
     // Reservoir
     compile 'com.anupcowkur:reservoir:2.1'
 
+    //umeng
+    compile 'com.umeng.analytics:analytics:latest.integration'
+    
     // other
     compile 'com.github.orhanobut:logger:1.12'
-
+    compile project(':umeng')
 }

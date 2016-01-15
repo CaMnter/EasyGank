@@ -55,6 +55,7 @@ import com.camnter.easygank.utils.DeviceUtils;
 import com.camnter.easygank.utils.IntentUtils;
 import com.camnter.easygank.utils.ShareUtils;
 import com.camnter.easygank.utils.ToastUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 
@@ -265,5 +266,23 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView,
         }
         return false;
     }
+
+    /*********
+     * Umeng *
+     *********/
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    /*********
+     * Umeng *
+     *********/
 
 }

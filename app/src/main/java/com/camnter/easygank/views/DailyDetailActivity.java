@@ -37,11 +37,11 @@ import com.camnter.easygank.core.BaseToolbarActivity;
 import com.camnter.easygank.utils.IntentUtils;
 import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
 import com.camnter.easyrecyclerview.widget.decorator.EasyBorderDividerItemDecoration;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Description：DailyDetailActivity
@@ -130,10 +130,22 @@ public class DailyDetailActivity extends BaseToolbarActivity implements DailyDet
         PictureActivity.startActivityByActivityOptionsCompat(this, url, title, v);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    /*********
+     * Umeng *
+     *********/
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    /*********
+     * Umeng *
+     *********/
+
 }
