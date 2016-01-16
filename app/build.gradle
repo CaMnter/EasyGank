@@ -171,7 +171,6 @@ dependencies {
 
     // square
     compile 'com.squareup.okhttp:okhttp:2.7.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
 
     // retrofit
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
