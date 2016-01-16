@@ -49,7 +49,9 @@ EasyGank妹纸
 
 [drakeet](https://github.com/drakeet)  
 
-[daimajia](https://github.com/daimajia)
+[daimajia](https://github.com/daimajia)  
+
+[jiangecho](https://github.com/jiangecho)  
 
 
 
