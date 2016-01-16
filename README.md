@@ -29,7 +29,8 @@ EasyGank妹纸
 
 ![ss_1](https://github.com/CaMnter/EasyGank/raw/master/screenshots/ss_1.png) ![ss_2](https://github.com/CaMnter/EasyGank/raw/master/screenshots/ss_2.png)   
 ![ss_3](https://github.com/CaMnter/EasyGank/raw/master/screenshots/ss_3.png) ![ss_4](https://github.com/CaMnter/EasyGank/raw/master/screenshots/ss_4.png)  
-![ss_5](https://github.com/CaMnter/EasyGank/raw/master/screenshots/ss_5.png)  
+![ss_5](https://github.com/CaMnter/EasyGank/raw/master/screenshots/ss_5.png) ![ss_6](https://github.com/CaMnter/EasyGank/raw/master/screenshots/ss_6.png)   
+![ss_7_g](https://github.com/CaMnter/EasyGank/raw/master/screenshots/ss_7_g.gif)
 
 
 ---
