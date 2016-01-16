@@ -61,6 +61,10 @@
                 android:id="@+id/navigation_resources"
                 android:icon="@mipmap/ic_resources"
                 android:title="@string/common_resources" />
+            <item
+                android:id="@+id/navigation_app"
+                android:icon="@mipmap/ic_app"
+                android:title="@string/common_app" />
 
         </menu>
     </item>

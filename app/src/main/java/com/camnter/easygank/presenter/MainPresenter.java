@@ -301,6 +301,7 @@ public class MainPresenter extends BasePresenter<MainView> {
             case GankType.resources:
             case GankType.welfare:
             case GankType.video:
+            case GankType.app:
                 this.getData(type, true, oldPage);
                 break;
         }

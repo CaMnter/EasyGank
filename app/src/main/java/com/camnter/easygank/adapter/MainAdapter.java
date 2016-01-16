@@ -113,7 +113,7 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
     @Override
     public int getRecycleViewItemType(int position) {
         /*
-         * android、ios、js、resource是一套布局
+         * android、ios、js、resource、app是一套布局
          */
         switch (this.type) {
             case GankType.daily:
@@ -123,6 +123,7 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
             case GankType.js:
             case GankType.resources:
             case GankType.video:
+            case GankType.app:
                 return LAYOUT_TYPE_TECHNOLOGY;
             case GankType.welfare:
                 return LAYOUT_TYPE_WELFARE;
@@ -207,7 +208,7 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
     }
 
     /**
-     * 加载技术类型数据 ( Android、iOS、前端、拓展资源 )
+     * 加载技术类型数据 ( Android、iOS、前端、拓展资源、App )
      *
      * @param easyRecyclerViewHolder easyRecyclerViewHolder
      * @param position               position

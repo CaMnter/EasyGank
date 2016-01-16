@@ -263,6 +263,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
             case GankType.resources:
             case GankType.welfare:
             case GankType.video:
+            case GankType.app:
                 this.presenter.getData(this.gankType, false, GankTypeDict.DONT_SWITCH);
                 break;
         }
@@ -300,6 +301,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
             case GankType.resources:
             case GankType.welfare:
             case GankType.video:
+            case GankType.app:
                 this.presenter.getData(this.gankType, true, GankTypeDict.DONT_SWITCH);
                 break;
         }
@@ -365,6 +367,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
             case GankType.js:
             case GankType.resources:
             case GankType.video:
+            case GankType.app:
                 // 防止重复添加一样的
                 this.clearDecoration();
                 this.mainRv.setLayoutManager(this.mLinearLayoutManager);
