@@ -33,6 +33,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.camnter.easygank.R;
+import com.camnter.easygank.widget.GlideCircleTransform;
 import com.orhanobut.logger.Logger;
 
 /**
@@ -124,6 +125,33 @@ public class GlideUtils {
             e.printStackTrace();
         }
 
+    }
+
+    public static void displayCircleHeader(ImageView view, @DrawableRes int res) {
+        // 不能崩
+        if (view == null) {
+            Logger.e("GlideUtils -> display -> imageView is null");
+            return;
+        }
+        Context context = view.getContext();
+        // View你还活着吗？
+        if (context instanceof Activity) {
+            if (((Activity) context).isFinishing()) {
+                return;
+            }
+        }
+
+        try {
+            Glide.with(context)
+                    .load(res)
+                    .centerCrop()
+                    .placeholder(R.mipmap.img_default_gray)
+                    .bitmapTransform(new GlideCircleTransform(context))
+                    .crossFade()
+                    .into(view);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

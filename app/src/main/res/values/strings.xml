@@ -76,9 +76,11 @@
 
     <string name="about_title">关于EasyGank妹纸</string>
     <string name="about_nickname">CaMnter</string>
-    <string name="about_sign">离三次元渐行渐远的二次元的少年</string>
+    <string name="about_sign">目送三次元世界渐行渐远的二次元的少年</string>
+    <string name="about_github">https://github.com/CaMnter</string>
     <string name="about_project_introduce">项目介绍</string>
-    <string name="about_project_introduce_content">EasyGank妹纸项目所用的基本上是Rx系列的框架 ( Square + ReactiveX ) :\n\n\tRxJava\n\tRxAndroid\n\tOkhttp\n\tRetrofit\n\tbutterknife\n\tGlide\n\tReservoir\n\n以基本的MVP模式为主划分模块，抽出Presenter作为View代理业务层，减轻View层代码的耦合度，然后集成了现在主流的RxJava+RxAndroid+Retrofit组合框架。\n\nEasyGank：https://github.com/CaMnter/EasyGank\n\nApi接口提供：http://gank.io/api</string>
-
+    <string name="about_project_introduce_content">EasyGank妹纸项目所用的基本上是Rx系列的框架 ( Square + ReactiveX ) :\n\n\tRxJava\n\tRxAndroid\n\tOkhttp\n\tRetrofit\n\tButterknife\n\tGlide\n\tReservoir\n\n以基本的MVP模式为主划分模块，抽出Presenter作为View代理业务层，减轻View层代码的耦合度，然后集成了现在主流的RxJava+RxAndroid+Retrofit组合框架。\n\nEasyGank：https://github.com/CaMnter/EasyGank\n\nApi接口提供：http://gank.io/api</string>
+    <string name="about_project_other">最后一些话</string>
+    <string name="about_project_other_content">\t\t15毕业我的，在16初对这个世界抱着很大的期待，技术在与时俱进，如果不跟进的话是多么让人忧伤。\n\t\t做EasyGank纯粹是为了巩固学习而已，而且干活集中营是一个技术潮流的先驱网站，提供的干货都很不错。公司项目用到了RxJava但是只是小模块，项目沉淀很大，重构需要的代价也很大。\n\t\t早就知道Rx+Retrofit这组合很有名，一直没机会用，公司也有自己的核心架构，所以也在开始写了EasyGank妹纸项目。也其恰巧这个月不是很忙，时间很容易挤出来，平时要是忙的话，晚上再回来写自己的项目，会崩溃了。为了写这个项目日夜操劳，最多操劳的还是UI设计这块，也借鉴了drakeet的项目，真的很棒。\n\t\t开源的魅力就在于，感觉大家在做一个项目似的。相信很多人有过这样的感受：每换一个公司，你都会有新的收获，这之中的奥秘，就在于你接触了不同的项目、不同的世界。投入到开源世界的道理和你换公司是一样的，不同的领域、不同的世界、不同的收获。至少，我收获了很多，如果在公司一直待着，我是不可能用到这个项目里的框架的，都是现学现用的。\n\n\t总之，非常开心。</string>
 
 </resources>

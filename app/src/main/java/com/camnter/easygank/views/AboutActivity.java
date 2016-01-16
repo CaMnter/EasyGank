@@ -27,9 +27,13 @@ package com.camnter.easygank.views;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.camnter.easygank.R;
 import com.camnter.easygank.core.BaseToolbarActivity;
+import com.camnter.easygank.utils.GlideUtils;
+
+import butterknife.Bind;
 
 /**
  * Description：AboutActivity
@@ -38,6 +42,9 @@ import com.camnter.easygank.core.BaseToolbarActivity;
  */
 public class AboutActivity extends BaseToolbarActivity {
 
+
+    @Bind(R.id.about_avatar_iv)
+    ImageView aboutAvatarIv;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, AboutActivity.class);
@@ -63,6 +70,7 @@ public class AboutActivity extends BaseToolbarActivity {
     protected void initViews(Bundle savedInstanceState) {
         this.showBack();
         this.setTitle(this.getString(R.string.about_title));
+        GlideUtils.displayCircleHeader(this.aboutAvatarIv, R.mipmap.ic_camnter);
     }
 
     /**

@@ -115,21 +115,22 @@ android {
             } else {
                 println("EasyGank -> buildTypes -> release: using default key")
             }
-        }
-        applicationVariants.all { variant ->
-            variant.outputs.each { output ->
-                def outputFile = output.outputFile
-                if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                    // EasyGank_版本_yyyy-MM-dd_渠道.apk
-                    def fileName = "EasyGank_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
-                    println("====== buildTypes.output ======")
-                    println("AppName: " + fileName)
-                    output.outputFile = new File(outputFile.parent, fileName)
-                } else {
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // EasyGank_版本_yyyy-MM-dd_渠道.apk
+                        def fileName = "EasyGank_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                        println("====== buildTypes.output ======")
+                        println("AppName: " + fileName)
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    } else {
 
+                    }
                 }
             }
         }
+
     }
 
     // 渠道Flavors
