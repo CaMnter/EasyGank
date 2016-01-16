@@ -172,3 +172,59 @@
 -keepclasseswithmembernames class * {
     @butterknife.* <methods>;
 }
+
+#umeng start
+-dontshrink
+-dontoptimize
+-dontwarn com.google.android.maps.**
+-dontwarn android.webkit.WebView
+-dontwarn com.umeng.**
+-dontwarn com.tencent.weibo.sdk.**
+-dontwarn com.facebook.**
+-dontwarn com.tencent.**
+-dontwarn com.ta.**
+-dontwarn u.upd.**
+-dontwarn u.aly.**
+
+-dontwarn org.apache.**
+-keep class org.apache.** { *; }
+-keep interface org.apache.** { *; }
+
+
+-keep enum com.facebook.**
+-keepattributes Exceptions,InnerClasses,Signature
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+
+-keep public interface com.facebook.**
+-keep public interface com.tencent.**
+-keep public interface com.umeng.socialize.**
+-keep public interface com.umeng.socialize.sensor.**
+-keep public interface com.umeng.scrshot.**
+
+-keep public class com.umeng.socialize.* {*;}
+-keep public class javax.**
+-keep public class android.webkit.**
+
+-keep class com.facebook.**
+-keep class com.umeng.scrshot.**
+-keep public class com.tencent.** {*;}
+-keep class com.umeng.socialize.sensor.**
+-keep class com.anupcowkur.** { *; }
+-keep class com.jakewharton.** { *; }
+-keep class org.apache.** { *; }
+-dontwarn org.apache.**
+-dontwarn com.jakewharton.**
+-dontwarn com.anupcowkur.**
+
+-keep class com.tencent.mm.sdk.modelmsg.WXMediaMessage {*;}
+
+-keep class com.tencent.mm.sdk.modelmsg.** implements com.tencent.mm.sdk.modelmsg.WXMediaMessage$IMediaObject {*;}
+
+-keep class im.yixin.sdk.api.YXMessage {*;}
+-keep class im.yixin.sdk.api.** implements im.yixin.sdk.api.YXMessage$YXMessageData{*;}
+
+-keep public class cn.pocdoc.majiaxian.R$*{
+    public static final int *;
+}
+#end umeng
