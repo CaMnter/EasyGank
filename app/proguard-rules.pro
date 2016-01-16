@@ -144,5 +144,31 @@
 -keepattributes Exceptions,InnerClasses
 
 # umeng
+-libraryjars libs/umeng-analytics-v5.6.4.jar
+-libraryjars libs/umeng-update-v2.6.0.1.jar
 -keep class com.umeng.** { *; }
+-keep class com.umeng.update.** { *; }
 -keep public class * extends com.umeng.**
+-keep public interface com.umeng.socialize.**
+-keep public interface com.umeng.socialize.sensor.**
+-keep public interface com.umeng.scrshot.**
+-keep public class com.umeng.socialize.* {*;}
+-keep class com.umeng.scrshot.**
+-keep class com.umeng.socialize.sensor.**
+-keep public class com.umeng.library.R$*{
+    public static final int *;
+}
+
+
+# butterknife
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}

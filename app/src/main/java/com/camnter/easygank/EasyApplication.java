@@ -25,7 +25,8 @@
 package com.camnter.easygank;
 
 import android.app.Application;
-import android.support.multidex.MultiDexApplication;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.anupcowkur.reservoir.Reservoir;
 import com.camnter.easygank.gank.GankApi;
@@ -49,6 +50,12 @@ public class EasyApplication extends Application {
 
     public static EasyApplication getInstance() {
         return ourInstance;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     @Override

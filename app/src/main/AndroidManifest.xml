@@ -77,6 +77,14 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" />
+
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
 
         <meta-data
             android:name="UMENG_APPKEY"
