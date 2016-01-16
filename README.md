@@ -23,7 +23,7 @@ EasyGank妹纸
 
 ## DownLoad
 
-[Fir](http://fir.im/rkuw)  
+[Fir](http://fir.im/easygank)  
 
 [Github](https://github.com/CaMnter/EasyGank/blob/master/app/EasyGank_v1.0_2016-01-16_Fir.apk)
 

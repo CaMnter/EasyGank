@@ -106,9 +106,9 @@ android {
         release {
             println("====== buildTypes.release ======")
             //开启或者关闭 混淆 。
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles file('proguard-rules.pro')
+//            minifyEnabled true
+//            shrinkResources true
+//            proguardFiles file('proguard-rules.pro')
             if (keyStore.exists()) {
                 println("EasyGank -> buildTypes -> release: using jks key")
                 signingConfig signingConfigs.release
@@ -135,17 +135,17 @@ android {
 
     // 渠道Flavors
     productFlavors {
-//        Fir {
-//            manifestPlaceholders = [CHANNEL_NAME  : "Fir",
-//                                    UMENG_APPKEY: "569902f967e58e5e760003e1",
-//                                    DEBUG         : "T"]
-//        }
-        DebugTest {
-            applicationId "com.camnter.easygank.test"
-            manifestPlaceholders = [CHANNEL_NAME: "DebugTest",
+        Fir {
+            manifestPlaceholders = [CHANNEL_NAME  : "Fir",
                                     UMENG_APPKEY: "569902f967e58e5e760003e1",
-                                    DEBUG       : "F"]
+                                    DEBUG         : "T"]
         }
+//        DebugTest {
+//            applicationId "com.camnter.easygank.test"
+//            manifestPlaceholders = [CHANNEL_NAME: "DebugTest",
+//                                    UMENG_APPKEY: "569902f967e58e5e760003e1",
+//                                    DEBUG       : "F"]
+//        }
     }
 
 }
