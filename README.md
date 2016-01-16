@@ -39,6 +39,12 @@ EasyGank妹纸
 
 ---
 
+## SolveBug
+
+[SolveBug](https://github.com/CaMnter/EasyGank/blob/master/md/SolveBug.md)  
+
+---
+
 ## Thanks
 
 [drakeet](https://github.com/drakeet)  
