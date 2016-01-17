@@ -141,17 +141,17 @@ android {
 //                                    DEBUG         : "T"]
 //        }
 
-        Github {
-            manifestPlaceholders = [CHANNEL_NAME  : "Github",
-                                    UMENG_APPKEY: "569902f967e58e5e760003e1",
-                                    DEBUG         : "T"]
-        }
-//        DebugTest {
-//            applicationId "com.camnter.easygank.test"
-//            manifestPlaceholders = [CHANNEL_NAME: "DebugTest",
+//        Github {
+//            manifestPlaceholders = [CHANNEL_NAME  : "Github",
 //                                    UMENG_APPKEY: "569902f967e58e5e760003e1",
-//                                    DEBUG       : "F"]
+//                                    DEBUG         : "T"]
 //        }
+        DebugTest {
+            applicationId "com.camnter.easygank.test"
+            manifestPlaceholders = [CHANNEL_NAME: "DebugTest",
+                                    UMENG_APPKEY: "569902f967e58e5e760003e1",
+                                    DEBUG       : "F"]
+        }
     }
 
 }

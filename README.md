@@ -32,9 +32,9 @@ EasyGank妹纸
 
 ## ScreenShots
 
-![ss_1](https://github.com/CaMnter/EasyGank/raw/master/screenshots/ss_1.png) ![ss_2](https://github.com/CaMnter/EasyGank/raw/master/screenshots/ss_2.png)   
-![ss_3](https://github.com/CaMnter/EasyGank/raw/master/screenshots/ss_3.png) ![ss_4](https://github.com/CaMnter/EasyGank/raw/master/screenshots/ss_4.png)  
-![ss_5](https://github.com/CaMnter/EasyGank/raw/master/screenshots/ss_5.png) ![ss_7_g](https://github.com/CaMnter/EasyGank/raw/master/screenshots/ss_7_g.gif)
+![sss_1](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_1.png) ![sss_2](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_2.png)   
+![sss_3](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_3.png) ![sss_4](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_4.png)  
+![ss_5](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_5.png) ![sss_6](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_6.gif)
 
 
 ---
