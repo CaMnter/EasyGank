@@ -52,7 +52,7 @@ public class EasyGank {
 
     private EasyGank() {
         OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.setReadTimeout(10, TimeUnit.SECONDS);
+        okHttpClient.setReadTimeout(7676, TimeUnit.MILLISECONDS);
 
         /*
          * 查看网络请求发送状况

@@ -32,11 +32,11 @@ import com.camnter.easygank.widget.MultiSwipeRefreshLayout;
 import butterknife.Bind;
 
 /**
- * Description：BaseSwipeRefreshLayout
+ * Description：BaseSwipeRefreshLayoutActivity
  * Created by：CaMnter
  * Time：2016-01-05 11:39
  */
-public abstract class BaseSwipeRefreshLayout extends BaseToolbarActivity {
+public abstract class BaseSwipeRefreshLayoutActivity extends BaseToolbarActivity {
 
     @Bind(R.id.multi_swipe_refresh_layout)
     protected MultiSwipeRefreshLayout mMultiSwipeRefreshLayout;
@@ -105,25 +105,16 @@ public abstract class BaseSwipeRefreshLayout extends BaseToolbarActivity {
          */
         if (!refresh && this.refreshStatus) {
             // 到这了 refresh==false && refreshStatus==true
-            this.mMultiSwipeRefreshLayout.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    BaseSwipeRefreshLayout.this.mMultiSwipeRefreshLayout.setRefreshing(false);
-                    BaseSwipeRefreshLayout.this.refreshStatus = false;
-                }
+            this.mMultiSwipeRefreshLayout.postDelayed(() -> {
+                BaseSwipeRefreshLayoutActivity.this.mMultiSwipeRefreshLayout.setRefreshing(false);
+                BaseSwipeRefreshLayoutActivity.this.refreshStatus = false;
             }, 1666);
         } else if (!this.refreshStatus) {
             /*
              * 到这了，refresh==true，refreshStatus==false
              * 排除了refreshStatus==true的情况
              */
-            this.mMultiSwipeRefreshLayout.post(new Runnable() {
-                @Override
-                public void run() {
-                    BaseSwipeRefreshLayout.this.mMultiSwipeRefreshLayout.setRefreshing(true);
-
-                }
-            });
+            this.mMultiSwipeRefreshLayout.post(() -> BaseSwipeRefreshLayoutActivity.this.mMultiSwipeRefreshLayout.setRefreshing(true));
             this.refreshStatus = true;
         }
 

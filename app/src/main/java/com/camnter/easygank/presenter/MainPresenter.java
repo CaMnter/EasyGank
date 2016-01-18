@@ -177,7 +177,9 @@ public class MainPresenter extends BasePresenter<MainView> {
                                     }
                                 });
                             } else {
-                                MainPresenter.this.switchFailure(oldPage, e);
+//                                MainPresenter.this.switchFailure(oldPage, e);
+                                // 加载更多失败
+                                MainPresenter.this.getMvpView().onFailure(e);
                             }
                         }
 
@@ -257,7 +259,9 @@ public class MainPresenter extends BasePresenter<MainView> {
                                     }
                                 });
                             } else {
-                                MainPresenter.this.switchFailure(oldPage, e);
+//                                MainPresenter.this.switchFailure(oldPage, e);
+                                // 加载更多失败
+                                MainPresenter.this.getMvpView().onFailure(e);
                             }
                         }
                     }

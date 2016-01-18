@@ -45,7 +45,7 @@ import butterknife.Bind;
  * Created by：CaMnter
  * Time：2016-01-06 00:29
  */
-public abstract class BaseDrawerLayoutActivity extends BaseSwipeRefreshLayout {
+public abstract class BaseDrawerLayoutActivity extends BaseSwipeRefreshLayoutActivity {
 
     @Bind(R.id.root_view)
     protected DrawerLayout mDrawerLayout;
