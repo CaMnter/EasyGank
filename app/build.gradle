@@ -202,9 +202,7 @@ dependencies {
     // Reservoir
     compile 'com.anupcowkur:reservoir:2.1'
 
-    //umeng
-    compile 'com.umeng.analytics:analytics:latest.integration'
-
     // other
     compile 'com.github.orhanobut:logger:1.12'
+
 }
