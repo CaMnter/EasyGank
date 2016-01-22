@@ -28,7 +28,6 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -37,6 +36,7 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
@@ -355,10 +355,15 @@ public class DeviceUtils {
      * @param content content
      */
     public static void copy2Clipboard(Context context, String content) {
-        ClipData clipData = ClipData.newPlainText(context.getString(R.string.app_name), content);
-        ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(
-                Context.CLIPBOARD_SERVICE);
-        clipboardManager.setPrimaryClip(clipData);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager) context.getSystemService(
+                    Context.CLIPBOARD_SERVICE);
+            ClipData clipData = ClipData.newPlainText(context.getString(R.string.app_name), content);
+            clipboardManager.setPrimaryClip(clipData);
+        } else {
+            android.text.ClipboardManager clipboardManager = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboardManager.setText(content);
+        }
     }
 
 }
