@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="horizontal">
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:clickable="true"
-        android:focusable="true" >
+        android:focusable="true">
 
         <TextView
             android:id="@+id/umeng_common_icon_view"
@@ -21,8 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:scaleType="center"
             android:contentDescription="@string/umeng_common_icon"
+            android:scaleType="center"
             android:src="@android:drawable/stat_sys_download" />
     </FrameLayout>
 
@@ -31,7 +31,7 @@
         android:layout_height="fill_parent"
         android:clickable="true"
         android:focusable="true"
-        android:paddingLeft="7dp" >
+        android:paddingLeft="7dp">
 
         <LinearLayout
             android:id="@+id/umeng_common_notification_controller"
@@ -42,7 +42,7 @@
             android:layout_marginTop="3dp"
             android:clickable="true"
             android:focusable="true"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/umeng_common_rich_notification_continue"
@@ -74,7 +74,7 @@
             android:clickable="true"
             android:focusable="true"
             android:orientation="vertical"
-            android:paddingTop="10dp" >
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/umeng_common_title"

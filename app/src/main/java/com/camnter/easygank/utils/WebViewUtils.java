@@ -68,7 +68,7 @@ public class WebViewUtils {
                     "parent.appendChild(style)" +
                     "})()");
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    WebView.setWebContentsDebuggingEnabled(true);
+                WebView.setWebContentsDebuggingEnabled(true);
             }
         } catch (Exception e) {
             e.printStackTrace();

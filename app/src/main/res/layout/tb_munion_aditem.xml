@@ -2,14 +2,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/tb_munion_item_selector"
-    android:layout_weight="1">
+    android:layout_weight="1"
+    android:background="@drawable/tb_munion_item_selector">
 
     <ImageView
         android:id="@+id/ad_image"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:scaleType="centerCrop"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/tb_munion_icon"/>
+        android:background="@drawable/tb_munion_icon"
+        android:scaleType="centerCrop" />
 </FrameLayout>

@@ -26,12 +26,12 @@ package com.camnter.easygank.gank;
 
 /**
  * Description：GankApi - http://gank.io/api
- * <p/>
+ * <p>
  * 分类数据: http://gank.avosapps.com/api/data/数据类型/请求个数/第几页
  * 数据类型： 福利 | Android | iOS | 休息视频 | 拓展资源 | 前端 | all
  * 请求个数： 数字，大于0
  * 第几页：数字，大于0
- * <p/>
+ * <p>
  * Created by：CaMnter
  * Time：2016-01-03 15:49
  */
