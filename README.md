@@ -31,6 +31,7 @@ EasyGank妹纸
 
 
 ## ScreenShots
+![sss_phone_style](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_phone_style.png)   
 
 ![sss_1](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_1.png) ![sss_2](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_2.png)   
 ![sss_3](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_3.png) ![sss_4](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_4.png)  
