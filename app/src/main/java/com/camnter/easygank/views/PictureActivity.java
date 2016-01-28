@@ -198,8 +198,10 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView,
 
     @Override
     protected void onDestroy() {
-        this.glideBitmapDrawable.setCallback(null);
-        this.glideBitmapDrawable = null;
+        if(this.glideBitmapDrawable!=null){
+            this.glideBitmapDrawable.setCallback(null);
+            this.glideBitmapDrawable = null;
+        }
         this.presenter.detachView();
         super.onDestroy();
     }
