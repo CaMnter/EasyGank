@@ -1,12 +1,6 @@
 EasyGank妹纸
 ==
 
-## Prefre 
-
-**As a graduate student, just in order to learn and consolidate knowledge, to do the project .**  
-
----
-
 ## Introduction
 
 **Base on the MVP pattern , RxJava+RxAndroid+Retrofit .**
