@@ -137,38 +137,6 @@
 
             </LinearLayout>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/shape_about_card"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/about_project_other"
-                    android:textColor="@color/about_title"
-                    android:textSize="@dimen/about_title"
-                    android:textStyle="bold"
-                    android:typeface="serif" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:autoLink="web"
-                    android:lineSpacingExtra="2dp"
-                    android:text="@string/about_project_other_content"
-                    android:textColor="@color/about_content"
-                    android:textIsSelectable="true"
-                    android:textSize="@dimen/about_content" />
-
-            </LinearLayout>
-
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
