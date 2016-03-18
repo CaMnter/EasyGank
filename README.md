@@ -1,9 +1,9 @@
 EasyGank妹纸
 ==
 
-![Language](https://img.shields.io/badge/language-Java-EE0000.svg) 
-[![License](https://img.shields.io/badge/license-GPL%203.0-blue.svg)](https://github.com/CaMnter/EasyGank/blob/master/LICENSE) 
-![Version](https://img.shields.io/badge/version-1.2-8470FF.svg) 
+[![Language](https://img.shields.io/badge/language-Java-EE0000.svg)]() 
+[![License](https://img.shields.io/badge/license-GPL%203.0-blue.svg)](https://github.com/CaMnter/EasyGank/blob/master/LICENSE)  
+[![Version](https://img.shields.io/badge/version-1.2-8470FF.svg)]() 
 
 
 ## Introduction
