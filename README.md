@@ -2,7 +2,7 @@ EasyGank妹纸
 ==
 
 [![Language](https://img.shields.io/badge/language-Java-EE0000.svg)]() 
-[![License](https://img.shields.io/badge/license-GPL%203.0-blue.svg)](https://github.com/CaMnter/EasyGank/blob/master/LICENSE)  
+[![License](https://img.shields.io/badge/license-GPL%203.0-blue.svg)](https://github.com/CaMnter/EasyGank/blob/master/LICENSE) 
 [![Version](https://img.shields.io/badge/version-1.2-8470FF.svg)]() 
 
 
@@ -24,7 +24,7 @@ EasyGank妹纸
 
 [Fir](http://fir.im/easygank)  
 
-[Github](https://github.com/CaMnter/EasyGank/blob/master/app/EasyGank_v1.1_2016-01-17_Github.apk)
+[Github](https://github.com/CaMnter/EasyGank/blob/master/app/EasyGank_v1.2_2016-03-18_Github.apk)
 
 
 

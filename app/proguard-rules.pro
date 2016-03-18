@@ -144,8 +144,6 @@
 -keepattributes Exceptions,InnerClasses
 
 # umeng
--libraryjars libs/umeng-analytics-v5.6.4.jar
--libraryjars libs/umeng-update-v2.6.0.1.jar
 -keep class com.umeng.** { *; }
 -keep class com.umeng.update.** { *; }
 -keep public class * extends com.umeng.**

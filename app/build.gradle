@@ -21,8 +21,8 @@ android {
         applicationId "com.camnter.easygank"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 2
-        versionName "1.1"
+        versionCode 3
+        versionName "1.2"
         multiDexEnabled true
     }
     buildTypes {
@@ -141,7 +141,7 @@ android {
 //                                    UMENG_APPKEY: "569902f967e58e5e760003e1",
 //                                    DEBUG         : "T"]
 //        }
-
+//
 //        Github {
 //            manifestPlaceholders = [CHANNEL_NAME  : "Github",
 //                                    UMENG_APPKEY: "569902f967e58e5e760003e1",
