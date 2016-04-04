@@ -30,23 +30,27 @@ public class RxBus {
     public static final RxBus bus = new RxBus();
     private final Subject<Object, Object> _bus = new SerializedSubject<>(PublishSubject.create());
 
+
     public static synchronized RxBus getInstance() {
         return bus;
     }
 
+
     private RxBus() {
     }
+
 
     public void send(RxEvent event) {
         _bus.onNext(event);
     }
 
+
     public Observable<Object> toObserverable() {
         return _bus;
     }
 
+
     public boolean hasObservers() {
         return _bus.hasObservers();
     }
-
 }

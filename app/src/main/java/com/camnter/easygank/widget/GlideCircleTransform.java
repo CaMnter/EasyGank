@@ -29,7 +29,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
@@ -43,6 +42,7 @@ public class GlideCircleTransform extends BitmapTransformation {
     public GlideCircleTransform(Context context) {
         super(context);
     }
+
 
     @Override
     protected Bitmap transform(BitmapPool pool, Bitmap inBitmap, int destWidth, int destHeight) {
@@ -60,7 +60,8 @@ public class GlideCircleTransform extends BitmapTransformation {
 
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();
-        paint.setShader(new BitmapShader(squared, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
+        paint.setShader(new BitmapShader(squared, BitmapShader.TileMode.CLAMP,
+                BitmapShader.TileMode.CLAMP));
         paint.setAntiAlias(true);
         float r = size / 2f;
         canvas.drawCircle(r, r, r, paint);
@@ -68,9 +69,7 @@ public class GlideCircleTransform extends BitmapTransformation {
     }
 
 
-    @Override
-    public String getId() {
+    @Override public String getId() {
         return getClass().getName();
     }
-
 }

@@ -24,10 +24,8 @@
 
 package com.camnter.easygank.gank;
 
-
 import com.camnter.easygank.bean.GankDaily;
 import com.camnter.easygank.bean.GankData;
-
 import retrofit.http.GET;
 import retrofit.http.Path;
 import rx.Observable;
@@ -40,17 +38,13 @@ import rx.Observable;
 public interface GankService {
 
     /**
-     * @param year  year
+     * @param year year
      * @param month month
-     * @param day   day
+     * @param day day
      * @return Observable<GankDaily>
      */
-    @GET("day/{year}/{month}/{day}")
-    Observable<GankDaily> getDaily(
-            @Path("year") int year,
-            @Path("month") int month,
-            @Path("day") int day
-    );
+    @GET("day/{year}/{month}/{day}") Observable<GankDaily> getDaily(
+            @Path("year") int year, @Path("month") int month, @Path("day") int day);
 
     /**
      * 找妹子、Android、iOS、前端、扩展资源、休息视频
@@ -60,12 +54,7 @@ public interface GankService {
      * @param page 第几页
      * @return Observable<GankWelfare>
      */
-    @GET("data/{type}/{size}/{page}")
-    Observable<GankData> getData(
-            @Path("type") String type,
-            @Path("size") int size,
-            @Path("page") int page
-    );
-
+    @GET("data/{type}/{size}/{page}") Observable<GankData> getData(
+            @Path("type") String type, @Path("size") int size, @Path("page") int page);
 }
 

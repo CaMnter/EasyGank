@@ -25,9 +25,7 @@
 package com.camnter.easygank.gank;
 
 import android.util.SparseArray;
-
 import com.camnter.easygank.R;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,22 +38,16 @@ public class GankTypeDict {
 
     public static final int DONT_SWITCH = -1;
 
-    public static int[] menuIds = new int[]{
-            R.id.navigation_daily,
-            R.id.navigation_welfare,
-            R.id.navigation_android,
-            R.id.navigation_ios,
-            R.id.navigation_js,
-            R.id.navigation_video,
-            R.id.navigation_resources,
-            R.id.navigation_app
-    };
+    public static int[] menuIds = new int[] { R.id.navigation_daily, R.id.navigation_welfare,
+            R.id.navigation_android, R.id.navigation_ios, R.id.navigation_js, R.id.navigation_video,
+            R.id.navigation_resources, R.id.navigation_app };
     public static final SparseArray<Integer> menuId2TypeDict = new SparseArray<>();
 
     public static final HashMap<Integer, String> type2UrlTypeDict = new HashMap<>();
     public static final HashMap<String, Integer> urlType2TypeDict = new HashMap<>();
 
     public static final HashMap<String, Integer> urlType2ColorDict = new HashMap<>();
+
 
     static {
         menuId2TypeDict.put(R.id.navigation_daily, GankType.daily);
@@ -87,6 +79,5 @@ public class GankTypeDict {
         urlType2ColorDict.put(GankApi.DATA_TYPE_JS, 0xffEF6C02);
         urlType2ColorDict.put(GankApi.DATA_TYPE_APP, 0xffC02E34);
         urlType2ColorDict.put(GankApi.DATA_TYPE_RECOMMEND, 0xff4527A0);
-
     }
 }

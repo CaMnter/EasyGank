@@ -64,7 +64,6 @@ public class UrlMatch {
     public static final String JIANSHU_CONTENT = "简书";
     public static final int JIANSHU_COLOR = 0xffE9816D;
 
-
     public static final String TUDOU_PREFIX = "tudou.com";
     public static final String TUDOU_CONTENT = "土豆";
     public static final int TUDOU_COLOR = 0xffFD6600;
@@ -133,7 +132,6 @@ public class UrlMatch {
     public static final String LETV_CONTENT = "乐视";
     public static final int LETV_COLOR = 0xffDA0206;
 
-
     public static final String OTHER_BLOG_CONTENT = "文章";
     public static final int OTHER_BLOG_COLOR = 0xff870D4F;
 
@@ -142,6 +140,7 @@ public class UrlMatch {
 
     public static final HashMap<String, Integer> url2Color = new HashMap<>();
     public static final HashMap<String, String> url2Content = new HashMap<>();
+
 
     static {
         url2Color.put(GITHUB_PREFIX, GITHUB_COLOR);
@@ -196,6 +195,7 @@ public class UrlMatch {
         url2Content.put(TV_SOUHU_PREFIX, TV_SOUHU_CONTENT);
     }
 
+
     public static String processUrl(String url) {
         String temp;
         if (url.startsWith(HTTPS)) {
@@ -205,5 +205,4 @@ public class UrlMatch {
         }
         return temp.substring(temp.indexOf(".") + 1, temp.indexOf("/"));
     }
-
 }

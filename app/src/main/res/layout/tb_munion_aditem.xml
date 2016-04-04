@@ -11,5 +11,5 @@
         android:layout_height="55dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/tb_munion_icon"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"/>
 </FrameLayout>

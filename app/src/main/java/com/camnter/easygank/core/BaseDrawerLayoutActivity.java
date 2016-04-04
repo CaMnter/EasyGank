@@ -32,13 +32,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-
+import butterknife.Bind;
 import com.camnter.easygank.R;
-
 import java.util.HashMap;
 import java.util.Map;
-
-import butterknife.Bind;
 
 /**
  * Description：BaseDrawerLayoutActivity
@@ -47,21 +44,20 @@ import butterknife.Bind;
  */
 public abstract class BaseDrawerLayoutActivity extends BaseSwipeRefreshLayoutActivity {
 
-    @Bind(R.id.root_view)
-    protected DrawerLayout mDrawerLayout;
-    @Bind(R.id.navigation_view)
-    protected NavigationView mNavigationView;
+    @Bind(R.id.root_view) protected DrawerLayout mDrawerLayout;
+    @Bind(R.id.navigation_view) protected NavigationView mNavigationView;
 
     private ActionBarDrawerToggle mDrawerToggle;
 
-
     protected HashMap<Integer, MenuItem> mMenuItems;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (this.getNavigationItemSelectedListener() != null)
-            this.mNavigationView.setNavigationItemSelectedListener(this.getNavigationItemSelectedListener());
+        if (this.getNavigationItemSelectedListener() != null) {
+            this.mNavigationView.setNavigationItemSelectedListener(
+                    this.getNavigationItemSelectedListener());
+        }
 
         this.mDrawerLayout.setDrawerListener(new EasyDrawerListener());
 
@@ -75,14 +71,10 @@ public abstract class BaseDrawerLayoutActivity extends BaseSwipeRefreshLayoutAct
             }
         }
 
-        this.mDrawerToggle = new ActionBarDrawerToggle(
-                this,
-                this.mDrawerLayout,
-                R.string.app_menu,
-                R.string.app_name
-        );
-
+        this.mDrawerToggle = new ActionBarDrawerToggle(this, this.mDrawerLayout, R.string.app_menu,
+                R.string.app_name);
     }
+
 
     /**
      * Fill in NavigationView.OnNavigationItemSelectedListener
@@ -108,6 +100,7 @@ public abstract class BaseDrawerLayoutActivity extends BaseSwipeRefreshLayoutAct
      */
     protected abstract void onMenuItemOnClick(MenuItem now);
 
+
     /**
      * set menu item check status
      *
@@ -132,8 +125,7 @@ public abstract class BaseDrawerLayoutActivity extends BaseSwipeRefreshLayoutAct
                  * 如果之前找到了之前选中过的
                  * 那别玩了，前后两次选了一样的
                  */
-                if (old != null && old.getItemId() == itemId)
-                    break;
+                if (old != null && old.getItemId() == itemId) break;
 
                 /*
                  * 到这了，前后两次的选择不会一样的
@@ -145,7 +137,6 @@ public abstract class BaseDrawerLayoutActivity extends BaseSwipeRefreshLayoutAct
                 } else {
                     menuItem.setChecked(false);
                 }
-
             }
             this.mDrawerLayout.closeDrawer(this.mNavigationView);
             return true;
@@ -154,21 +145,23 @@ public abstract class BaseDrawerLayoutActivity extends BaseSwipeRefreshLayoutAct
         }
     }
 
+
     /**
      * Take care of calling onBackPressed() for pre-Eclair platforms.
      *
      * @param keyCode keyCode
-     * @param event   event
+     * @param event event
      */
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
         // 如果抽屉打开了
-        if (keyCode == KeyEvent.KEYCODE_BACK && this.mDrawerLayout.isDrawerOpen(this.mNavigationView)) {
+        if (keyCode == KeyEvent.KEYCODE_BACK &&
+                this.mDrawerLayout.isDrawerOpen(this.mNavigationView)) {
             this.mDrawerLayout.closeDrawer(this.mNavigationView);
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
+
 
     /**
      * @param item The menu item that was selected.
@@ -176,8 +169,7 @@ public abstract class BaseDrawerLayoutActivity extends BaseSwipeRefreshLayoutAct
      * proceed, true to consume it here.
      * @see #onCreateOptionsMenu
      */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             this.mDrawerLayout.openDrawer(GravityCompat.START);
             return true;
@@ -186,43 +178,41 @@ public abstract class BaseDrawerLayoutActivity extends BaseSwipeRefreshLayoutAct
         }
     }
 
+
     /**
      * When using ActionBarDrawerToggle, all DrawerLayout listener methods should be forwarded
      * if the ActionBarDrawerToggle is not used as the DrawerLayout listener directly.
      */
     private class EasyDrawerListener implements DrawerLayout.DrawerListener {
-        @Override
-        public void onDrawerOpened(View drawerView) {
+        @Override public void onDrawerOpened(View drawerView) {
             BaseDrawerLayoutActivity.this.mDrawerToggle.onDrawerOpened(drawerView);
             if (BaseDrawerLayoutActivity.this.mActionBarHelper != null) {
                 BaseDrawerLayoutActivity.this.mActionBarHelper.onDrawerOpened();
             }
         }
 
-        @Override
-        public void onDrawerClosed(View drawerView) {
+
+        @Override public void onDrawerClosed(View drawerView) {
             BaseDrawerLayoutActivity.this.mDrawerToggle.onDrawerClosed(drawerView);
             BaseDrawerLayoutActivity.this.mActionBarHelper.onDrawerClosed();
         }
 
-        @Override
-        public void onDrawerSlide(View drawerView, float slideOffset) {
+
+        @Override public void onDrawerSlide(View drawerView, float slideOffset) {
             BaseDrawerLayoutActivity.this.mDrawerToggle.onDrawerSlide(drawerView, slideOffset);
         }
 
-        @Override
-        public void onDrawerStateChanged(int newState) {
+
+        @Override public void onDrawerStateChanged(int newState) {
             BaseDrawerLayoutActivity.this.mDrawerToggle.onDrawerStateChanged(newState);
         }
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
+
+    @Override protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
-
-
 }

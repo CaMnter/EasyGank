@@ -31,10 +31,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.camnter.easygank.R;
-
 import butterknife.Bind;
+import com.camnter.easygank.R;
 
 /**
  * Description：BaseToolbarActivity
@@ -43,40 +41,38 @@ import butterknife.Bind;
  */
 public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
 
-    @Bind(R.id.toolbar)
-    protected Toolbar mToolbar;
-    @Bind(R.id.app_bar_layout)
-    protected AppBarLayout mAppBarLayout;
+    @Bind(R.id.toolbar) protected Toolbar mToolbar;
+    @Bind(R.id.app_bar_layout) protected AppBarLayout mAppBarLayout;
 
     protected ActionBarHelper mActionBarHelper;
+
 
     /**
      * Initialize the toolbar in the layout
      *
      * @param savedInstanceState savedInstanceState
      */
-    @Override
-    protected void initToolbar(Bundle savedInstanceState) {
+    @Override protected void initToolbar(Bundle savedInstanceState) {
         this.initToolbarHelper();
     }
+
 
     /**
      * init the toolbar
      */
     protected void initToolbarHelper() {
-        if (this.mToolbar == null || this.mAppBarLayout == null)
-            return;
+        if (this.mToolbar == null || this.mAppBarLayout == null) return;
 
         this.setSupportActionBar(this.mToolbar);
 
         this.mActionBarHelper = this.createActionBarHelper();
         this.mActionBarHelper.init();
 
-
         if (Build.VERSION.SDK_INT >= 21) {
             this.mAppBarLayout.setElevation(6.6f);
         }
     }
+
 
     /**
      * @param item The menu item that was selected.
@@ -84,8 +80,7 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
      * proceed, true to consume it here.
      * @see #onCreateOptionsMenu
      */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             this.onBackPressed();
             return true;
@@ -94,10 +89,11 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
         }
     }
 
+
     protected void showBack() {
-        if (this.mActionBarHelper != null)
-            this.mActionBarHelper.setDisplayHomeAsUpEnabled(true);
+        if (this.mActionBarHelper != null) this.mActionBarHelper.setDisplayHomeAsUpEnabled(true);
     }
+
 
     /**
      * set the AppBarLayout alpha
@@ -107,6 +103,7 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
     protected void setAppBarLayoutAlpha(float alpha) {
         this.mAppBarLayout.setAlpha(alpha);
     }
+
 
     /**
      * set the AppBarLayout visibility
@@ -121,6 +118,7 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
         }
     }
 
+
     /**
      * Create a compatible helper that will manipulate the action bar if available.
      */
@@ -128,14 +126,17 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
         return new ActionBarHelper();
     }
 
+
     public class ActionBarHelper {
         private final ActionBar mActionBar;
         public CharSequence mDrawerTitle;
         public CharSequence mTitle;
 
+
         public ActionBarHelper() {
             this.mActionBar = getSupportActionBar();
         }
+
 
         public void init() {
             if (this.mActionBar == null) return;
@@ -144,29 +145,32 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
             this.mTitle = mDrawerTitle = getTitle();
         }
 
+
         public void onDrawerClosed() {
             if (this.mActionBar == null) return;
             this.mActionBar.setTitle(this.mTitle);
         }
+
 
         public void onDrawerOpened() {
             if (this.mActionBar == null) return;
             this.mActionBar.setTitle(this.mDrawerTitle);
         }
 
+
         public void setTitle(CharSequence title) {
             this.mTitle = title;
         }
+
 
         public void setDrawerTitle(CharSequence drawerTitle) {
             this.mDrawerTitle = drawerTitle;
         }
 
+
         public void setDisplayHomeAsUpEnabled(boolean showHomeAsUp) {
             if (this.mActionBar == null) return;
             this.mActionBar.setDisplayHomeAsUpEnabled(showHomeAsUp);
         }
-
     }
-
 }

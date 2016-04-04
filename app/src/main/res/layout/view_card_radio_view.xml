@@ -32,4 +32,4 @@
     android:padding="@dimen/card_item_content_padding"
     android:scaleType="centerCrop"
     app:imageRatio="1.0"
-    app:imageRatioType="widthHeight" />
+    app:imageRatioType="widthHeight"/>

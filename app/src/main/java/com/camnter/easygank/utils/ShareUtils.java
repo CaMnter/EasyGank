@@ -52,5 +52,4 @@ public class ShareUtils {
         intent.putExtra(Intent.EXTRA_TEXT, content);
         context.startActivity(Intent.createChooser(intent, "分享"));
     }
-
 }

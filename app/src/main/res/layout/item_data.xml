@@ -45,7 +45,7 @@
             android:maxLines="2"
             android:paddingBottom="6dp"
             android:textColor="@color/item_title_tv"
-            android:textSize="@dimen/item_title_tv" />
+            android:textSize="@dimen/item_title_tv"/>
 
         <TextView
             android:id="@+id/data_via_tv"
@@ -59,7 +59,7 @@
             android:textColor="@color/common_item_via"
             android:textSize="@dimen/item_via_tv"
             android:textStyle="italic"
-            android:typeface="serif" />
+            android:typeface="serif"/>
 
         <LinearLayout
             android:id="@+id/data_tag_ll"
@@ -78,7 +78,7 @@
                 android:background="@drawable/bg_data_tag"
                 android:gravity="center"
                 android:textColor="@color/item_tag_tv"
-                android:textSize="@dimen/item_tag_tv" />
+                android:textSize="@dimen/item_tag_tv"/>
 
         </LinearLayout>
 
@@ -91,7 +91,7 @@
             android:layout_alignParentRight="true"
             android:text="222"
             android:textColor="@color/item_date"
-            android:textSize="@dimen/item_date_tv" />
+            android:textSize="@dimen/item_date_tv"/>
 
     </RelativeLayout>
 

@@ -27,7 +27,6 @@ package com.camnter.easygank.model.impl;
 import com.camnter.easygank.bean.GankDaily;
 import com.camnter.easygank.gank.EasyGank;
 import com.camnter.easygank.model.IDailyModel;
-
 import rx.Observable;
 
 /**
@@ -39,24 +38,25 @@ public class DailyModel implements IDailyModel {
 
     private static final DailyModel ourInstance = new DailyModel();
 
+
     public static DailyModel getInstance() {
         return ourInstance;
     }
 
+
     private DailyModel() {
     }
+
 
     /**
      * 查询每日数据
      *
-     * @param year  year
+     * @param year year
      * @param month month
-     * @param day   day
+     * @param day day
      * @return Observable<GankDaily>
      */
-    @Override
-    public Observable<GankDaily> getDaily(int year, int month, int day) {
+    @Override public Observable<GankDaily> getDaily(int year, int month, int day) {
         return EasyGank.getInstance().getGankService().getDaily(year, month, day);
     }
-
 }

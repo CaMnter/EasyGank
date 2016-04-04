@@ -25,11 +25,9 @@
 package com.camnter.easygank.core;
 
 import android.os.Bundle;
-
+import butterknife.Bind;
 import com.camnter.easygank.R;
 import com.camnter.easygank.widget.MultiSwipeRefreshLayout;
-
-import butterknife.Bind;
 
 /**
  * Description：BaseSwipeRefreshLayoutActivity
@@ -38,41 +36,44 @@ import butterknife.Bind;
  */
 public abstract class BaseSwipeRefreshLayoutActivity extends BaseToolbarActivity {
 
-    @Bind(R.id.multi_swipe_refresh_layout)
-    protected MultiSwipeRefreshLayout mMultiSwipeRefreshLayout;
+    @Bind(R.id.multi_swipe_refresh_layout) protected MultiSwipeRefreshLayout
+            mMultiSwipeRefreshLayout;
 
     private boolean refreshStatus = false;
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
+
+    @Override protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         this.initMultiSwipeRefreshLayout();
     }
+
 
     /**
      * 初始化MultiSwipeRefreshLayout
      */
     private void initMultiSwipeRefreshLayout() {
         // 下拉刷新的颜色
-        if (this.mMultiSwipeRefreshLayout != null)
+        if (this.mMultiSwipeRefreshLayout != null) {
             this.mMultiSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        }
 
         // 在刷新时，关闭刷新开关
-        if (this.mMultiSwipeRefreshLayout != null)
+        if (this.mMultiSwipeRefreshLayout != null) {
             this.mMultiSwipeRefreshLayout.setOnRefreshListener(() -> onSwipeRefresh());
-
+        }
     }
+
 
     /**
      * 刷新的时候
      */
     public abstract void onSwipeRefresh();
+
 
     /**
      * 设置刷新状态
@@ -83,6 +84,7 @@ public abstract class BaseSwipeRefreshLayoutActivity extends BaseToolbarActivity
         this.refreshStatus = status;
     }
 
+
     /**
      * 获取当前刷新状态
      *
@@ -91,6 +93,7 @@ public abstract class BaseSwipeRefreshLayoutActivity extends BaseToolbarActivity
     public boolean isRefreshStatus() {
         return refreshStatus;
     }
+
 
     /**
      * 刷新 true false
@@ -114,10 +117,10 @@ public abstract class BaseSwipeRefreshLayoutActivity extends BaseToolbarActivity
              * 到这了，refresh==true，refreshStatus==false
              * 排除了refreshStatus==true的情况
              */
-            this.mMultiSwipeRefreshLayout.post(() -> BaseSwipeRefreshLayoutActivity.this.mMultiSwipeRefreshLayout.setRefreshing(true));
+            this.mMultiSwipeRefreshLayout.post(
+                    () -> BaseSwipeRefreshLayoutActivity.this.mMultiSwipeRefreshLayout.setRefreshing(
+                            true));
             this.refreshStatus = true;
         }
-
     }
-
 }

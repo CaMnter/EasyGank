@@ -30,7 +30,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
     <com.camnter.easygank.widget.RatioImageView
         android:id="@+id/welfare_iv"
         android:layout_width="match_parent"
@@ -38,6 +37,6 @@
         android:padding="2dp"
         android:scaleType="centerCrop"
         app:imageRatio="0.7"
-        app:imageRatioType="widthHeight" />
+        app:imageRatioType="widthHeight"/>
 
 </android.support.v7.widget.CardView>

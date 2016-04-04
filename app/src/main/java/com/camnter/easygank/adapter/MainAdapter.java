@@ -30,7 +30,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.camnter.easygank.R;
 import com.camnter.easygank.bean.BaseGankData;
 import com.camnter.easygank.bean.GankDaily;
@@ -51,7 +50,6 @@ import com.camnter.easyrecyclerview.holder.EasyRecyclerViewHolder;
  */
 public class MainAdapter extends EasyRecyclerViewAdapter {
 
-
     public static final int LAYOUT_TYPE_DAILY = 0;
     public static final int LAYOUT_TYPE_TECHNOLOGY = 1;
     public static final int LAYOUT_TYPE_WELFARE = 2;
@@ -61,19 +59,17 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
     private int type;
     private OnClickListener listener;
 
+
     public MainAdapter(Context context, int type) {
         this.context = context;
         this.type = type;
     }
 
-    @Override
-    public int[] getItemLayouts() {
-        return new int[]{
-                R.layout.item_daily,
-                R.layout.item_data,
-                R.layout.item_welfate,
-        };
+
+    @Override public int[] getItemLayouts() {
+        return new int[] { R.layout.item_daily, R.layout.item_data, R.layout.item_welfate, };
     }
+
 
     @Override
     public void onBindRecycleViewHolder(EasyRecyclerViewHolder easyRecyclerViewHolder, int position) {
@@ -91,9 +87,11 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         }
     }
 
+
     public int getType() {
         return type;
     }
+
 
     /**
      * 用于切换数据类型，从而切换数据源(url)
@@ -104,14 +102,14 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         this.type = type;
     }
 
+
     /**
      * 不需要一个RecyclerView里item不一样的情况
      *
      * @param position position
      * @return int
      */
-    @Override
-    public int getRecycleViewItemType(int position) {
+    @Override public int getRecycleViewItemType(int position) {
         /*
          * android、ios、js、resource、app是一套布局
          */
@@ -132,11 +130,12 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         }
     }
 
+
     /**
      * 加载每日干货类型数据
      *
      * @param easyRecyclerViewHolder easyRecyclerViewHolder
-     * @param position               position
+     * @param position position
      */
     private void loadingDaily(EasyRecyclerViewHolder easyRecyclerViewHolder, int position) {
         GankDaily dailyData = this.getItem(position);
@@ -157,11 +156,14 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         if (dailyData.results.videoData != null && dailyData.results.videoData.size() > 0) {
             BaseGankData video = dailyData.results.videoData.get(0);
             dailyTitleTV.setText(video.desc.trim());
-            dailyDateTV.setText(DateUtils.date2String(video.publishedAt.getTime(), Constant.DAILY_DATE_FORMAT));
-        } else if (dailyData.results.welfareData != null && dailyData.results.welfareData.size() > 0) {
+            dailyDateTV.setText(
+                    DateUtils.date2String(video.publishedAt.getTime(), Constant.DAILY_DATE_FORMAT));
+        } else if (dailyData.results.welfareData != null &&
+                dailyData.results.welfareData.size() > 0) {
             BaseGankData welfare = dailyData.results.welfareData.get(0);
             dailyTitleTV.setText(welfare.desc.trim());
-            dailyDateTV.setText(DateUtils.date2String(welfare.publishedAt.getTime(), Constant.DAILY_DATE_FORMAT));
+            dailyDateTV.setText(DateUtils.date2String(welfare.publishedAt.getTime(),
+                    Constant.DAILY_DATE_FORMAT));
         } else {
             dailyTitleTV.setText("这期没福利了，安心学习吧！");
             dailyDateTV.setText("");
@@ -172,8 +174,9 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
             final BaseGankData welfare = dailyData.results.welfareData.get(0);
             GlideUtils.display(dailyIV, welfare.url);
             dailyIV.setOnClickListener(v -> {
-                if (MainAdapter.this.listener != null)
+                if (MainAdapter.this.listener != null) {
                     MainAdapter.this.listener.onClickPicture(welfare.url, welfare.desc, v);
+                }
             });
         } else {
             GlideUtils.displayNative(dailyIV, R.mipmap.img_default_gray);
@@ -204,14 +207,14 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
                 jsTagTV.setVisibility(View.GONE);
             }
         }
-
     }
+
 
     /**
      * 加载技术类型数据 ( Android、iOS、前端、拓展资源、App )
      *
      * @param easyRecyclerViewHolder easyRecyclerViewHolder
-     * @param position               position
+     * @param position position
      */
     private void loadingTechnology(EasyRecyclerViewHolder easyRecyclerViewHolder, int position) {
         BaseGankData baseGankData = this.getItem(position);
@@ -242,18 +245,17 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
             dataViaTV.setText(this.context.getString(R.string.common_via, baseGankData.who));
         }
 
-
         if (TextUtils.isEmpty(baseGankData.url)) {
             dataTagTV.setVisibility(View.GONE);
         } else {
             this.setTag(dataTagTV, baseGankData.url);
         }
-
     }
+
 
     /**
      * @param dataTagTV dataTagTV
-     * @param url       url
+     * @param url url
      */
     private void setTag(TextView dataTagTV, String url) {
         String key = UrlMatch.processUrl(url);
@@ -278,11 +280,12 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         }
     }
 
+
     /**
      * 加载 福利
      *
      * @param easyRecyclerViewHolder easyRecyclerViewHolder
-     * @param position               position
+     * @param position position
      */
     private void loadingWelfare(EasyRecyclerViewHolder easyRecyclerViewHolder, int position) {
         BaseGankData baseGankData = this.getItem(position);
@@ -301,15 +304,15 @@ public class MainAdapter extends EasyRecyclerViewAdapter {
         } else {
             GlideUtils.display(welfareIV, baseGankData.url);
         }
-
     }
+
 
     public void setListener(OnClickListener listener) {
         this.listener = listener;
     }
 
+
     public interface OnClickListener {
         void onClickPicture(String url, String title, View view);
     }
-
 }

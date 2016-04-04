@@ -15,7 +15,7 @@
             android:id="@+id/umeng_common_icon_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -23,7 +23,7 @@
             android:layout_gravity="center"
             android:contentDescription="@string/umeng_common_icon"
             android:scaleType="center"
-            android:src="@android:drawable/stat_sys_download" />
+            android:src="@android:drawable/stat_sys_download"/>
     </FrameLayout>
 
     <RelativeLayout
@@ -51,7 +51,7 @@
                 android:background="@drawable/umeng_common_gradient_orange"
                 android:singleLine="true"
                 android:text="@string/umeng_common_action_pause"
-                android:textSize="12sp" />
+                android:textSize="12sp"/>
 
             <Button
                 android:id="@+id/umeng_common_rich_notification_cancel"
@@ -62,7 +62,7 @@
                 android:background="@drawable/umeng_common_gradient_red"
                 android:singleLine="true"
                 android:text="@string/umeng_common_action_cancel"
-                android:textSize="12sp" />
+                android:textSize="12sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -83,7 +83,7 @@
                 android:singleLine="true"
                 android:textColor="?android:attr/textColorPrimaryInverse"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/umeng_common_progress_text"
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
         </LinearLayout>
 
         <ProgressBar
@@ -101,7 +101,7 @@
             android:layout_height="12dp"
             android:layout_alignParentBottom="true"
             android:paddingBottom="8dp"
-            android:paddingRight="25dp" />
+            android:paddingRight="25dp"/>
     </RelativeLayout>
 
 </LinearLayout>

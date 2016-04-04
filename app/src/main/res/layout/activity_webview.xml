@@ -32,7 +32,7 @@
     android:orientation="vertical"
     tools:context="com.camnter.easygank.views.EasyWebViewActivity">
 
-    <include layout="@layout/include_toolbar" />
+    <include layout="@layout/include_toolbar"/>
 
     <ProgressBar
         android:id="@+id/webview_pb"
@@ -41,14 +41,13 @@
         android:layout_height="2dp"
         android:max="100"
         android:progress="0"
-        android:progressDrawable="@drawable/layerlist_webview_progress" />
+        android:progressDrawable="@drawable/layerlist_webview_progress"/>
 
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layerType="hardware" />
-
+        android:layerType="hardware"/>
 
 </LinearLayout>
 

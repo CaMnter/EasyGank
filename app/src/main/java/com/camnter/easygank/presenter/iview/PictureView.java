@@ -25,7 +25,6 @@
 package com.camnter.easygank.presenter.iview;
 
 import android.net.Uri;
-
 import com.camnter.easygank.core.mvp.MvpView;
 
 /**
@@ -48,5 +47,4 @@ public interface PictureView extends MvpView {
      * @param uri uri
      */
     void onShare(Uri uri);
-
 }

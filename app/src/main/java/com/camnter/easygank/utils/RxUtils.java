@@ -40,9 +40,11 @@ public class RxUtils {
      */
     private static Observable.Transformer ioToMainThreadSchedulerTransformer;
 
+
     static {
         ioToMainThreadSchedulerTransformer = createIOToMainThreadScheduler();
     }
+
 
     /**
      * Get {@link rx.Observable.Transformer} that transforms the source observable to subscribe in
@@ -55,13 +57,14 @@ public class RxUtils {
     @SuppressWarnings("unchecked")
     private static <T> Observable.Transformer<T, T> createIOToMainThreadScheduler() {
         return tObservable -> tObservable.subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.computation()) // TODO: remove when https://github.com/square/okhttp/issues/1592 is fixed
-                .observeOn(AndroidSchedulers.mainThread());
+                                         .unsubscribeOn(
+                                                 Schedulers.computation()) // TODO: remove when https://github.com/square/okhttp/issues/1592 is fixed
+                                         .observeOn(AndroidSchedulers.mainThread());
     }
+
 
     @SuppressWarnings("unchecked")
     public static <T> Observable.Transformer<T, T> applyIOToMainThreadSchedulers() {
         return ioToMainThreadSchedulerTransformer;
     }
-
 }

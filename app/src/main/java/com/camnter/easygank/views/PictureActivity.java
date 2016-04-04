@@ -39,7 +39,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
-
+import butterknife.Bind;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
@@ -57,35 +57,35 @@ import com.camnter.easygank.utils.ShareUtils;
 import com.camnter.easygank.utils.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
 
-import butterknife.Bind;
-
 /**
  * Description：PictureActivity
  * Created by：CaMnter
  * Time：2016-01-11 19:25
  */
-public class PictureActivity extends BaseToolbarActivity implements PictureView, View.OnLongClickListener {
+public class PictureActivity extends BaseToolbarActivity
+        implements PictureView, View.OnLongClickListener {
 
     private static final String EXTRA_URL = "com.camnter.easygank.EXTRA_URL";
     private static final String EXTRA_TITLE = "com.camnter.easygank.EXTRA_TITLE";
 
     private static final String SHARED_ELEMENT_NAME = "PictureActivity";
 
-    @Bind(R.id.picture_iv)
-    ImageView pictureIV;
-
+    @Bind(R.id.picture_iv) ImageView pictureIV;
 
     private PicturePresenter presenter;
 
     private GlideBitmapDrawable glideBitmapDrawable;
 
+
     public static void startActivity(Context context, String url, String title) {
         context.startActivity(createIntent(context, url, title));
     }
 
+
     public static void startActivityByActivityOptionsCompat(Activity activity, String url, String title, View view) {
         Intent intent = createIntent(activity, url, title);
-        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(view, view.getWidth() / 2, view.getHeight() / 2, view.getWidth(), view.getHeight());
+        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(
+                view, view.getWidth() / 2, view.getHeight() / 2, view.getWidth(), view.getHeight());
         try {
             ActivityCompat.startActivity(activity, intent, activityOptionsCompat.toBundle());
         } catch (IllegalArgumentException e) {
@@ -94,6 +94,7 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView,
         }
     }
 
+
     private static Intent createIntent(Context context, String url, String title) {
         Intent intent = new Intent(context, PictureActivity.class);
         intent.putExtra(EXTRA_URL, url);
@@ -101,85 +102,87 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView,
         return intent;
     }
 
+
     /**
      * Fill in layout id
      *
      * @return layout id
      */
-    @Override
-    protected int getLayoutId() {
+    @Override protected int getLayoutId() {
         return R.layout.activity_picture;
     }
+
 
     /**
      * Initialize the view in the layout
      *
      * @param savedInstanceState savedInstanceState
      */
-    @Override
-    protected void initViews(Bundle savedInstanceState) {
+    @Override protected void initViews(Bundle savedInstanceState) {
         this.pictureIV = this.findView(R.id.picture_iv);
         ViewCompat.setTransitionName(this.pictureIV, SHARED_ELEMENT_NAME);
     }
 
+
     /**
      * Initialize the View of the listener
      */
-    @Override
-    protected void initListeners() {
+    @Override protected void initListeners() {
         this.pictureIV.setOnLongClickListener(this);
     }
+
 
     /**
      * Initialize the Activity data
      */
-    @Override
-    protected void initData() {
+    @Override protected void initData() {
         this.showBack();
         this.setTitle(this.getUrlTitle());
         Glide.with(this)
-                .load(this.getUrl())
-                .listener(new RequestListener<String, GlideDrawable>() {
-                    @Override
-                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                        return false;
-                    }
+             .load(this.getUrl())
+             .listener(new RequestListener<String, GlideDrawable>() {
+                 @Override
+                 public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                     return false;
+                 }
 
-                    @Override
-                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                        // 加载完成了
-                        PictureActivity.this.glideBitmapDrawable = (GlideBitmapDrawable) resource;
-                        return false;
-                    }
-                })
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .crossFade()
-                .into(this.pictureIV)
-                .getSize((width, height) -> {
-                    if (!PictureActivity.this.pictureIV.isShown()) {
-                        PictureActivity.this.pictureIV.setVisibility(View.VISIBLE);
-                    }
-                });
+
+                 @Override
+                 public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                     // 加载完成了
+                     PictureActivity.this.glideBitmapDrawable = (GlideBitmapDrawable) resource;
+                     return false;
+                 }
+             })
+             .diskCacheStrategy(DiskCacheStrategy.ALL)
+             .crossFade()
+             .into(this.pictureIV)
+             .getSize((width, height) -> {
+                 if (!PictureActivity.this.pictureIV.isShown()) {
+                     PictureActivity.this.pictureIV.setVisibility(View.VISIBLE);
+                 }
+             });
 
         this.presenter = new PicturePresenter();
         this.presenter.attachView(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.menu_picture, menu);
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_picture_download:
                 this.download();
                 return true;
             case R.id.menu_picture_copy:
                 DeviceUtils.copy2Clipboard(this, this.getUrl());
-                Snackbar.make(this.pictureIV, this.getString(R.string.common_copy_success), Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(this.pictureIV, this.getString(R.string.common_copy_success),
+                        Snackbar.LENGTH_SHORT).show();
                 return true;
             case R.id.menu_picture_share:
                 this.download();
@@ -188,17 +191,19 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView,
         return super.onOptionsItemSelected(item);
     }
 
+
     private String getUrl() {
         return IntentUtils.getStringExtra(this.getIntent(), EXTRA_URL);
     }
+
 
     private String getUrlTitle() {
         return IntentUtils.getStringExtra(this.getIntent(), EXTRA_TITLE);
     }
 
-    @Override
-    protected void onDestroy() {
-        if(this.glideBitmapDrawable!=null){
+
+    @Override protected void onDestroy() {
+        if (this.glideBitmapDrawable != null) {
             this.glideBitmapDrawable.setCallback(null);
             this.glideBitmapDrawable = null;
         }
@@ -206,43 +211,48 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView,
         super.onDestroy();
     }
 
+
     /**
      * 下载成功
      *
      * @param path path
      */
-    @Override
-    public void onDownloadSuccess(String path) {
+    @Override public void onDownloadSuccess(String path) {
         ToastUtils.show(this, path, Toast.LENGTH_SHORT);
     }
+
 
     /**
      * 分享
      *
      * @param uri uri
      */
-    @Override
-    public void onShare(Uri uri) {
+    @Override public void onShare(Uri uri) {
         ShareUtils.shareImage(this, uri, "分享妹子");
     }
+
 
     /**
      * 发生错误
      *
      * @param e e
      */
-    @Override
-    public void onFailure(Throwable e) {
-        Snackbar.make(this.pictureIV, this.getString(R.string.common_network_error), Snackbar.LENGTH_LONG).show();
+    @Override public void onFailure(Throwable e) {
+        Snackbar.make(this.pictureIV, this.getString(R.string.common_network_error),
+                Snackbar.LENGTH_LONG).show();
     }
+
 
     public void download() {
         if (this.glideBitmapDrawable != null) {
-            this.presenter.downloadPicture(this.glideBitmapDrawable, this, EasyApplication.getInstance());
+            this.presenter.downloadPicture(this.glideBitmapDrawable, this,
+                    EasyApplication.getInstance());
         } else {
-            Snackbar.make(this.pictureIV, this.getString(R.string.picture_loading), Snackbar.LENGTH_LONG).show();
+            Snackbar.make(this.pictureIV, this.getString(R.string.picture_loading),
+                    Snackbar.LENGTH_LONG).show();
         }
     }
+
 
     /**
      * Called when a view has been clicked and held.
@@ -250,24 +260,25 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView,
      * @param v The view that was clicked and held.
      * @return true if the callback consumed the long click, false otherwise.
      */
-    @Override
-    public boolean onLongClick(View v) {
+    @Override public boolean onLongClick(View v) {
         switch (v.getId()) {
             case R.id.picture_iv:
-                new AlertDialog.Builder(PictureActivity.this)
-                        .setMessage(getString(R.string.picture_download))
-                        .setNegativeButton(android.R.string.cancel,
-                                (dialog, which) -> dialog.dismiss())
-                        .setPositiveButton(android.R.string.ok,
-                                (dialog, which) -> {
-                                    this.download();
-                                    dialog.dismiss();
-                                })
-                        .show();
+                new AlertDialog.Builder(PictureActivity.this).setMessage(
+                        getString(R.string.picture_download))
+                                                             .setNegativeButton(
+                                                                     android.R.string.cancel,
+                                                                     (dialog, which) -> dialog.dismiss())
+                                                             .setPositiveButton(android.R.string.ok,
+                                                                     (dialog, which) -> {
+                                                                         this.download();
+                                                                         dialog.dismiss();
+                                                                     })
+                                                             .show();
                 return true;
         }
         return false;
     }
+
 
     /*********
      * Umeng *
@@ -277,6 +288,7 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView,
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
 
     public void onPause() {
         super.onPause();

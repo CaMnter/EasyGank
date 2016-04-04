@@ -39,8 +39,8 @@ public class MainActivityEvent extends RxEvent {
     public static final int ON_GET_DAILY_SUCCESS = 2064;
     public static final int ON_GET_DAILY_DETAIL_SUCCESS = 2064;
 
+
     public MainActivityEvent(int type) {
         super(type);
     }
-
 }

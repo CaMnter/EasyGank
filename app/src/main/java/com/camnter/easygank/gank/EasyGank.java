@@ -27,9 +27,7 @@ package com.camnter.easygank.gank;
 import com.camnter.easygank.EasyApplication;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Response;
-
 import java.util.concurrent.TimeUnit;
-
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
@@ -45,10 +43,12 @@ public class EasyGank {
 
     private GankService gankService;
 
+
     public static EasyGank getInstance() {
         if (ourInstance == null) ourInstance = new EasyGank();
         return ourInstance;
     }
+
 
     private EasyGank() {
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -65,19 +65,18 @@ public class EasyGank {
             });
         }
 
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(GankApi.BASE_URL)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(EasyApplication.getInstance().gson))
-                .client(okHttpClient)
-                .build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(GankApi.BASE_URL)
+                                                  .addCallAdapterFactory(
+                                                          RxJavaCallAdapterFactory.create())
+                                                  .addConverterFactory(GsonConverterFactory.create(
+                                                          EasyApplication.getInstance().gson))
+                                                  .client(okHttpClient)
+                                                  .build();
         this.gankService = retrofit.create(GankService.class);
     }
+
 
     public GankService getGankService() {
         return gankService;
     }
-
-
 }

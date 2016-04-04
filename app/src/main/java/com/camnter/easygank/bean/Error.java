@@ -34,10 +34,7 @@ import com.google.gson.annotations.SerializedName;
 public class Error {
 
     // 每个请求都有error数据
-    @SerializedName("error")
-    public Boolean error;
+    @SerializedName("error") public Boolean error;
 
-    @SerializedName("msg")
-    public String msg;
-
+    @SerializedName("msg") public String msg;
 }

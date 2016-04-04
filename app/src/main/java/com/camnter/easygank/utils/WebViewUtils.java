@@ -30,7 +30,6 @@ import android.os.Build;
 import android.util.Base64;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-
 import java.io.InputStream;
 
 /**
@@ -74,5 +73,4 @@ public class WebViewUtils {
             e.printStackTrace();
         }
     }
-
 }

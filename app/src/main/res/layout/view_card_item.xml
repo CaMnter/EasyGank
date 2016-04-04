@@ -31,4 +31,4 @@
     android:gravity="start|top"
     android:lineSpacingExtra="4dp"
     android:textColor="@color/common_title_tv"
-    android:textSize="@dimen/card_item_title_tv" />
+    android:textSize="@dimen/card_item_title_tv"/>

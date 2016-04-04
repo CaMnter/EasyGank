@@ -23,6 +23,7 @@ package com.camnter.easygank.utils.rx;
 public class RxEvent {
     public int type;
 
+
     public RxEvent(int type) {
         this.type = type;
     }

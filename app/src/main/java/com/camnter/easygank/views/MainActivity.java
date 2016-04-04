@@ -35,7 +35,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
+import butterknife.Bind;
 import com.camnter.easygank.R;
 import com.camnter.easygank.adapter.MainAdapter;
 import com.camnter.easygank.bean.BaseGankData;
@@ -51,16 +51,13 @@ import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
 import com.camnter.easyrecyclerview.widget.decorator.EasyBorderDividerItemDecoration;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+public class MainActivity extends BaseDrawerLayoutActivity
+        implements MainView, MainAdapter.OnClickListener {
 
-public class MainActivity extends BaseDrawerLayoutActivity implements MainView, MainAdapter.OnClickListener {
-
-    @Bind(R.id.main_rv)
-    EasyRecyclerView mainRv;
+    @Bind(R.id.main_rv) EasyRecyclerView mainRv;
 
     private EasyBorderDividerItemDecoration dataDecoration;
     private EasyBorderDividerItemDecoration welfareDecoration;
@@ -74,29 +71,30 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
 
     private int gankType;
 
+
     /**
      * Fill in layout id
      *
      * @return layout id
      */
-    @Override
-    protected int getLayoutId() {
+    @Override protected int getLayoutId() {
         return R.layout.activity_main;
     }
+
 
     /**
      * 刷新的时候
      */
-    @Override
-    public void onSwipeRefresh() {
+    @Override public void onSwipeRefresh() {
         this.refreshData(this.gankType);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 
     /**
      * @param item The menu item that was selected.
@@ -104,14 +102,14 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
      * proceed, true to consume it here.
      * @see #onCreateOptionsMenu
      */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_main_about:
                 AboutActivity.startActivity(this);
                 return true;
             case R.id.menu_main_home_page:
-                EasyWebViewActivity.toUrl(this, GankApi.GANK_HOME_PAGE_URL, GankApi.GANK_HOME_PAGE_NAME);
+                EasyWebViewActivity.toUrl(this, GankApi.GANK_HOME_PAGE_URL,
+                        GankApi.GANK_HOME_PAGE_NAME);
                 return true;
             case R.id.menu_main_top_github:
                 EasyWebViewActivity.toUrl(this, Constant.GIHUB_TRENDING, Constant.GIHUB_TRENDING);
@@ -120,48 +118,46 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
         return super.onOptionsItemSelected(item);
     }
 
+
     /**
      * Initialize the view in the layout
      *
      * @param savedInstanceState savedInstanceState
      */
-    @Override
-    protected void initViews(Bundle savedInstanceState) {
+    @Override protected void initViews(Bundle savedInstanceState) {
         this.dataDecoration = new EasyBorderDividerItemDecoration(
                 this.getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height),
-                this.getResources().getDimensionPixelOffset(R.dimen.data_border_padding_infra_spans)
-        );
+                this.getResources()
+                    .getDimensionPixelOffset(R.dimen.data_border_padding_infra_spans));
         this.welfareDecoration = new EasyBorderDividerItemDecoration(
                 this.getResources().getDimensionPixelOffset(R.dimen.welfare_border_divider_height),
-                this.getResources().getDimensionPixelOffset(R.dimen.welfare_border_padding_infra_spans)
-        );
+                this.getResources()
+                    .getDimensionPixelOffset(R.dimen.welfare_border_padding_infra_spans));
         this.mainRv.addItemDecoration(this.dataDecoration);
         this.mLinearLayoutManager = (LinearLayoutManager) this.mainRv.getLayoutManager();
-        this.mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        this.mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL);
         this.mActionBarHelper.setDrawerTitle(this.getResources().getString(R.string.app_menu));
 
         UmengUpdateAgent.update(this);
     }
 
+
     /**
      * Initialize the View of the listener
      */
-    @Override
-    protected void initListeners() {
+    @Override protected void initListeners() {
         this.mainRv.addOnScrollListener(this.getRecyclerViewOnScrollListener());
         this.mainAdapter.setOnItemClickListener((view, position) -> {
             Object o = MainActivity.this.mainAdapter.getItem(position);
             if (o instanceof BaseGankData) {
                 BaseGankData baseGankData = (BaseGankData) o;
                 if (GankTypeDict.urlType2TypeDict.get(baseGankData.type) == GankType.welfare) {
-                    PictureActivity.startActivityByActivityOptionsCompat(MainActivity.this, baseGankData.url, baseGankData.desc, view);
+                    PictureActivity.startActivityByActivityOptionsCompat(MainActivity.this,
+                            baseGankData.url, baseGankData.desc, view);
                 } else {
-                    EasyWebViewActivity.toUrl(
-                            MainActivity.this,
-                            baseGankData.url,
-                            baseGankData.desc,
-                            baseGankData.type
-                    );
+                    EasyWebViewActivity.toUrl(MainActivity.this, baseGankData.url,
+                            baseGankData.desc, baseGankData.type);
                 }
             } else if (o instanceof GankDaily) {
                 GankDaily daily = (GankDaily) o;
@@ -169,6 +165,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
             }
         });
     }
+
 
     /**
      * LinearLayoutManager 时的滚动监听
@@ -179,8 +176,8 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
         return new RecyclerView.OnScrollListener() {
             private boolean toLast = false;
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+            @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 /*
                  * dy 表示y轴滑动方向
                  * dx 表示x轴滑动方向
@@ -194,15 +191,16 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
                 }
             }
 
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+            @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
                 if (layoutManager instanceof LinearLayoutManager) {
                     LinearLayoutManager manager = (LinearLayoutManager) layoutManager;
                     // 不滚动
                     if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                         // 最后完成显示的item的position 正好是 最后一条数据的index
-                        if (toLast && manager.findLastCompletelyVisibleItemPosition() == (manager.getItemCount() - 1)) {
+                        if (toLast && manager.findLastCompletelyVisibleItemPosition() ==
+                                (manager.getItemCount() - 1)) {
                             MainActivity.this.loadMoreRequest();
                         }
                     }
@@ -222,10 +220,10 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
                         }
                     }
                 }
-
             }
         };
     }
+
 
     /**
      * 请求加载更多
@@ -233,7 +231,8 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
     private void loadMoreRequest() {
         // 没数据了
         if (this.emptyCount >= EMPTY_LIMIT) {
-            this.showToast(MainActivity.this.getString(R.string.main_empty_data), Toast.LENGTH_LONG);
+            this.showToast(MainActivity.this.getString(R.string.main_empty_data),
+                    Toast.LENGTH_LONG);
             return;
         }
 
@@ -246,6 +245,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
             this.refresh(true);
         }
     }
+
 
     /**
      * 加载更多
@@ -269,11 +269,11 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
         }
     }
 
+
     /**
      * Initialize the Activity data
      */
-    @Override
-    protected void initData() {
+    @Override protected void initData() {
         this.presenter = new MainPresenter();
         this.presenter.attachView(this);
         this.gankType = GankType.daily;
@@ -284,6 +284,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
 
         this.refreshData(this.gankType);
     }
+
 
     /**
      * 刷新 or 下拉刷新
@@ -307,14 +308,14 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
         }
     }
 
+
     /**
      * 查询每日干货成功
      *
      * @param dailyData dailyData
-     * @param refresh   是否刷新
+     * @param refresh 是否刷新
      */
-    @Override
-    public void onGetDailySuccess(List<GankDaily> dailyData, boolean refresh) {
+    @Override public void onGetDailySuccess(List<GankDaily> dailyData, boolean refresh) {
         if (refresh) {
             this.emptyCount = 0;
             this.mainAdapter.clear();
@@ -327,14 +328,14 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
         if (dailyData.size() == 0) this.emptyCount++;
     }
 
+
     /**
      * 查询 ( Android、iOS、前端、拓展资源、福利、休息视频 ) 成功
      *
-     * @param data    data
+     * @param data data
      * @param refresh 是否刷新
      */
-    @Override
-    public void onGetDataSuccess(List<BaseGankData> data, boolean refresh) {
+    @Override public void onGetDataSuccess(List<BaseGankData> data, boolean refresh) {
         if (refresh) {
             this.emptyCount = 0;
             this.mainAdapter.clear();
@@ -347,13 +348,13 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
         if (data.size() == 0) this.emptyCount++;
     }
 
+
     /**
      * 切换数据源成功
      *
      * @param type type
      */
-    @Override
-    public void onSwitchSuccess(int type) {
+    @Override public void onSwitchSuccess(int type) {
         this.emptyCount = 0;
         this.mainAdapter.setType(type);
         this.mainAdapter.clear();
@@ -381,14 +382,14 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
         }
     }
 
+
     /**
      * 获取每日详情数据
      *
-     * @param title  title
+     * @param title title
      * @param detail detail
      */
-    @Override
-    public void getDailyDetail(String title, ArrayList<ArrayList<BaseGankData>> detail) {
+    @Override public void getDailyDetail(String title, ArrayList<ArrayList<BaseGankData>> detail) {
         DailyDetailActivity.startActivity(this, title, detail);
     }
 
@@ -398,23 +399,24 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
         this.mainRv.removeItemDecoration(this.welfareDecoration);
     }
 
+
     /**
      * 发生错误
      *
      * @param e e
      */
-    @Override
-    public void onFailure(Throwable e) {
+    @Override public void onFailure(Throwable e) {
         this.refresh(false);
         this.setRefreshStatus(true);
         Snackbar.make(this.mainRv, R.string.main_load_error, Snackbar.LENGTH_SHORT).show();
     }
 
-    @Override
-    protected void onDestroy() {
+
+    @Override protected void onDestroy() {
         this.presenter.detachView();
         super.onDestroy();
     }
+
 
     /**
      * Fill in NavigationView.OnNavigationItemSelectedListener
@@ -426,15 +428,16 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
         return item -> MainActivity.this.menuItemChecked(item.getItemId());
     }
 
+
     /**
      * Fill in NavigationView menu ids
      *
      * @return int[]
      */
-    @Override
-    protected int[] getMenuItemIds() {
+    @Override protected int[] getMenuItemIds() {
         return GankTypeDict.menuIds;
     }
+
 
     /**
      * Fill in your menu operation on click
@@ -444,11 +447,12 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
      *
      * @param now Now you choose the item
      */
-    @Override
-    protected void onMenuItemOnClick(MenuItem now) {
-        if (GankTypeDict.menuId2TypeDict.indexOfKey(now.getItemId()) >= 0)
+    @Override protected void onMenuItemOnClick(MenuItem now) {
+        if (GankTypeDict.menuId2TypeDict.indexOfKey(now.getItemId()) >= 0) {
             this.changeGankType(GankTypeDict.menuId2TypeDict.get(now.getItemId()));
+        }
     }
+
 
     /**
      * 走到这，就不会有两次点击都一样的情况
@@ -461,10 +465,11 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
         this.presenter.switchType(gankType);
     }
 
-    @Override
-    public void onClickPicture(String url, String title, View view) {
+
+    @Override public void onClickPicture(String url, String title, View view) {
         PictureActivity.startActivityByActivityOptionsCompat(this, url, title, view);
     }
+
 
     /*********
      * Umeng *
@@ -474,6 +479,7 @@ public class MainActivity extends BaseDrawerLayoutActivity implements MainView, 
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
 
     public void onPause() {
         super.onPause();

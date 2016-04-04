@@ -32,7 +32,7 @@
     android:orientation="vertical"
     tools:context="com.camnter.easygank.views.AboutActivity">
 
-    <include layout="@layout/include_toolbar" />
+    <include layout="@layout/include_toolbar"/>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                     android:id="@+id/about_avatar_iv"
                     android:layout_width="66dp"
                     android:layout_height="66dp"
-                    android:src="@mipmap/ic_camnter" />
+                    android:src="@mipmap/ic_camnter"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -78,7 +78,7 @@
                     android:textColor="@color/about_title"
                     android:textSize="@dimen/about_title"
                     android:textStyle="bold"
-                    android:typeface="serif" />
+                    android:typeface="serif"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
                     android:autoLink="web"
                     android:text="@string/about_github"
                     android:textColor="@color/about_sign"
-                    android:textSize="@dimen/about_sign" />
+                    android:textSize="@dimen/about_sign"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -101,10 +101,9 @@
                     android:layout_marginTop="12dp"
                     android:text="@string/about_sign"
                     android:textColor="@color/about_sign"
-                    android:textSize="@dimen/about_sign" />
+                    android:textSize="@dimen/about_sign"/>
 
             </RelativeLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -121,7 +120,7 @@
                     android:textColor="@color/about_title"
                     android:textSize="@dimen/about_title"
                     android:textStyle="bold"
-                    android:typeface="serif" />
+                    android:typeface="serif"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -132,8 +131,7 @@
                     android:text="@string/about_project_introduce_content"
                     android:textColor="@color/about_content"
                     android:textIsSelectable="true"
-                    android:textSize="@dimen/about_content" />
-
+                    android:textSize="@dimen/about_content"/>
 
             </LinearLayout>
 

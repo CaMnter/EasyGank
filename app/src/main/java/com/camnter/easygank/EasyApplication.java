@@ -27,7 +27,6 @@ package com.camnter.easygank;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
-
 import com.anupcowkur.reservoir.Reservoir;
 import com.camnter.easygank.gank.GankApi;
 import com.google.gson.Gson;
@@ -48,18 +47,19 @@ public class EasyApplication extends Application {
     public static final long ONE_MB = ONE_KB * 1024L;
     public static final long CACHE_DATA_MAX_SIZE = ONE_MB * 3L;
 
+
     public static EasyApplication getInstance() {
         return ourInstance;
     }
 
-    @Override
-    protected void attachBaseContext(Context base) {
+
+    @Override protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
 
-    @Override
-    public void onCreate() {
+
+    @Override public void onCreate() {
         super.onCreate();
         ourInstance = this;
         Logger.init();
@@ -67,11 +67,11 @@ public class EasyApplication extends Application {
         this.initReservoir();
     }
 
+
     private void initGson() {
-        this.gson = new GsonBuilder()
-                .setDateFormat(GankApi.GANK_DATA_FORMAT)
-                .create();
+        this.gson = new GsonBuilder().setDateFormat(GankApi.GANK_DATA_FORMAT).create();
     }
+
 
     private void initReservoir() {
         try {
@@ -81,5 +81,4 @@ public class EasyApplication extends Application {
             e.printStackTrace();
         }
     }
-
 }

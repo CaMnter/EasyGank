@@ -25,7 +25,6 @@
 package com.camnter.easygank.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -36,8 +35,6 @@ import java.util.ArrayList;
  */
 public class GankData extends Error implements Serializable {
 
-    @SerializedName("results")
-    public ArrayList<BaseGankData> results;
-
+    @SerializedName("results") public ArrayList<BaseGankData> results;
 }
 

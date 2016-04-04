@@ -25,7 +25,6 @@
 package com.camnter.easygank.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -36,37 +35,26 @@ import java.util.ArrayList;
  */
 public class GankDaily extends Error implements Serializable {
 
-    @SerializedName("results")
-    public DailyResults results;
+    @SerializedName("results") public DailyResults results;
 
-    @SerializedName("category")
-    public ArrayList<String> category;
+    @SerializedName("category") public ArrayList<String> category;
 
     public class DailyResults {
 
-        @SerializedName("福利")
-        public ArrayList<BaseGankData> welfareData;
+        @SerializedName("福利") public ArrayList<BaseGankData> welfareData;
 
-        @SerializedName("Android")
-        public ArrayList<BaseGankData> androidData;
+        @SerializedName("Android") public ArrayList<BaseGankData> androidData;
 
-        @SerializedName("iOS")
-        public ArrayList<BaseGankData> iosData;
+        @SerializedName("iOS") public ArrayList<BaseGankData> iosData;
 
-        @SerializedName("前端")
-        public ArrayList<BaseGankData> jsData;
+        @SerializedName("前端") public ArrayList<BaseGankData> jsData;
 
-        @SerializedName("休息视频")
-        public ArrayList<BaseGankData> videoData;
+        @SerializedName("休息视频") public ArrayList<BaseGankData> videoData;
 
-        @SerializedName("拓展资源")
-        public ArrayList<BaseGankData> resourcesData;
+        @SerializedName("拓展资源") public ArrayList<BaseGankData> resourcesData;
 
-        @SerializedName("App")
-        public ArrayList<BaseGankData> appData;
+        @SerializedName("App") public ArrayList<BaseGankData> appData;
 
-        @SerializedName("瞎推荐")
-        public ArrayList<BaseGankData> recommendData;
-
+        @SerializedName("瞎推荐") public ArrayList<BaseGankData> recommendData;
     }
 }

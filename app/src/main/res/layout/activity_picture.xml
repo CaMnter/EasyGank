@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/app_bar_layout"
-        layout="@layout/include_toolbar" />
+        layout="@layout/include_toolbar"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,9 +19,8 @@
             android:id="@+id/picture_iv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"/>
 
     </RelativeLayout>
-
 
 </RelativeLayout>

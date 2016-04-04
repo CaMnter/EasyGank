@@ -25,7 +25,6 @@
 package com.camnter.easygank.model;
 
 import com.camnter.easygank.bean.GankData;
-
 import rx.Observable;
 
 /**

@@ -25,7 +25,6 @@
 package com.camnter.easygank.model;
 
 import com.camnter.easygank.bean.GankDaily;
-
 import rx.Observable;
 
 /**
@@ -37,9 +36,9 @@ public interface IDailyModel {
     /**
      * 查询每日数据
      *
-     * @param year  year
+     * @param year year
      * @param month month
-     * @param day   day
+     * @param day day
      * @return Observable<GankDaily>
      */
     Observable<GankDaily> getDaily(int year, int month, int day);

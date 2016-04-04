@@ -29,7 +29,6 @@ import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.view.View;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.camnter.easygank.R;
@@ -45,11 +44,12 @@ public class GlideUtils {
 
     private static final String TAG = "GlideUtils";
 
+
     /**
      * glide加载图片
      *
      * @param view view
-     * @param url  url
+     * @param url url
      */
     public static void display(ImageView view, String url) {
         displayUrl(view, url, R.mipmap.img_default_gray);
@@ -59,11 +59,12 @@ public class GlideUtils {
     /**
      * glide加载图片
      *
-     * @param view         view
-     * @param url          url
+     * @param view view
+     * @param url url
      * @param defaultImage defaultImage
      */
-    private static void displayUrl(final ImageView view, String url, @DrawableRes int defaultImage) {
+    private static void displayUrl(final ImageView view, String url,
+                                   @DrawableRes int defaultImage) {
         // 不能崩
         if (view == null) {
             Logger.e("GlideUtils -> display -> imageView is null");
@@ -79,21 +80,22 @@ public class GlideUtils {
 
         try {
             Glide.with(context)
-                    .load(url)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(defaultImage)
-                    .crossFade()
-                    .centerCrop()
-                    .into(view)
-                    .getSize((width, height) -> {
-                        if (!view.isShown()) {
-                            view.setVisibility(View.VISIBLE);
-                        }
-                    });
+                 .load(url)
+                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                 .placeholder(defaultImage)
+                 .crossFade()
+                 .centerCrop()
+                 .into(view)
+                 .getSize((width, height) -> {
+                     if (!view.isShown()) {
+                         view.setVisibility(View.VISIBLE);
+                     }
+                 });
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     public static void displayNative(final ImageView view, @DrawableRes int resId) {
         // 不能崩
@@ -111,21 +113,21 @@ public class GlideUtils {
 
         try {
             Glide.with(context)
-                    .load(resId)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .crossFade()
-                    .centerCrop()
-                    .into(view)
-                    .getSize((width, height) -> {
-                        if (!view.isShown()) {
-                            view.setVisibility(View.VISIBLE);
-                        }
-                    });
+                 .load(resId)
+                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                 .crossFade()
+                 .centerCrop()
+                 .into(view)
+                 .getSize((width, height) -> {
+                     if (!view.isShown()) {
+                         view.setVisibility(View.VISIBLE);
+                     }
+                 });
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
 
     public static void displayCircleHeader(ImageView view, @DrawableRes int res) {
         // 不能崩
@@ -143,15 +145,14 @@ public class GlideUtils {
 
         try {
             Glide.with(context)
-                    .load(res)
-                    .centerCrop()
-                    .placeholder(R.mipmap.img_default_gray)
-                    .bitmapTransform(new GlideCircleTransform(context))
-                    .crossFade()
-                    .into(view);
+                 .load(res)
+                 .centerCrop()
+                 .placeholder(R.mipmap.img_default_gray)
+                 .bitmapTransform(new GlideCircleTransform(context))
+                 .crossFade()
+                 .into(view);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

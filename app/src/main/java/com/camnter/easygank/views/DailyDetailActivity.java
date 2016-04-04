@@ -29,7 +29,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
+import butterknife.Bind;
 import com.camnter.easygank.R;
 import com.camnter.easygank.adapter.DailyDetailAdapter;
 import com.camnter.easygank.bean.BaseGankData;
@@ -38,24 +38,22 @@ import com.camnter.easygank.utils.IntentUtils;
 import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
 import com.camnter.easyrecyclerview.widget.decorator.EasyBorderDividerItemDecoration;
 import com.umeng.analytics.MobclickAgent;
-
 import java.util.ArrayList;
-
-import butterknife.Bind;
 
 /**
  * Description：DailyDetailActivity
  * Created by：CaMnter
  * Time：2016-01-09 19:01
  */
-public class DailyDetailActivity extends BaseToolbarActivity implements DailyDetailAdapter.onCardItemClickListener {
+public class DailyDetailActivity extends BaseToolbarActivity
+        implements DailyDetailAdapter.onCardItemClickListener {
 
-    @Bind(R.id.daily_detail_rv)
-    EasyRecyclerView dailydailyDetailRv;
+    @Bind(R.id.daily_detail_rv) EasyRecyclerView dailydailyDetailRv;
     private DailyDetailAdapter detailAdapter;
 
     private static final String EXTRA_DETAIL = "com.camnter.easygank.EXTRA_DETAIL";
     private static final String EXTRA_TITLE = "com.camnter.easygank.EXTRA_TITLE";
+
 
     public static void startActivity(Context context, String title, ArrayList<ArrayList<BaseGankData>> detail) {
         Intent intent = new Intent(context, DailyDetailActivity.class);
@@ -64,28 +62,27 @@ public class DailyDetailActivity extends BaseToolbarActivity implements DailyDet
         context.startActivity(intent);
     }
 
+
     /**
      * Fill in layout id
      *
      * @return layout id
      */
-    @Override
-    protected int getLayoutId() {
+    @Override protected int getLayoutId() {
         return R.layout.activity_daily_detail;
     }
+
 
     /**
      * Initialize the view in the layout
      *
      * @param savedInstanceState savedInstanceState
      */
-    @SuppressLint("InflateParams")
-    @Override
-    protected void initViews(Bundle savedInstanceState) {
+    @SuppressLint("InflateParams") @Override protected void initViews(Bundle savedInstanceState) {
         EasyBorderDividerItemDecoration detailDecoration = new EasyBorderDividerItemDecoration(
                 this.getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height),
-                this.getResources().getDimensionPixelOffset(R.dimen.data_border_padding_infra_spans)
-        );
+                this.getResources()
+                    .getDimensionPixelOffset(R.dimen.data_border_padding_infra_spans));
         this.dailydailyDetailRv.addItemDecoration(detailDecoration);
         this.detailAdapter = new DailyDetailAdapter(this);
         this.detailAdapter.setOnCardItemClickListener(this);
@@ -94,41 +91,44 @@ public class DailyDetailActivity extends BaseToolbarActivity implements DailyDet
         this.setTitle(this.getDetailTitle());
     }
 
+
     /**
      * Initialize the View of the listener
      */
-    @Override
-    protected void initListeners() {
+    @Override protected void initListeners() {
 
     }
+
 
     /**
      * Initialize the Activity data
      */
-    @Override
-    protected void initData() {
+    @Override protected void initData() {
         this.detailAdapter.setList(this.getDetail());
         this.detailAdapter.notifyDataSetChanged();
     }
 
-    @SuppressWarnings("unchecked")
-    private ArrayList<ArrayList<BaseGankData>> getDetail() {
-        return (ArrayList<ArrayList<BaseGankData>>) IntentUtils.getSerializableExtra(this.getIntent(), EXTRA_DETAIL);
+
+    @SuppressWarnings("unchecked") private ArrayList<ArrayList<BaseGankData>> getDetail() {
+        return (ArrayList<ArrayList<BaseGankData>>) IntentUtils.getSerializableExtra(
+                this.getIntent(), EXTRA_DETAIL);
     }
+
 
     private String getDetailTitle() {
         return IntentUtils.getStringExtra(this.getIntent(), EXTRA_TITLE);
     }
 
-    @Override
-    public void onCardItemOnClick(String urlType, String title, String url) {
+
+    @Override public void onCardItemOnClick(String urlType, String title, String url) {
         EasyWebViewActivity.toUrl(this, url, title, urlType);
     }
 
-    @Override
-    public void onWelfareOnClick(String url, String title, View v) {
+
+    @Override public void onWelfareOnClick(String url, String title, View v) {
         PictureActivity.startActivityByActivityOptionsCompat(this, url, title, v);
     }
+
 
     /*********
      * Umeng *
@@ -138,6 +138,7 @@ public class DailyDetailActivity extends BaseToolbarActivity implements DailyDet
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
 
     public void onPause() {
         super.onPause();

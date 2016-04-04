@@ -55,5 +55,4 @@ public class GankApi {
     public static final int DEFAULT_DAILY_SIZE = 15;
 
     public static final String GANK_DATA_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
-
 }

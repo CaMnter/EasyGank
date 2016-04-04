@@ -36,7 +36,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.camnter.easygank.R;
 import com.camnter.easygank.bean.BaseGankData;
 import com.camnter.easygank.gank.GankType;
@@ -46,7 +45,6 @@ import com.camnter.easygank.utils.ResourcesUtils;
 import com.camnter.easygank.widget.RatioImageView;
 import com.camnter.easyrecyclerview.adapter.EasyRecyclerViewAdapter;
 import com.camnter.easyrecyclerview.holder.EasyRecyclerViewHolder;
-
 import java.util.List;
 
 /**
@@ -69,7 +67,6 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
 
     private static final int dividerColor = 0xffCCCCCC;
 
-
     private DailyDetailAdapter.onCardItemClickListener onCardItemClickListener;
 
 
@@ -80,24 +77,29 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
         this.initViaTextStyle(res);
     }
 
+
     private void initCardItemStyle(Resources res) {
         this.cardItemPadding = res.getDimensionPixelOffset(R.dimen.card_item_content_padding);
-        this.cardCategoryPaddingTopBottom = res.getDimensionPixelOffset(R.dimen.card_category_padding_top_bottom);
+        this.cardCategoryPaddingTopBottom = res.getDimensionPixelOffset(
+                R.dimen.card_category_padding_top_bottom);
         this.cardItemDivider = res.getDimensionPixelOffset(R.dimen.card_item_divider);
     }
+
 
     private void initViaTextStyle(Resources res) {
         int viaTextColor = ResourcesUtils.getColor(this.context, R.color.common_item_via);
         this.viaTextSize = res.getDimensionPixelSize(R.dimen.item_via_tv);
         this.viaModel = res.getString(R.string.common_via);
         this.viaModelKey = res.getString(R.string.common_via_key);
-        this.viaColorStateList = ResourcesUtils.createColorStateList(viaTextColor, viaTextColor, viaTextColor, viaTextColor);
+        this.viaColorStateList = ResourcesUtils.createColorStateList(viaTextColor, viaTextColor,
+                viaTextColor, viaTextColor);
     }
 
-    @Override
-    public int[] getItemLayouts() {
-        return new int[]{R.layout.item_daily_detail};
+
+    @Override public int[] getItemLayouts() {
+        return new int[] { R.layout.item_daily_detail };
     }
+
 
     @Override
     public void onBindRecycleViewHolder(EasyRecyclerViewHolder easyRecyclerViewHolder, int position) {
@@ -117,8 +119,10 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
                 RatioImageView welfareIV = this.createRatioImageView();
                 GlideUtils.display(welfareIV, baseGankData.url);
                 welfareIV.setOnClickListener(v -> {
-                    if (DailyDetailAdapter.this.onCardItemClickListener != null)
-                        DailyDetailAdapter.this.onCardItemClickListener.onWelfareOnClick(baseGankData.url, baseGankData.desc, v);
+                    if (DailyDetailAdapter.this.onCardItemClickListener != null) {
+                        DailyDetailAdapter.this.onCardItemClickListener.onWelfareOnClick(
+                                baseGankData.url, baseGankData.desc, v);
+                    }
                 });
                 detailLL.addView(welfareIV);
             } else {
@@ -128,51 +132,44 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
         }
     }
 
-    @Override
-    public int getRecycleViewItemType(int i) {
+
+    @Override public int getRecycleViewItemType(int i) {
         return 0;
     }
 
+
     private TextView createCardItemText(BaseGankData baseGankData) {
-        TextView itemText = (TextView) LayoutInflater.from(this.context).inflate(R.layout.view_card_item, null);
-        itemText.setPadding(
-                this.cardItemPadding,
-                this.cardItemPadding,
-                this.cardItemPadding,
-                this.cardItemPadding
-        );
+        TextView itemText = (TextView) LayoutInflater.from(this.context)
+                                                     .inflate(R.layout.view_card_item, null);
+        itemText.setPadding(this.cardItemPadding, this.cardItemPadding, this.cardItemPadding,
+                this.cardItemPadding);
         String content = baseGankData.desc.trim() +
                 "   " +
                 String.format(this.viaModel, baseGankData.who);
         SpannableStringBuilder ssb = new SpannableStringBuilder(content);
-        ssb.setSpan(new TextAppearanceSpan("serif", Typeface.ITALIC, this.viaTextSize, this.viaColorStateList, this.viaColorStateList),
-                content.indexOf(this.viaModelKey),
-                content.length(),
-                Spanned.SPAN_INCLUSIVE_INCLUSIVE
-        );
+        ssb.setSpan(new TextAppearanceSpan("serif", Typeface.ITALIC, this.viaTextSize,
+                        this.viaColorStateList, this.viaColorStateList), content.indexOf(this.viaModelKey),
+                content.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         itemText.setText(ssb);
         itemText.setTag(R.id.tag_card_item_url, baseGankData.url);
         itemText.setTag(R.id.tag_card_item_desc, baseGankData.desc.trim());
         itemText.setTag(R.id.tag_card_item_type, baseGankData.type);
         itemText.setOnClickListener(v -> {
-            if (DailyDetailAdapter.this.onCardItemClickListener != null)
+            if (DailyDetailAdapter.this.onCardItemClickListener != null) {
                 DailyDetailAdapter.this.onCardItemClickListener.onCardItemOnClick(
                         (String) v.getTag(R.id.tag_card_item_type),
                         (String) v.getTag(R.id.tag_card_item_desc),
-                        (String) v.getTag(R.id.tag_card_item_url)
-                );
+                        (String) v.getTag(R.id.tag_card_item_url));
+            }
         });
         return itemText;
     }
 
+
     private TextView createCardCategory(String urlType) {
         TextView categoryTV = new TextView(this.context);
-        categoryTV.setPadding(
-                this.cardItemPadding,
-                this.cardCategoryPaddingTopBottom,
-                this.cardItemPadding,
-                this.cardCategoryPaddingTopBottom
-        );
+        categoryTV.setPadding(this.cardItemPadding, this.cardCategoryPaddingTopBottom,
+                this.cardItemPadding, this.cardCategoryPaddingTopBottom);
         categoryTV.setText(urlType);
         categoryTV.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         categoryTV.setTextSize(20);
@@ -181,23 +178,26 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
         return categoryTV;
     }
 
+
     private View createDivider() {
         View divider = new View(this.context);
-        divider.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                this.cardItemDivider)
-        );
+        divider.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                this.cardItemDivider));
         divider.setBackgroundColor(dividerColor);
         return divider;
     }
 
+
     private RatioImageView createRatioImageView() {
-        return (RatioImageView) LayoutInflater.from(this.context).inflate(R.layout.view_card_radio_view, null);
+        return (RatioImageView) LayoutInflater.from(this.context)
+                                              .inflate(R.layout.view_card_radio_view, null);
     }
+
 
     public void setOnCardItemClickListener(DailyDetailAdapter.onCardItemClickListener onCardItemClickListener) {
         this.onCardItemClickListener = onCardItemClickListener;
     }
+
 
     public interface onCardItemClickListener {
 
@@ -205,5 +205,4 @@ public class DailyDetailAdapter extends EasyRecyclerViewAdapter {
 
         void onWelfareOnClick(String url, String title, View v);
     }
-
 }

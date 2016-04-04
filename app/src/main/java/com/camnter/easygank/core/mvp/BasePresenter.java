@@ -25,7 +25,6 @@
 package com.camnter.easygank.core.mvp;
 
 import com.camnter.easygank.data.DataManager;
-
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -45,32 +44,35 @@ public class BasePresenter<T extends MvpView> implements Presenter<T> {
     public DataManager mDataManager;
 
 
-    @Override
-    public void attachView(T mvpView) {
+    @Override public void attachView(T mvpView) {
         this.mMvpView = mvpView;
         this.mCompositeSubscription = new CompositeSubscription();
         this.mDataManager = DataManager.getInstance();
     }
 
-    @Override
-    public void detachView() {
+
+    @Override public void detachView() {
         this.mMvpView = null;
         this.mCompositeSubscription.unsubscribe();
         this.mCompositeSubscription = null;
         this.mDataManager = null;
     }
 
+
     public boolean isViewAttached() {
         return mMvpView != null;
     }
+
 
     public T getMvpView() {
         return mMvpView;
     }
 
+
     public void checkViewAttached() {
         if (!isViewAttached()) throw new MvpViewNotAttachedException();
     }
+
 
     public static class MvpViewNotAttachedException extends RuntimeException {
         public MvpViewNotAttachedException() {
@@ -78,5 +80,4 @@ public class BasePresenter<T extends MvpView> implements Presenter<T> {
                     " requesting data to the Presenter");
         }
     }
-
 }

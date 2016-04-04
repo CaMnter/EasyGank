@@ -15,7 +15,7 @@ public class ViewUtils {
      * Set view alpha
      * 设置透明度
      *
-     * @param view  view
+     * @param view view
      * @param alpha alpha value
      */
     public static void setAlpha(View view, int alpha) {
@@ -29,11 +29,13 @@ public class ViewUtils {
         }
     }
 
+
     /**
      * 根据Android系统版本，调用版本API中的设置View背景的方法
-     * According to the Android version, calls the Settings in the View background method of version API
+     * According to the Android version, calls the Settings in the View background method of version
+     * API
      *
-     * @param view     view
+     * @param view view
      * @param drawable drawable
      */
     public static void setViewBackgroundDrawable(View view, Drawable drawable) {
@@ -43,6 +45,7 @@ public class ViewUtils {
             view.setBackgroundDrawable(drawable);
         }
     }
+
 
     /**
      * 获取View在当前窗口内的绝对坐标
@@ -57,6 +60,7 @@ public class ViewUtils {
         return location;
     }
 
+
     /**
      * 获取View在整个屏幕内的绝对坐标
      * obtain access to View the absolute coordinates of within the entire screen
@@ -69,5 +73,4 @@ public class ViewUtils {
         view.getLocationOnScreen(location);
         return location;
     }
-
 }
