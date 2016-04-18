@@ -65,10 +65,10 @@ public class DataManager {
         return Observable.just(currentDate)
                          .flatMapIterable(MainPresenter.EasyDate::getPastTime)
                          .flatMap(easyDate -> {
-                    /*
-                     * 感觉Android的数据应该不会为null
-                     * 所以以Android的数据为判断是否当天有数据
-                     */
+                            /*
+                             * 感觉Android的数据应该不会为null
+                             * 所以以Android的数据为判断是否当天有数据
+                             */
                              return this.dailyModel.getDaily(easyDate.getYear(),
                                      easyDate.getMonth(), easyDate.getDay())
                                                    .filter(dailyData ->
