@@ -25,7 +25,7 @@ EasyGank妹纸
 
 [Fir](http://fir.im/easygank)  
 
-[Github](https://github.com/CaMnter/EasyGank/blob/master/app/EasyGank_v1.2_2016-03-18_Github.apk)
+[Github](https://github.com/CaMnter/EasyGank/blob/master/app/EasyGank_v1.3_2016-04-18_Github.apk)
 
 
 
