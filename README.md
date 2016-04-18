@@ -3,7 +3,8 @@ EasyGank妹纸
 
 ![Language](https://img.shields.io/badge/language-Java-EE0000.svg) 
 [![License](https://img.shields.io/badge/license-GPL%203.0-blue.svg)](https://github.com/CaMnter/EasyGank/blob/master/LICENSE)
-![Version](https://img.shields.io/badge/version-1.2-8470FF.svg)
+![SDK](https://img.shields.io/badge/SDK-9%2B-orange.svg)
+![Version](https://img.shields.io/badge/version-1.3-8470FF.svg)
 
 
 ## Introduction
@@ -30,11 +31,11 @@ EasyGank妹纸
 
 
 ## ScreenShots
-![sss_phone_style](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_phone_style.png)   
+<img src="http://ww4.sinaimg.cn/large/006lPEc9gw1f30tgf42nhj31ay298ne5.jpg" width="420x">
 
-![sss_1](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_1.png) ![sss_2](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_2.png)   
-![sss_3](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_3.png) ![sss_4](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_4.png)  
-![ss_5](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_5.png) ![sss_6](https://github.com/CaMnter/EasyGank/raw/master/screenshots/sss_6.gif)
+<img src="http://ww1.sinaimg.cn/large/006lPEc9gw1f30tgqj6pjj31ay29815v.jpg" width="420x"> <img src="http://ww2.sinaimg.cn/large/006lPEc9gw1f30thnk4s1j31ay298ds8.jpg" width="420x">   
+<img src="http://ww1.sinaimg.cn/large/006lPEc9gw1f30ti6r35oj31ay29847a.jpg" width="420x"> <img src="http://ww2.sinaimg.cn/large/006lPEc9gw1f30tigoaskj31ay2981f1.jpg" width="420x">  
+<img src="http://ww2.sinaimg.cn/large/006lPEc9gw1f30tinwt7ij31ay29849u.jpg" width="420x"> <img src="http://ww4.sinaimg.cn/large/006lPEc9gw1f30tj1s6a6j31ay298k1u.jpg" width="420x">
 
 
 

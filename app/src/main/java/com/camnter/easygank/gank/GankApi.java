@@ -39,7 +39,7 @@ public class GankApi {
     public static final String GANK_HOME_PAGE_NAME = "干货集中营";
     public static final String GANK_HOME_PAGE_URL = "http://gank.io/";
 
-    public static final String BASE_URL = "http://gank.avosapps.com/api/";
+    public static final String BASE_URL = "http://gank.io/api/";
 
     public static final String DATA_TYPE_WELFARE = "福利";
     public static final String DATA_TYPE_ANDROID = "Android";

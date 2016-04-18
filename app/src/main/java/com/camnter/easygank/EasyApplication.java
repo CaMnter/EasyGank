@@ -40,7 +40,7 @@ import com.orhanobut.logger.Logger;
  */
 public class EasyApplication extends Application {
     private static EasyApplication ourInstance = new EasyApplication();
-    public boolean log = false;
+    public boolean log = true;
     public Gson gson;
 
     public static final long ONE_KB = 1024L;
