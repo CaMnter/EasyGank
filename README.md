@@ -1,11 +1,15 @@
 EasyGank妹纸
 ==
 
+<br>
+
 ![Language](https://img.shields.io/badge/language-Java-EE0000.svg) 
 [![License](https://img.shields.io/badge/license-GPL%203.0-blue.svg)](https://github.com/CaMnter/EasyGank/blob/master/LICENSE)
 ![SDK](https://img.shields.io/badge/SDK-9%2B-orange.svg)
 ![Version](https://img.shields.io/badge/version-1.3-8470FF.svg)
 
+<br>
+<br>
 
 ## Introduction
 
@@ -19,7 +23,8 @@ EasyGank妹纸
 - Glide
 - Reservoir
 
-
+<br>
+<br>
 
 ## DownLoad
 
@@ -27,24 +32,27 @@ EasyGank妹纸
 
 [Github](https://github.com/CaMnter/EasyGank/blob/master/app/EasyGank_v1.3_2016-04-18_Github.apk)
 
-
-
+<br>
+<br>
 
 ## ScreenShots
 <img src="http://ww4.sinaimg.cn/large/006lPEc9gw1f30tgf42nhj31ay298ne5.jpg" width="420x">
-
-<img src="http://ww1.sinaimg.cn/large/006lPEc9gw1f30tgqj6pjj31ay29815v.jpg" width="420x"> <img src="http://ww2.sinaimg.cn/large/006lPEc9gw1f30thnk4s1j31ay298ds8.jpg" width="420x">   
-<img src="http://ww1.sinaimg.cn/large/006lPEc9gw1f30ti6r35oj31ay29847a.jpg" width="420x"> <img src="http://ww2.sinaimg.cn/large/006lPEc9gw1f30tigoaskj31ay2981f1.jpg" width="420x">  
+<br>
+<img src="http://ww1.sinaimg.cn/large/006lPEc9gw1f30tgqj6pjj31ay29815v.jpg" width="420x"> <img src="http://ww2.sinaimg.cn/large/006lPEc9gw1f30thnk4s1j31ay298ds8.jpg" width="420x">
+<br>
+<img src="http://ww1.sinaimg.cn/large/006lPEc9gw1f30ti6r35oj31ay29847a.jpg" width="420x"> <img src="http://ww2.sinaimg.cn/large/006lPEc9gw1f30tigoaskj31ay2981f1.jpg" width="420x">
+<br>
 <img src="http://ww2.sinaimg.cn/large/006lPEc9gw1f30tinwt7ij31ay29849u.jpg" width="420x"> <img src="http://ww4.sinaimg.cn/large/006lPEc9gw1f30tj1s6a6j31ay298k1u.jpg" width="420x">
 
-
-
+<br>
+<br>
 
 ## SolveBug
 
 [SolveBug](https://github.com/CaMnter/EasyGank/blob/master/md/SolveBug.md)  
 
-
+<br>
+<br>
 
 ## Thanks
 
@@ -54,6 +62,8 @@ EasyGank妹纸
 
 [jiangecho](https://github.com/jiangecho)  
 
+<br>
+<br>
 
 ## License
 
